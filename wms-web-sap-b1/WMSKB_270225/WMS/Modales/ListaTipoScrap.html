@@ -1,0 +1,32 @@
+﻿<div class="modal-header">
+    <h4 class="modal-title">Lista Tipos de Scrap</h4>
+</div>
+<div class="modal-body" name="modalData">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="megaTras">
+                <table class='headerTras'>
+                    <tr style="margin:0; padding:0;">
+                        <td style="color: white;" class="colTH6">#</td>
+                        <td style="color: white;" class="colTH3">Scrap</td>
+                    </tr>
+                </table>
+                <table style="width:100%; margin-top:40px;">
+                    <tbody>
+                        <tr ng-repeat="lt in ScrapList | filter:searchText" style="display: table; table-layout:fixed; width: 100%;">
+                            <td class="colTT6" ng-click="RegSeleccionado(lt);">{{$index + 1}}</td>
+                            <td class="colTT3" ng-click="RegSeleccionado(lt);">{{lt.IdS}} - {{lt.TipoS}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-lg-5 col-lg-offset-6">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ok()">Cerrar</button>
+        </div>
+    </div>
+</div>

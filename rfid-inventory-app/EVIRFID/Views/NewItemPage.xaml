@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EVIRFID.Views.NewItemPage"
+             Shell.PresentationMode="ModalAnimated"
+             Title="Nuevo Item"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:local="clr-namespace:EVIRFID.ViewModels"
+             ios:Page.UseSafeArea="true">
+
+
+    <ContentPage.Content>
+        <StackLayout Spacing="3" Padding="15">
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Chip:" FontSize="Medium" FontAttributes="Bold" />
+                <Label Text="{Binding Filtro}" FontSize="Medium" HorizontalOptions="Center" TextDecorations="Underline"/>
+            </StackLayout>
+
+            <inputLayout:SfTextInputLayout
+                    Hint="Tipo"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    FocusedColor="#00AFA0"
+                    HelperText="Descripción de la Prenda">
+                <Entry Text="{Binding Prenda,Mode=TwoWay}" />
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout
+                    Hint="Tipo"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    FocusedColor="#00AFA0"
+                    HelperText="Talla de la Prenda">
+                <Entry Text="{Binding Talla,Mode=TwoWay}" />
+            </inputLayout:SfTextInputLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancelar" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Guardar" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>
+

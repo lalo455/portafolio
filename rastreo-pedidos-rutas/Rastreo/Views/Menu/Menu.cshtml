@@ -1,0 +1,116 @@
+@{
+    Layout = null;
+}
+@using System.Threading;
+@using System.Security.Claims;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Entregas WEB | PRUEBAS</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Librarys/Bootstrap/Css/bootstrap7.min.css" rel="stylesheet" />
+    <link href="~/Content/Styles/menu.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/xeditable.css" rel="stylesheet" />
+    <link href="~/Librarys/Growl_v2/angular-growl.min.css" rel="stylesheet" />
+    <link href="~/Content/Estilos.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Librarys/Messi/messi.min.css" rel="stylesheet" />
+    <link href="../Content/Tablas.css" rel="stylesheet" />
+    <link href="~/Content/Footer.css" rel="stylesheet" />
+    <link href="../Content/tabs.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="~/Librarys/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Librarys/Angular/angular.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.min.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.debug.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/bootstrap7.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery-ui.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-2.5.0.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Librarys/Angular/angular-ui-utils.min.js"></script>
+    <script src="~/Librarys/Messi/messi.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery.dataTables.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Librarys/dirPagination.js"></script>
+    <script src="~/Librarys/Growl_v2/angular-growl.min.js"></script>
+    <script src="~/Librarys/Jquery/xeditable.min.js"></script>
+    <script src="~/Librarys/Angular/dataGrid.js"></script>
+    <script src="~/Scripts/appTab.js"></script>
+
+    <style>
+        /* Estilos para las alertas de error */
+        .alert-error {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <i class="fas fa-warehouse"></i> <!-- Logo -->
+            Entregas WEB
+        </div>
+        <div class="user-info">
+            @{
+                <spam style="color: #FFFFFF;" id="UsuarioLogin">  @User.Identity.Name  </spam>
+            }
+            <br />
+            <a></a>&nbsp;
+            <a href="@Url.Action("Logout", "Login")" class="fas fa-sign-out" style="color: #FFD43B" title="Salir">  Salir  </a>
+        </div>
+    </div>
+
+    <!-- Profile Select -->
+    <div class="profile-select">
+        @if (User.IsInRole("R"))
+        {
+            <div class="profile-option" onclick="location.href='@Url.Action("PedidosAsigandos", "Pedido", new { estatus = "O" })'">
+                <i class="fas fa-box"></i>
+                <span>Pedidos</span>
+            </div>
+            <div class="profile-option" onclick="location.href='@Url.Action("RutasAsignadas", "Rutas", new { estatus = "C" })'">
+                <i class="fas fa-cash-register"></i>
+                <span>Corte de caja</span>
+            </div>
+        }
+
+        @if (User.IsInRole("A"))
+        {
+            <div class="profile-option" onclick="location.href='@Url.Action("Rutas", "Rutas")'">
+                <i class="fa-solid fa-route"></i>
+                <span>Rutas</span>
+            </div>
+            <div class="profile-option" onclick="location.href='@Url.Action("CorteCajaAdmin", "CorteCaja")'">
+                <i class="fas fa-file-pdf"></i>
+                <span>Reportes Corte Caja</span>
+            </div>
+        }
+    </div>
+
+    <!-- Mensajes de error -->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert-error">
+            <strong>Error:</strong> @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <!-- Script para logout automático -->
+    <script>
+        // Logout automático después de 5 horas (18000000 milisegundos)
+        setTimeout(function () {
+            window.location.href = '@Url.Action("Logout", "Login")';
+        }, 18000000); // 5 horas
+    </script>
+</body>
+</html>

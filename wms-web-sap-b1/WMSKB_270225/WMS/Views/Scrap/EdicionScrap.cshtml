@@ -1,0 +1,128 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Library/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Library/Estilos/Styles.css" rel="stylesheet" />
+    <link href="~/Library/Growl/angular-growl.min.css" rel="stylesheet" />
+    <link href="~/Library/XEditable/xeditable.css" rel="stylesheet" />
+    <link href="~/Library/FontAwesome/fontawesome/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/Library/FontAwesome/fontawesome/css/solid.css" rel="stylesheet" />
+    <link href="~/Library/Messi/messi.min.css" rel="stylesheet" />
+    <title>Editar Scrap</title>
+</head>
+
+<body ng-app="editScrapApp" ng-controller="editScrapController" class="animated fadeIn fast">
+    <div growl></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="~/Assets/EditarScrap.png" width="30" height="30" class="d-inline-block align-top" alt=""> Editar Scrap
+        </a>
+        <button onclick="location.href='@Url.Action("SubMenuScrap", "Menu")'" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="~/Assets/back.png" />
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto"></ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button onclick="location.href='@Url.Action("SubMenuScrap", "Menu")'" class="btn btn-light my-2 my-sm-0" type="submit">
+                    <img src="~/Assets/back.png" />
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-group row">
+            <label for="OrdFab" class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 col-form-label py-2 pr-0">Orden Fabricación</label>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <div class="input-group">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Orden Fab"
+                           ng-model="Scrap.NumOrdr"
+                           ng-disabled="Memoria.LineasReg.length > 0">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" ng-click="Cargar()" ng-disabled="Memoria.LineasReg.length > 0">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-lg-offset-0" style="padding:0em;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding:0em; padding-left:1em; margin-top:7px;">
+                    <div class="megaTras">
+                        <table class='headerTras'>
+                            <tr>
+                                <td class="colTH6">#</td>
+                                @*<td class="colTH5">Orden Fab</td>*@
+                                <td class="colTH3">No. Parte</td>
+                                <td class="colTH2">Descripción</td>
+                                <td class="colTH4">Maquina</td>
+                                <td class="colTH5">Turno</td>
+                                <td class="colTH3">Cantidad</td>
+                                <td class="colTH3">Id Scrap</td>
+                                <td class="colTH2">Desc. Concepto</td>
+                                <td class="colTH5">Accion</td>
+                            </tr>
+                        </table>
+                        <table style="width:100%; margin-top:40px;">
+                            <tbody>
+                                <tr id="Reg{{$index}}" ng-repeat="Ln in Memoria.LineasReg">
+                                    <td class="colTT6">{{$index + 1}}</td>
+                                    @*<td class="colTH5">{{Ln.DocNum}}</td>*@
+                                    <td class="colTH3">{{Ln.ItemCode}}</td>
+                                    <td class="colTH2">{{Ln.ItemName}}</td>
+                                    <td class="colTH4">{{Ln.Maquina}}</td>
+                                    <td class="colTH5">{{Ln.Turno}}</td>
+                                    <td class="colTH3">{{Ln.Cantidad}}</td>
+                                    <td class="colTH3">{{Ln.TipoScrap}}</td>
+                                    <td class="colTH2">{{Ln.DescScrap}}</td>
+                                    <td class="colTT5"><img src="~/Assets/delete.png" ng-click="Eliminar($index)" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row pb-4 mt-4">
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12 text-center">
+                <button ng-hide="Lectura.Movimiento"
+                        type="button"
+                        class="btn btn-lg btn-warning"
+                        style="background-color:#DAA520"
+                        ng-click="Crear()"
+                        ng-disabled="Memoria.LineasEliminar.length == 0">
+                    Confirmar Transacción
+                </button>
+
+                <img class="col-12 col-lg-3 col-md-4 col-sm-12" style="width: 22%;" ng-show="Lectura.Movimiento" src="~/Assets/loading_.gif" />
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Library/JQuery/jquery-3.3.1.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/bootstrap.js" asp-append-version="true"></script>
+    <script src="~/Library/Angular/angular.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Growl/angular-growl.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/ui-bootstrap-tpls.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/ui-bootstrap-tpls-3.0.6.min.js" asp-append-version="true"></script>
+    <script src="~/Library/XEditable/xeditable.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Messi/messi.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Angular/angular-locale_es-mx.js" asp-append-version="true"></script>
+    <script src="~/Scripts/Scrap/EditarScrap.js" asp-append-version="true"></script>
+
+</body>
+</html>

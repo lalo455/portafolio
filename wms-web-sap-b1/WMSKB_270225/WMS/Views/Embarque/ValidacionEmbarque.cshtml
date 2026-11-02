@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Library/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Library/Estilos/Styles.css" rel="stylesheet" />
+    <link href="~/Library/Growl/angular-growl.min.css" rel="stylesheet" />
+    <script src="~/Library/JQuery/jquery-3.3.1.js"></script>
+    <script src="~/Library/Angular/angular.min.js"></script>
+    <script src="~/Library/Growl/angular-growl.min.js"></script>
+    <script src="~/Scripts/Embarque/ValidacionEmbarque.js"></script>
+    <title>Validacion de Embarque</title>
+</head>
+<body ng-app="validacionEmbApp" ng-controller="validacionEmbController" class="animated fadeIn fast">
+    <div growl></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="~/Assets/Val_de_Embarque.png" width="30" height="30" class="d-inline-block align-top" alt=""> Val. de Embarque
+        </a>
+        <button onclick="location.href='@Url.Action("Menu", "Menu")'" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="~/Assets/back.png" />
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto"></ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button onclick="location.href='@Url.Action("Menu", "Menu")'" class="btn btn-light my-2 my-sm-0" type="submit">
+                    <img src="~/Assets/back.png" />
+                </button>
+            </form>
+        </div>
+    </nav>
+    <div class="container pt-3">
+        <div class="form-group row">
+            <label for="Almacen" class="col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1 form-label py-0 pr-0 mt-2">Cliente</label>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2">
+                <select ng-model="Valores.Cliente" class="form-control custom-select"
+                        ng-model-options="{getterSetter:true}"
+                        ng-options="Cl.CardCode as ( Cl.CardCode + ' - ' + Cl.CardName) for Cl in Valores.Clientes"
+                        ng-change="Cambiar()">
+                    <option style="display:none" value="">Cliente</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="Cliente" class="col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1 form-label py-0 pr-0 mt-2">Embarque</label>
+            <div class="col-7 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+                <div class="input-group">
+                    <input type="number" class="form-control" ng-model="Valores.Documento" placeholder="Embarque" ng-disabled="Valores.Cliente == ''">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" ng-click="CargarDocumento()" ng-disabled="Memoria.Procesando">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 mr-3">
+                <input type="text" style="width:100%" id="Entradas" class="form-control"
+                       ng-style="Turno.AP == true ? {'border':'1px solid red'} : {'border':'1px solid green'}"
+                       ng-change="LeerCB()"
+                       ng-model="Entrada" placeholder="Entradas"
+                       ng-disabled="Valores.LineasDoc.length == 0" />
+            </div>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-3 mr-3" style="padding: 0em;">
+                <p ng-show="Turno.AP" style="font-weight:bold; color:red; ">Esperando Etiqueta AP</p>
+                <p ng-show="Turno.Audi" style="font-weight:bold; color:green ">Esperando Etiqueta Externa</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:0em; padding-left:1em; margin-top:7px;">
+                <div class="megaTras">
+                    <table class="headerTras">
+                        <tr>
+                            <td class="colTH6">#</td>
+                            <td class="colTH2">N° Parte</td>
+                            <td class="colTH2">Cant. Disp.</td>
+                            <td class="colTH2">Cant. Leida.</td>
+                            <td class="colTH5">Accion</td>
+                        </tr>
+                    </table>
+                    <table style="width:100%; margin-top:40px;">
+                        <tbody>
+                            <tr ng-repeat="D in Valores.LineasDoc" ng-style="D.U_Quantity < D.U_QtyDisp ? {'background-color':'#f99a9a'} : {'background-color':'#80ea7e'}">
+                                <td class="colTT6" style="font-size:16px">{{$index + 1}}</td>
+                                <td class="colTT2" style="font-size:16px">{{D.U_ItemSN}}</td>
+                                <td class="colTT2" style="font-size:16px">{{D.U_QtyDisp}}</td>
+                                <td class="colTT2" style="font-size:16px">{{D.U_Quantity}}</td>
+                                <td class="colTT5"><img src="~/Assets/refresh.png" ng-click="Refresh($index)" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row pb-4">
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12 text-center">
+                <button type="button" class="btn btn-lg btnGenerar" style="background-color:#FFB400; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif" id="Validar" ng-click="ValidarDocumento()" ng-disabled="Valores.LineasDoc.length == 0">Validar Lecturas</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+     xmlns="http://xamarin.com/schemas/2014/forms"
+     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+     xmlns:controls="clr-namespace:EVIRFID.Controls"
+     x:Class="EVIRFID.Views.InventoryPage">
+
+    <Grid>
+        <controls:InventoryWebView
+            x:Name="TheWebView"
+            Source="https://api.example.com" />
+
+        <Button 
+            Text="📶"
+            Clicked="OnPowerButtonClicked"
+            WidthRequest="56"
+            HeightRequest="56"
+            CornerRadius="28"
+            BackgroundColor="#2E86DE"
+            TextColor="White"
+            FontSize="Large"
+            VerticalOptions="End"
+            HorizontalOptions="Start"
+            Margin="15" />
+
+        <!--<Button
+            x:Name="RetryBtn"
+            Text="🔄 Reintentar"
+            Command="{Binding ReintentarEnvioCommand}"
+            HeightRequest="50"
+            CornerRadius="25"
+            BackgroundColor="#F39C12"
+            TextColor="White"
+            FontAttributes="Bold"
+            VerticalOptions="End"
+            HorizontalOptions="End"
+            Margin="15"
+            Padding="15,0" />-->
+
+        <ContentView
+            x:Name="PowerPopup"
+            IsVisible="False"
+            BackgroundColor="#80000000"
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill">
+
+            <Frame 
+                BackgroundColor="#FAFAFA"
+                CornerRadius="18"
+                Padding="25"
+                HasShadow="True"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="300"
+                BorderColor="#DDDDDD">
+
+                <ScrollView>
+                    <StackLayout Spacing="15">
+                        <Label 
+                            Text="Ajustes de Lector RFID"
+                            FontSize="20"
+                            TextColor="#333333"
+                            HorizontalOptions="Center"
+                            FontAttributes="Bold"/>
+
+                        <Frame CornerRadius="10" Padding="15" BackgroundColor="#F8F9FA" BorderColor="#DDDDDD" HasShadow="False">
+                            <StackLayout Spacing="5">
+                                <Label Text="Potencia de Antena" FontSize="14" FontAttributes="Bold" TextColor="#555555" />
+                                <Slider x:Name="PowerSlider" Maximum="30" Minimum="1" Value="15" MinimumTrackColor="#2E86DE" MaximumTrackColor="#CCCCCC" ThumbColor="#2E86DE" ValueChanged="OnSliderChanged"/>
+                                <Label x:Name="PowerLabel" Text="Valor: 15 dBm" FontSize="16" TextColor="#222222" HorizontalOptions="Center" FontAttributes="Bold"/>
+                                <Label x:Name="PowerDescLabel" Text="Mayor potencia = mayor alcance de lectura" FontSize="12" TextColor="#7F8C8D" HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </Frame>
+
+                        <Frame CornerRadius="10" Padding="15" BackgroundColor="#F8F9FA" BorderColor="#DDDDDD" HasShadow="False">
+                            <StackLayout Spacing="5">
+                                <Label Text="Filtro de Proximidad (RSSI)" FontSize="14" FontAttributes="Bold" TextColor="#555555" />
+                                <Slider x:Name="RssiSlider" Maximum="100" Minimum="0" Value="50" MinimumTrackColor="#F39C12" MaximumTrackColor="#CCCCCC" ThumbColor="#F39C12" ValueChanged="OnRssiSliderChanged"/>
+                                <Label x:Name="RssiLabel" Text="Valor: 50" FontSize="16" TextColor="#222222" HorizontalOptions="Center" FontAttributes="Bold"/>
+                                <Label x:Name="RssiDescLabel" Text="Mayor valor = ignora etiquetas lejanas" FontSize="12" TextColor="#7F8C8D" HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </Frame>
+
+                        <!-- Tarjeta Anticolisión (Q-Value) -->
+                        <Frame CornerRadius="10" Padding="15" BackgroundColor="#F8F9FA" BorderColor="#DDDDDD" HasShadow="False">
+                            <StackLayout Spacing="5">
+                                <Label Text="Optimización Anticolisión (Valor Q)" FontSize="14" FontAttributes="Bold" TextColor="#555555" />
+                                <Slider x:Name="QValueSlider" Maximum="15" Minimum="2" Value="2" MinimumTrackColor="#8E44AD" MaximumTrackColor="#CCCCCC" ThumbColor="#8E44AD" ValueChanged="OnQValueSliderChanged"/>
+                                <Label x:Name="QValueLabel" Text="Valor Q: 2" FontSize="16" TextColor="#222222" HorizontalOptions="Center" FontAttributes="Bold"/>
+                                <Label x:Name="QValueDescLabel" Text="Recomendado para: ~4 etiquetas" FontSize="12" TextColor="#7F8C8D" HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </Frame>
+
+                        <!-- Tarjeta Sesión Gen2 -->
+                        <Frame CornerRadius="10" Padding="15" BackgroundColor="#F8F9FA" BorderColor="#DDDDDD" HasShadow="False">
+                            <StackLayout Spacing="5">
+                                <Label Text="Sesión de Inventario (Gen2)" FontSize="14" FontAttributes="Bold" TextColor="#555555" />
+                                <Picker x:Name="SessionPicker" SelectedIndexChanged="OnSessionPickerChanged" TextColor="#222222" Title="Selecciona la sesión">
+                                    <Picker.Items>
+                                        <x:String>S0 - Lectura Continua</x:String>
+                                        <x:String>S1 - Inventario Estándar</x:String>
+                                        <x:String>S2 - Inventario Denso</x:String>
+                                        <x:String>S3 - Inventario Especial</x:String>
+                                    </Picker.Items>
+                                </Picker>
+                                <Label x:Name="SessionDescLabel" Text="S1 duerme etiquetas leídas para descubrir nuevas." FontSize="12" TextColor="#7F8C8D" HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </Frame>
+
+                        <Button 
+                            Text="Ir a Calibración y Pruebas"
+                            BackgroundColor="#28B463"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Margin="0,10,0,0"
+                            Command="{Binding GoToCalibrationCommand}"/>
+
+                        <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="CenterAndExpand">
+                            <Button 
+                                Text="Cancelar"
+                                BackgroundColor="#E0E0E0"
+                                TextColor="Black"
+                                CornerRadius="10"
+                                HorizontalOptions="FillAndExpand"
+                                Clicked="OnCancelPowerClicked"/>
+                            <Button 
+                                Text="Guardar"
+                                BackgroundColor="#0077FF"
+                                TextColor="White"
+                                CornerRadius="10"
+                                HorizontalOptions="FillAndExpand"
+                                Clicked="OnApplyPowerClicked"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </Frame>
+        </ContentView>
+    </Grid>
+</ContentPage>

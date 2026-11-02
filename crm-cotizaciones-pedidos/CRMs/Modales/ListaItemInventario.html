@@ -1,0 +1,49 @@
+﻿<div class="modal-header text-center" style="background-color: #EEEEEE;">
+    <!--<h5 class="modal-title text-center">Seleccione el Artículo a Consultar</h5>-->
+    <label><strong>Seleccione el artículo a consultar</strong></label>
+</div>
+<div class="modal-body" name="modalData">
+    <div class="row">
+        <div class="col-xs-4">
+            <label for="search">Buscar:</label>
+            <input ng-model="QueryBusqueda" id="search" class="form-control" placeholder="Texto de Filtrado">
+        </div>
+        <div class="col-xs-4">
+            <label for="search">Artículos por página:</label>
+            <input type="number" min="1" max="100" class="form-control" ng-model="QtyPageView">
+        </div>
+        <div class="col-lg-12 col-md-12">
+            <table id="modTabITEM" class="table table-bordered bordered table-striped table-hover table-condensed">
+                <thead style="background-color: lightgray;">
+                    <tr style="margin:0; padding:0;">
+                        <th>Código</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color:#FAFAFA;">
+
+                    <tr dir-paginate="item in ListaITEMInvt|orderBy:sortKey:reverse|filter:QueryBusqueda|itemsPerPage:QtyPageView" pagination-id="listItemWhs" class="pointerCursor" style="font-size:10px;">
+                        <td style="text-align:center" ng-click="ItemSeleccionado(item);">
+                            {{item.ItemCode}}
+                        </td>
+                        <td style="text-align:center" ng-click="ItemSeleccionado(item);">
+                            {{item.ItemName}}
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <dir-pagination-controls max-size="7"
+                                     direction-links="true"
+                                     boundary-links="true" pagination-id="listItemWhs">
+            </dir-pagination-controls>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-lg-5 col-lg-offset-6">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ok()">Cancelar</button>
+        </div>
+    </div>
+</div>

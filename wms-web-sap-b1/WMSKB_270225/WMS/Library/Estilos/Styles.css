@@ -1,0 +1,213 @@
+﻿.bg-success2 {
+    background-color: #1D7AB3 !important;
+}
+.text-white2 {
+    color: white;
+}
+
+#TitModulo {
+    font-size: 30px;
+}
+html {
+    background-color: #efefef;
+}
+
+body {
+    font: 14px/1.5 Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+#tsm {
+    color: black;    
+}
+#tm {
+    color:black;
+    font-weight:bold;
+}
+h5 {
+    color:white;
+}
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+.megaTras {
+    height: 350px;
+    margin: 0px;
+    width: 100%;
+    overflow: auto;
+    background: #fafafa;
+    word-wrap: break-word;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+    background: -moz-linear-gradient(top, #fbfbfb, #fafafa);
+    position: relative;
+}
+
+.headerTras {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    word-wrap: break-word;
+    font-weight: bold;
+    background: #ededed;
+    background: -webkit-gradient(linear, left top, left bottom, from(#DAA520), to(#DAA520));
+    background: -moz-linear-gradient(top, #DAA520, #DAA520);
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.headerTras + * {
+    margin-top: 30px;
+}
+/*estilos de encabezados*/
+.colTH1 {
+    width: 100px;
+    text-align: center;
+}
+
+.colTH2 {
+    width: 170px;
+    text-align: center;
+}
+
+.colTH3 {
+    width: 120px;
+    text-align: center;
+}
+
+.colTH4 {
+    width: 70px;
+    text-align: center;
+}
+
+.colTH5 {
+    width: 80px;
+    text-align: center;
+}
+
+.colTH6 {
+    width: 45px;
+    text-align: center;
+}
+
+.colTH7 {
+    width: 30px;
+    text-align: center;
+}
+/*estilos para td del body*/
+.colTT1 {
+    width: 100px;
+    text-align: center;
+    word-wrap: break-word;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    font-style: normal;
+    font-size: 17px;
+}
+
+.colTT2 {
+    width: 170px;
+    text-align: center;
+    word-wrap: break-word;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    font-style: normal;
+    font-size: 17px;
+}
+
+.colTT3 {
+    width: 120px;
+    text-align: center;
+    word-wrap: break-word;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    font-style: normal;
+    font-size: 17px;
+}
+
+.colTT4 {
+    width: 70px;
+    text-align: center;
+    word-wrap: break-word;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    font-style: normal;
+    font-size: 17px;
+}
+
+.colTT5 {
+    width: 80px;
+    text-align: center;
+    word-wrap: break-word;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    font-style: normal;
+    font-size: 17px;
+}
+
+.colTT6 {
+    width: 45px;
+    text-align: center;
+    word-wrap: break-word;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    font-style: normal;
+    font-size: 17px;
+}
+
+.colTT7 {
+    width: 30px;
+    text-align: center;
+    word-wrap: break-word;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    font-style: normal;
+    font-size: 17px;
+}
+
+.Plh1::placeholder {
+    color: red;
+}
+.Plh2::placeholder {
+    color: gray;
+}
+
+
+/*animaciones*/
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}

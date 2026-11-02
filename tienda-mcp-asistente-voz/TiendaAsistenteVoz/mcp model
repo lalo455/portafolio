@@ -1,0 +1,291 @@
+# 🏪 La Tiendita del Barrio — Arquitectura MCP + Single-Turn Action
+
+## ¿Qué vamos a hacer?
+
+Vamos a convertir tu tiendita en una **arquitectura profesional de 3 capas** usando **MCP** + el patrón **Single-Turn Action** para máxima velocidad.
+
+```mermaid
+graph LR
+    A["🖥️ Frontend Web<br/>(HTML/CSS/JS)"] -->|HTTP REST| B["🔌 WebApi<br/>(Cliente MCP + Gemini)"]
+    B -->|"Protocolo MCP<br/>JSON-RPC via SSE"| C["🛠️ Servidor MCP<br/>(Herramientas + SQLite)"]
+    B -->|"1 sola llamada HTTP<br/>Single-Turn Action"| D["🧠 Google Gemini<br/>(IA Gratuita)"]
+```
+
+---
+
+## 🆕 Patrón Single-Turn Action (¿Qué es y por qué es mejor?)
+
+> [!NOTE]
+> ### ❌ Antes (Multi-Turn Tool Calling — lento)
+> 1. Frontend → WebApi → **Gemini**: "El usuario quiere Coca-Cola"
+> 2. **Gemini** → WebApi: "Voy a llamar buscar_producto('coca')"
+> 3. WebApi → **MCP Server** → SQLite → devuelve resultados
+> 4. WebApi → **Gemini** otra vez: "Aquí están los resultados"
+> 5. **Gemini** → WebApi: "¡Encontré estas Coca-Colas!" *(texto final)*
+> 6. WebApi → Frontend
+>
+> **= 2+ llamadas a Gemini por mensaje** 🐌
+
+> [!TIP]
+> ### ✅ Ahora (Single-Turn Action — rápido)
+> 1. WebApi pre-carga contexto del MCP Server (productos, carrito)
+> 2. Frontend → WebApi → **Gemini** (UNA sola vez): "Aquí tienes el catálogo y el carrito. El usuario dice 'Quiero una Coca'. Devuélveme JSON con tu respuesta + acciones"
+> 3. **Gemini** devuelve: `{"respuesta": "¡Claro! Te agrego la Coca-Cola 600ml...", "acciones": [{"tipo": "agregar_carrito", "id_producto": 1, "cantidad": 1}]}`
+> 4. WebApi → Frontend: **Muestra texto y habla DE INMEDIATO**
+> 5. WebApi → MCP Server: **Ejecuta acciones en background**
+>
+> **= 1 sola llamada a Gemini** ⚡
+
+---
+
+## 🆕 Campo `DescripcionIA` en Productos (Lo que buscabas)
+
+> [!NOTE]
+> ### Lo que recordabas se llama **Embeddings** (Vectores Semánticos)
+> 
+> Los **embeddings** son arrays de números flotantes como `[0.234, -0.891, 0.445, ...]` que representan el "significado" de un texto. Se ven "encriptados" porque son ilegibles para humanos, pero la IA los compara ultra-rápido.
+>
+> **Para tu demo con 50 productos, los embeddings son overkill** (necesitarías instalar modelos de embedding por separado). En su lugar usaremos una versión simplificada pero igual de efectiva:
+
+### Solución: Campo `DescripcionIA`
+Un campo de texto compacto pre-generado que contiene TODO lo que la IA necesita saber del producto en formato optimizado:
+
+```
+"coca-cola|refresco|bebida|gaseosa|cola|600ml|$20|250cal|NO-diabeticos|popular:95"
+```
+
+**¿Por qué funciona?** En vez de que Gemini tenga que leer 10 columnas por producto, lee 1 sola cadena compacta con todas las keywords y sinónimos. Es como un "índice humano" del producto.
+
+**Ventajas:**
+- ✅ Zero dependencias extra (no necesitas modelos de embedding)
+- ✅ La IA encuentra productos por sinónimos ("refresco" → "coca-cola")  
+- ✅ Se incluye en el contexto del prompt para Single-Turn Action
+- ✅ Funciona con SQLite puro (no necesitas sqlite-vec)
+
+---
+
+## Decisiones Confirmadas
+
+| Decisión | Valor |
+|----------|-------|
+| API Key de Gemini | En `appsettings.json` ✅ |
+| Base de datos | SQLite (suficiente para demo) |
+| Modelo de IA | `gemini-flash-lite-latest` (gratuito) |
+| Patrón de IA | Single-Turn Action (1 sola llamada) |
+| Optimización de búsqueda | Campo `DescripcionIA` compacto |
+| SDK MCP | `ModelContextProtocol.AspNetCore` (oficial) |
+
+---
+
+## Estructura de Carpetas Final
+
+```
+📁 TiendaMCP/
+├── 📁 TiendaMCP.Server/          ← NUEVO: Servidor MCP (puerto 5010)
+│   ├── Program.cs                 ← Configuración del servidor MCP
+│   ├── Tools/
+│   │   └── TiendaTools.cs         ← Las 4 herramientas MCP
+│   ├── Data/
+│   │   └── DatabaseInitializer.cs ← Inicialización de BD + DescripcionIA
+│   ├── TiendaMCP.Server.csproj
+│   └── tiendita.db                ← Base de datos SQLite
+│
+├── 📁 TiendaMCP.WebApi/           ← NUEVO: API intermediaria (puerto 5020)
+│   ├── Program.cs                 ← API REST + Cliente MCP + Gemini Single-Turn
+│   ├── TiendaMCP.WebApi.csproj
+│   └── appsettings.json           ← API key de Gemini aquí
+│
+├── 📁 TiendaAsistenteVoz/         ← EXISTENTE: Frontend (puerto 5030)
+│   ├── Program.cs                 ← Simplificado (solo archivos estáticos)
+│   ├── wwwroot/
+│   │   ├── index.html
+│   │   ├── app.js                 ← URL apunta al WebApi
+│   │   └── styles.css
+│   └── TiendaAsistenteVoz.csproj
+│
+└── TiendaMCP.sln                  ← Solución que agrupa todo
+```
+
+---
+
+## Proposed Changes
+
+### Componente 1: TiendaMCP.Server (Servidor MCP)
+
+Expone las herramientas de la tienda como funciones MCP estándar.
+
+#### [NEW] TiendaMCP.Server.csproj
+- Target: `net10.0`
+- Paquetes: `ModelContextProtocol.AspNetCore`, `Dapper`, `Microsoft.Data.Sqlite`
+
+#### [NEW] Program.cs
+```csharp
+// Registrar MCP Server con transporte HTTP (SSE)
+builder.Services.AddMcpServer()
+    .WithHttpTransport()          // Comunicación via HTTP/SSE
+    .WithToolsFromAssembly();     // Descubre [McpServerTool] automáticamente
+
+app.MapMcp();  // Crea endpoints /sse y /messages automáticamente
+```
+
+#### [NEW] Tools/TiendaTools.cs
+- Clase con `[McpServerToolType]`
+- 4 herramientas con `[McpServerTool]` + `[Description()]`:
+  1. `buscar_producto(string nombre)` — Busca con LIKE + DescripcionIA
+  2. `agregar_carrito(int id_producto, int cantidad)` — Valida stock
+  3. `ver_carrito()` — Lista items con subtotales
+  4. `eliminar_carrito(int id_item)` — Elimina y restaura stock
+- Una herramienta extra:
+  5. `obtener_contexto_tienda()` — Devuelve catálogo completo + carrito (para Single-Turn)
+
+#### [NEW] Data/DatabaseInitializer.cs
+- Tabla `Productos` con campo nuevo: **`DescripcionIA TEXT`**
+- Cada producto incluye su DescripcionIA pre-generada con sinónimos y keywords
+- Tabla `Carrito` (sin cambios)
+- Los 50 productos mexicanos con imágenes reales
+
+---
+
+### Componente 2: TiendaMCP.WebApi (API + Cliente MCP + Gemini)
+
+El "cerebro" que implementa el patrón Single-Turn Action.
+
+#### [NEW] TiendaMCP.WebApi.csproj
+- Target: `net10.0`
+- Paquetes: `ModelContextProtocol` (modo cliente)
+
+#### [NEW] Program.cs — Endpoint `/api/chat` (Single-Turn Action)
+
+**Flujo del chat:**
+```
+1. Recibe mensaje del usuario
+2. Llama MCP Tool: obtener_contexto_tienda() → catálogo + carrito
+3. Construye prompt para Gemini con:
+   - System instruction (personalidad)
+   - Contexto completo (productos con DescripcionIA + carrito actual)
+   - Instrucción de devolver JSON estructurado
+4. UNA sola llamada a Gemini
+5. Parsea JSON de respuesta:
+   - "respuesta" → se envía al frontend DE INMEDIATO
+   - "acciones" → se ejecutan via MCP en background
+6. Devuelve respuesta + resultados al frontend
+```
+
+**Schema JSON que Gemini debe devolver:**
+```json
+{
+  "respuesta": "¡Hola! Encontré estas opciones de Coca-Cola para ti...",
+  "acciones": [
+    {
+      "tipo": "agregar_carrito",
+      "parametros": { "id_producto": 1, "cantidad": 1 }
+    }
+  ],
+  "productos_relevantes": [1, 3]
+}
+```
+
+#### [NEW] appsettings.json
+```json
+{
+  "Gemini": {
+    "ApiKey": "TU_API_KEY",
+    "Model": "gemini-flash-lite-latest"
+  },
+  "McpServer": {
+    "Url": "http://localhost:5010"
+  }
+}
+```
+
+**Otros endpoints** (delegan al MCP Server):
+- `GET /api/productos` → MCP `buscar_producto`
+- `POST /api/carrito` → MCP `agregar_carrito`
+- `GET /api/carrito` → MCP `ver_carrito`
+- `DELETE /api/carrito/{id}` → MCP `eliminar_carrito`
+
+---
+
+### Componente 3: TiendaAsistenteVoz (Frontend — Cambios mínimos)
+
+#### [MODIFY] [Program.cs](file:///d:/lalog/Documents/proyectosprogramacionpersonales/TiendaMCP/TiendaAsistenteVoz/Program.cs)
+- Se simplifica: solo `UseStaticFiles()` + `MapFallback()` a `index.html`
+- Se elimina TODA la lógica de Gemini, SQLite, endpoints API
+- Queda como un servidor de archivos estáticos ultra-simple
+
+#### [MODIFY] [app.js](file:///d:/lalog/Documents/proyectosprogramacionpersonales/TiendaMCP/TiendaAsistenteVoz/wwwroot/app.js)
+- Cambiar `API_BASE = ''` a `API_BASE = 'http://localhost:5020'`
+- El frontend recibe la respuesta inmediata y habla al instante
+- Las acciones ya se ejecutaron en el backend (el usuario no espera)
+
+#### [MODIFY] [TiendaAsistenteVoz.csproj](file:///d:/lalog/Documents/proyectosprogramacionpersonales/TiendaMCP/TiendaAsistenteVoz/TiendaAsistenteVoz.csproj)
+- Eliminar paquetes Dapper y Microsoft.Data.Sqlite
+
+---
+
+### Componente 4: Solución Global
+
+#### [NEW] TiendaMCP.sln
+- Agrupa los 3 proyectos
+
+---
+
+## Flujo Completo con Single-Turn Action
+
+```mermaid
+sequenceDiagram
+    participant U as 👤 Usuario
+    participant F as 🖥️ Frontend (5030)
+    participant W as 🔌 WebApi (5020)
+    participant M as 🛠️ MCP Server (5010)
+    participant DB as 💾 SQLite
+    participant G as 🧠 Gemini
+
+    U->>F: "Agrega una Coca-Cola al carrito"
+    F->>W: POST /api/chat
+
+    Note over W,M: Paso 1: Pre-cargar contexto
+    W->>M: MCP: obtener_contexto_tienda()
+    M->>DB: SELECT productos + carrito
+    DB-->>M: Catálogo + carrito actual
+    M-->>W: Contexto completo
+
+    Note over W,G: Paso 2: UNA sola llamada a Gemini
+    W->>G: Prompt con contexto + "devuelve JSON"
+    G-->>W: {"respuesta":"¡Listo! Te agrego...", "acciones":[{agregar_carrito...}]}
+
+    Note over W,F: Paso 3: Respuesta inmediata
+    W-->>F: respuesta: "¡Listo! Te agrego..."
+    F-->>U: 🔊 Habla y muestra texto AL INSTANTE
+
+    Note over W,M: Paso 4: Ejecutar acciones en background
+    W->>M: MCP: agregar_carrito(id:1, qty:1)
+    M->>DB: INSERT + UPDATE stock
+    M-->>W: ✅ Éxito
+```
+
+## Verification Plan
+
+### Compilar
+```bash
+dotnet build TiendaMCP.sln
+```
+
+### Levantar (3 terminales)
+```bash
+# Terminal 1
+cd TiendaMCP.Server && dotnet run     # Puerto 5010
+
+# Terminal 2
+cd TiendaMCP.WebApi && dotnet run     # Puerto 5020
+
+# Terminal 3
+cd TiendaAsistenteVoz && dotnet run   # Puerto 5030
+```
+
+### Probar
+1. Abrir `http://localhost:5030`
+2. Ver que el catálogo carga (MCP Server → WebApi → Frontend)
+3. Chatear: "¿Qué leches tienes?" → respuesta inmediata
+4. Chatear: "Agrega una Coca al carrito" → respuesta inmediata + carrito se actualiza
+5. Verificar voz, filtros, búsqueda

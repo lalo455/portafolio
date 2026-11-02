@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:EVIRFID.ViewModels"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             x:Class="EVIRFID.Views.ItemDetailPage"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Actualizar Info" Command="{Binding UpdateItemCommand}"/>
+    </ContentPage.ToolbarItems>
+
+
+
+    <StackLayout Spacing="20" Padding="15">
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Chip:" FontSize="Medium" FontAttributes="Bold" Style="{StaticResource MainLabel}"/>
+            <Label Text="{Binding CurrentItem.epc}" FontSize="Medium" HorizontalOptions="Center" TextDecorations="Underline" Style="{StaticResource SecondaryLabel}"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Clave de Corporación:" FontSize="Medium" FontAttributes="Bold" Style="{StaticResource MainLabel}"/>
+            <Label Text="{Binding CurrentItem.claveCorporacion}" FontSize="Medium" HorizontalOptions="Center" VerticalTextAlignment="End" Style="{StaticResource SecondaryLabel}"/>
+
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Serie Chip:" FontSize="Medium" FontAttributes="Bold" Style="{StaticResource MainLabel}"/>
+            <Label Text="{Binding CurrentItem.sxtid}" FontSize="16" HorizontalOptions="Center" Style="{StaticResource SecondaryLabel}"/>
+
+        </StackLayout>
+
+        <inputLayout:SfTextInputLayout
+                    Hint="Prenda"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    FocusedColor="#00AFA0"
+                    HelperText="Descripción de la Prenda">
+                <Entry Text="{Binding CurrentItem.prenda,Mode=TwoWay}" 
+                       Style="{StaticResource SecondaryLabel}"/>
+            </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout
+                    Hint="Talla"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    FocusedColor="#00AFA0"
+                    HelperText="Talla">
+                <Entry Text="{Binding CurrentItem.talla, Mode=TwoWay}" 
+                       Style="{StaticResource SecondaryLabel}"/>
+            </inputLayout:SfTextInputLayout>
+    </StackLayout>
+    
+</ContentPage>

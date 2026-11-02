@@ -1,0 +1,330 @@
+
+@{
+    ViewBag.Title = "VistaPedido";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/Librarys/Bootstrap/Css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Librarys/ag-grid/ag-grid.css" rel="stylesheet" />
+    <link href="~/Librarys/ag-grid/theme-fresh.css" rel="stylesheet" />
+    <link href="~/Content/Estilos.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/jquery-ui.css" rel="stylesheet" />
+    <link href="../Content/Tablas.css" rel="stylesheet" />
+    <link href="../Content/tabs.css" rel="stylesheet" />
+    <title>Pedido</title>
+</head>
+<body ng-app="appPedido">
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navba-nav navbar-left" style="width:80%">
+                    <li id="logo"><img src="~/Images/CRMAcme2.png" style="max-width:15%" /></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("Logout","Login")">Salir</a></li>
+                </ul>
+                <ul class="nav navba-nav navbar-right">
+                    @{
+                        <li><a id="UsuarioLogin">Usuario: @User.Identity.Name</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div style="width:100%;min-width:1200px; padding-bottom:0px; margin-bottom:0px;">
+        <div class="container" style="padding-bottom: 30px; margin-bottom: 0px;">
+            <label>Registro de Pedidos</label>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2" style="vertical-align:middle;">
+                    <span style="font-size:large;"> Fecha de entrega</span>
+                    <label style="margin-left:1em;" id="fechaEntrega"></label> <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+                <div class="col-lg-4" style="vertical-align:middle;">
+                    <!--<span style="font-size:large;"> N° de Pedido</span>-->
+                    <label style="margin-left:1em;" id="Npedi"></label> <span class="glyphicon glyphicon-book"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" ng-controller="pedidoController" style="padding-top:10px;">
+        <div class="row form-horizontal " style="margin-top:2em;">
+            <div class="row form-horizontal" style="margin-bottom:1em;">
+                <div class="col-lg-6">
+                    <div>
+                        <label for="male" class="control-label col-md-2">Cliente</label>
+                        <div class="col-md-10">
+                            <input class="form-control inputstl" style="width:35%; display:inline-block;" id="cardCode" name="Height" type="text" value="{{customerBP.CardCode}}" />
+                            <input class="form-control inputstl" style="width:35%; display:inline-block;" id="cardName" name="Height" type="text" value="{{customerBP.CardName}}"/>
+                            <button id="getBPListP" ng-click="mostrarModalSN();" type="button" class="btn btn-info btn-md"><span class="glyphicon glyphicon-plus-sign"></span></button>
+                            <input id="priceList" name="Height" type="text" style="width:20px; visibility:hidden" value="{{customerBP.ListaPrecios}}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <!--COLUMNA 1-->
+                <div class="form-group">
+                    <label for="male" class="control-label col-md-2">Número de Pedido</label>
+                    <div class="col-md-6">
+                        <!--<input id="Referencia" name="Height" type="text" class="form-control inputstl" />-->
+                        <textarea class="form-control" id="Referencia" style="margin: 0px; width:260px; height: 40px;  resize: none;"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="male" class="control-label col-md-2">Comentarios</label>
+                    <div class="col-md-6">
+                        <!--<input id="Comentario" name="Height" type="text" class="form-control inputstl" />-->
+                        <textarea class="form-control" id="Comentario" style="margin: 0px; width:260px; height: 40px;  resize: none;"></textarea>
+                    </div>
+                </div>
+                @*<div class="form-group">
+                    <label for="male" class="control-label col-md-2 text-left">Contacto</label>
+                    <div class="col-md-6">
+                        <div class="dropdown">
+                            <select class="form-control inputstl">
+                                <option data-tokens="ketchup mustard">Oliver</option>
+                                <option data-tokens="mustard">Juan</option>
+                                <option data-tokens="frosting">Pedro</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>*@
+
+
+                <div class="form-group">
+                    <label for="male" class="control-label col-md-2">Añadir Artículos</label>
+                    <div class="col-md-6">
+                        <button id="getItemListP" ng-click="MostrarModalITEM()" type="button" class="btn btn-info btn-md" data-toggle="modal"><span class="glyphicon glyphicon-plus-sign"></span></button>
+                    </div>
+                </div>
+            </div> <!--FIN DE COLUMNA 1-->
+            <div class="col-lg-6">
+                <!--COLUMNA 2-->
+                @*<div class="form-group">
+                    <label for="male" class="control-label col-md-2">Almacén</label>
+                    <div class="col-md-6">
+                        <input id="almacen" name="Height" type="text" class="form-control inputstl" value="01" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="male" class="control-label col-md-2">Moneda</label>
+                    <div class="col-md-6">
+                        <div class="dropdown" id="monedas" data-toggle="tooltip" title="El tipo de cambio no esta actualizado. Consulte con su Administrador.">
+                            <select id="moneda" class="form-control inputstl"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="male" class="control-label col-md-2">Vendedor</label>
+                    <div class="col-md-6">
+                        <div class="dropdown" id="vendedor">
+                            <select id="seller" class="form-control inputstl"></select>
+                        </div>
+                    </div>
+                </div>*@
+            </div> <!--FIN DE COLUMNA 2-->
+            <!--:::::::::MODAL PARA ARTICULOS::::::::::-->
+            @*<div class="col-lg-6">
+                <div class="container">
+                    <!-- Modal -->
+                    <div class="modal fade" id="ArticulosModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Propiedades de Artículo</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="pagination" class="tab-pane active">
+                                        <div class="table-responsive">
+                                            <table id="resultTable" class="table">
+                                                <thead>
+                                                </thead>
+                                                <tbody id="myTable1"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="col-md-12 text-center">
+                                        <ul class="pagination pagination-lg pager" id="myPager1"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--FIN DE TABLA MODAL-->
+            </div>*@
+
+            <!--:::::::::::::MODAL PARA CLINTES::::::::::::-->
+            @*<div class="col-lg-6">*@
+                @*<div class="container">*@
+                    <!-- Modal -->
+                    @*<div class="modal fade" id="ClienteModal" role="dialog">
+                        @*<div class="modal-dialog">*@
+                            <!-- Modal content-->
+                            @*<div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Lista de Clientes</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="pane1" class="tab-pane active">
+                                        <table id="resultTableC" class="table">
+                                            <thead>
+                                            </thead>
+                                            <tbody id="myTable"></tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="col-md-12 text-center">
+                                        <ul class="pagination pagination-lg pager" id="myPager"></ul>
+                                    </div>
+                                </div>
+                            </div>*@
+                        @*</div>*@
+                    @*</div>*@
+                @*</div>*@
+                <!--FIN DE TABLA MODAL-->
+            @*</div>*@
+            <!--::::::::::::FIN DE MODAL CLIENTES:::::::::::-->
+
+
+        </div>
+
+        <!--Tabla de ARTICULOS agregados-->
+        <div style="width: 90%; margin-left: 100px; padding-left: 0px; padding-right: 0px; background-color: #EEEEEE;" class="container">
+            <table id="tabPedidoP" class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Artículo</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>IVA</th>
+                        <th>Total</th>
+                        <th>Entrega</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="pedido">
+                    <tr id="eliminar" ng-repeat="articulo in ListaItemDetalle">
+                        <td>{{$index + 1}}</td>
+                        <td>{{articulo.Codigo}}</td>  
+                        <td>{{articulo.Nombre}}</td>
+                        <td>{{articulo.Cantidad}}</td>
+                        <td>{{articulo.Precio}}</td>
+                        <td>{{articulo.IVA}}</td>
+                        <td>{{articulo.Total}}</td>
+                        <td>{{articulo.FechaEntrega}}</td>
+                        <td>Editar</td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <div id="" class="row" style="background-color: white; margin-left: 700px; margin-right: 10px;">
+                <div id="totalTotal" class="col-md-2 text-left"><span style="font-weight: bold;">Total</span></div>
+                <div class="col-md-1 text-center" style="margin-left:60px"><span id="costoTotalNeto" style="font-weight: bold;">${{TotalAPagar}}</span></div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 text-right">
+                    <ul class="pagination pagination-lg pager" id="pedPaginador"></ul>
+                </div>
+            </div>
+        </div>
+        <!-------------->
+    </div>
+    <div class="container" style="margin-top:2em;">
+        <div class="row form-horizontal">
+            <div class="form-group">
+                <label for="male" class="control-label col-md-2">Direccion de Entrega: </label>
+                <div class="col-md-3">
+                    <!--<div class="dropdown">
+                        <select class="form-control" id="direccionE">
+                            <option></option>
+                        </select>
+                    </div>-->
+                    <label style="padding-top:7px;" id="direccionE"></label>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <label style="width:25em; margin-top:.5em; margin-left:13em; border:1px solid white; " id="direc">  </label>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:2em;">
+            <div class="col-lg-4 col-lg-offset-1" style="text-align:center;">
+                <button id="EnvCoti" type="button" class="btn btn-primary">Enviar Cotización</button>
+            </div>
+            <!--<div class="col-lg-4 col-lg-offset-1" style="text-align:center;">
+                <button id="clearForm" type="button" class="btn btn-primary">Limpiar</button>
+            </div>-->
+        </div>
+    </div>
+
+    <!--ALERTAS-->
+    <div class="modal fade" id="postPediExito">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="alert alert-success alert-dismissable">
+                        <strong>Se enviaron correctamente los datos. </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="postPediError">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="alert alert-danger alert-dismissable">
+                        <strong>No ha sido posible enviar la Pedido.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--otra modal para mensajes de comobox-->
+    <div id="popup">
+        <div id="topbar">
+            <span class="close">×</span>
+            Mensaje
+        </div>
+        <div id="content"><h4 id="mensajito"></h4></div>
+    </div>
+
+    <div id="popup2">
+        <div id="topbar2">
+            <span class="close2">×</span>
+            Mensaje
+        </div>
+        <div id="content2"><h4 id="mensajito2"></h4></div>
+    </div>
+    <!--FIN ALERTAS-->
+ 
+
+    <script src="~/Librarys/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Librarys/Angular/angular.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/bootstrap.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-tpls.min.js"></script>    
+    <script src="~/Librarys/Angular/angular-ui-utils.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery.dataTables.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/dataTables.bootstrap.min.js"></script>
+    
+    <script src="~/Librarys/ag-grid/ag-grid.js"></script>
+    <script src="~/Librarys/Angular/dataGrid.js"></script>
+    <script src="~/Scripts/appPedido.js"></script>
+</body>
+</html>

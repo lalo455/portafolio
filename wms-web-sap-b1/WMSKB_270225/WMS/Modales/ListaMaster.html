@@ -1,0 +1,36 @@
+﻿<div class="modal-header">
+    <h4 class="modal-title">Lista de Etiquetas Master</h4>
+</div>
+<div class="modal-body" name="modalData">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <table id="modTagTab" class="table table-bordered bordered table-striped table-condensed datatable">
+                <thead style="background-color: #DAA520;">
+                    <tr style="margin:0; padding:0;">
+                        <th style="text-align:center">Etq. Master</th>
+                        <th style="text-align:center">Artículo</th>
+                        <th style="text-align:center">Turno</th>
+                        <!--<th style="text-align:center">Estatus</th>-->
+                        <th style="text-align:center">Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color:#FAFAFA;">
+                    <tr ng-repeat="lm in ListaM">
+                        <td style="text-align:center" ng-click="MasterSeleccionada(ListaM[$index]);">{{lm.Codigo}}</td>
+                        <td style="text-align:center" ng-click="MasterSeleccionada(ListaM[$index]);">{{lm.Articulo}}</td>
+                        <td style="text-align:center" ng-click="MasterSeleccionada(ListaM[$index]);">{{lm.Turno}}</td>
+                        <!--<td style="text-align:center" ng-click="MasterSeleccionada(ListaM[$index]);">{{lm.Estatus}}</td>-->
+                    <td style="text-align:center" ng-click="MasterSeleccionada(ListaM[$index]);">{{lm.MasterOnHandQty}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-lg-5 col-lg-offset-6">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ok()">Cancelar</button>
+        </div>
+    </div>
+</div>

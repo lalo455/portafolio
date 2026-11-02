@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:lists="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:sfPopup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms"
+    xmlns:range="clr-namespace:Syncfusion.SfRangeSlider.XForms;assembly=Syncfusion.SfRangeSlider.XForms"
+    xmlns:local="clr-namespace:EVIRFID.ViewModels"
+    xmlns:model="clr-namespace:EVIRFID.Models"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:Helpers="clr-namespace:Syncfusion.ListView.XForms.Helpers;assembly=Syncfusion.SfListView.XForms"
+    xmlns:local1="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms" 
+    x:DataType="local:ByItemViewModel"
+    x:Class="EVIRFID.Views.ByItemPage"
+    Shell.PresentationMode="NotAnimated"
+    Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cerrar entrega" Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.BindingContext>
+        <local:ByItemViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding CurrentPerson.nombre}" TextColor="Blue" FontSize="17" HorizontalOptions="EndAndExpand" FontAttributes="Bold"></Label>
+            <Label Text="{Binding CurrentPerson.adscripcion}" TextColor="Red" HorizontalOptions="EndAndExpand" Margin="0,-10,0,-5"></Label>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Objetos que se asignarán al elemento:" FontSize="Small" HorizontalTextAlignment="Start" Margin="0,0,0,-6" TextColor="DarkBlue"></Label>
+                <CheckBox IsChecked="{Binding AutoNamePrenda}"></CheckBox>
+            </StackLayout>
+            <StackLayout>
+                <lists:SfListView x:Name="listViewEPC"
+                                  BackgroundColor="LightSteelBlue"
+                                  ItemsSource="{Binding ListaEpcs}"
+                                  SelectedItem="{Binding epcSeleccionados}"
+                                  TapCommand="{Binding DiscardSelectedCommand}"
+                                  AutoFitMode="DynamicHeight"
+                                  SelectionMode="Single"
+                                  AllowSwiping="False"
+                                  ItemSize="50">
+                    <lists:SfListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Item">
+                            <StackLayout BackgroundColor="LightYellow" Margin="2">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding epc}" FontSize="14" TextColor="Black"/>
+                                    <Label Text="{Binding nombre}" FontAttributes="Bold" FontSize="10" TextColor="Red" VerticalOptions="Center" HorizontalOptions="EndAndExpand" Margin="0,0,3,0"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding prenda}" FontAttributes="Bold" FontSize="14" HorizontalOptions="Start" VerticalOptions="Center" TextColor="Black"/>
+                                    <Label Text="|" TextColor="Blue"></Label>
+                                    <Label Text="{Binding talla}" FontAttributes="Bold" FontSize="14" VerticalOptions="Center" TextColor="Black"/>
+                                    <Label Text="|" TextColor="Blue"></Label>
+                                    <Label Text="{Binding claveCorporacion}" FontAttributes="Bold" FontSize="14" VerticalOptions="Center" TextColor="Black"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </DataTemplate>
+                    </lists:SfListView.ItemTemplate>
+                </lists:SfListView>
+                <Label Text="↑ Seleccione objeto para eliminarlo de la lista ↑" FontSize="Micro" HorizontalTextAlignment="Center" FontAttributes="Bold"></Label>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <buttons:SfCheckBox x:Name="chkCalzado" IsChecked="{Binding CurrentPerson.calzadoEntregado}" Text="Calzado" TextColor="Black" UncheckedColor="DarkRed" CheckedColor="DarkGreen" CornerRadius="6" Margin="10,0,10,0"></buttons:SfCheckBox>
+                    <buttons:SfCheckBox x:Name="chkCinturon" IsChecked="{Binding CurrentPerson.cinturonEntregado}" Text="Cinturón" TextColor="Black" UncheckedColor="DarkRed" CheckedColor="DarkGreen" CornerRadius="6" Margin="10,0,10,0"></buttons:SfCheckBox>
+                    <buttons:SfCheckBox x:Name="chkPantalon" IsChecked="{Binding CurrentPerson.pantalonEntregado}" Text="Pantalón" TextColor="Black" UncheckedColor="DarkRed" CheckedColor="DarkGreen" CornerRadius="6" Margin="10,0,10,0"></buttons:SfCheckBox>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <buttons:SfCheckBox x:Name="chkKepi" IsChecked="{Binding CurrentPerson.kepiEntregado}" Text="Kepi" TextColor="Black" UncheckedColor="DarkRed" CheckedColor="DarkGreen" CornerRadius="6" Margin="0,0,0,0"></buttons:SfCheckBox>
+                    <buttons:SfCheckBox x:Name="chkGorra" IsChecked="{Binding CurrentPerson.gorraEntregado}" Text="Gorra" TextColor="Black" UncheckedColor="DarkRed" CheckedColor="DarkGreen" CornerRadius="6" Margin="0,0,0,0"></buttons:SfCheckBox>
+                    <buttons:SfCheckBox x:Name="chkImpermeable" IsChecked="{Binding CurrentPerson.impermeableEntregado}" TextColor="Black" Text="Impermeable" UncheckedColor="DarkRed" CheckedColor="DarkGreen" CornerRadius="6" Margin="5,0,5,0"></buttons:SfCheckBox>
+                    <buttons:SfCheckBox x:Name="chkTodos" StateChanged="chkTodos_StateChanged" Text="Todos" TextColor="Black" FontAttributes="Bold" UncheckedColor="DarkRed" CheckedColor="DarkGreen" CornerRadius="6" Margin="0,0,0,0"></buttons:SfCheckBox>
+                </StackLayout>
+            </StackLayout>
+
+            <BoxView Color="Gray" HeightRequest="3" Opacity="0.7"></BoxView>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Potencia: " HorizontalOptions="Start" TextColor="Black"></Label>
+                <Label Text="{Binding RfPower}" FontAttributes="Bold" TextColor="Black"></Label>
+                <Label Text="Leídos: " HorizontalOptions="EndAndExpand" TextColor="Black"></Label>
+                <Label Text="{Binding ListaEpcs.Count}" FontAttributes="Bold" Padding="0,0,20,0" TextColor="Black"></Label>
+            </StackLayout>
+            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" HeightRequest="60">
+                <buttons:SfButton x:Name="PwrBtn" Text="PWR" ImageSource="rfpwr.png" Clicked="PwrBtn_Clicked" FontSize="16" BackgroundColor="LightPink" CornerRadius="3" ShowIcon="True" ImageAlignment="Top"/>
+                <buttons:SfButton x:Name="ClearBtn" Text="Limpiar" ImageSource="clear.png" Command="{Binding ClearEpcListCommand}" FontSize="16" BackgroundColor="LightGray" CornerRadius="3" ShowIcon="True" ImageAlignment="Top"/>
+                <buttons:SfButton x:Name="ScanBtn" Text="Leer" HeightRequest="66" Clicked="ScanBtn_Clicked" EnableRippleEffect="True" ImageSource="rfid.png" Command="{Binding ScanCommand}" FontSize="22" BackgroundColor="DeepSkyBlue" CornerRadius="3" ShowIcon="True" HorizontalOptions="FillAndExpand" IsCheckable="True" ImageAlignment="Left" ImageWidth="50">
+                </buttons:SfButton>
+            </StackLayout>
+            <sfPopup:SfPopupLayout x:Name="assignLayout">
+                <sfPopup:SfPopupLayout.PopupView>
+                    <sfPopup:PopupView HeaderTitle="Asignar ítems" AppearanceMode="TwoButton" AcceptButtonText="Asignar" DeclineButtonText="Regresar sin asignar" ShowCloseButton="False" HeightRequest="500" AcceptCommand="{Binding AssignItemsCommand}">
+                        <sfPopup:PopupView.ContentTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <Label Text="¿Confirma la asignación a" Margin="0,0,0,0" TextColor="Black"></Label>
+                                    <Label Text="{Binding CurrentPerson.nombre}" Margin="0,-10,0,0" FontSize="16" FontAttributes="Bold" TextColor="DarkBlue"></Label>
+                                    <Label Text="de los siguientes artículos?:" Margin="0,-10,0,0" TextColor="Black"></Label>
+                                    <lists:SfListView x:Name="listViewEPC"
+                                  BackgroundColor="LightSteelBlue"
+                                  ItemsSource="{Binding ListaEpcs}"
+                                  AutoFitMode="None"
+                                  SelectionMode="None"
+                                  AllowSwiping="True"
+                                  ItemSize="50">
+                                        <lists:SfListView.ItemTemplate>
+                                            <DataTemplate x:DataType="model:Item">
+                                                <StackLayout BackgroundColor="WhiteSmoke" Margin="2">
+                                                    <Label Text="{Binding epc}" FontSize="14" TextColor="Black" />
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <Label Text="{Binding prenda}" FontAttributes="Bold" FontSize="16" TextColor="Black" />
+                                                        <Label Text="|" TextColor="Blue"></Label>
+                                                        <Label Text="{Binding talla}" FontAttributes="Bold" FontSize="16" TextColor="Black" />
+                                                        <Label Text="|" TextColor="Blue"></Label>
+                                                        <Label Text="{Binding claveCorporacion}" FontAttributes="Bold" FontSize="16" TextColor="Black" />
+                                                    </StackLayout>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </lists:SfListView.ItemTemplate>
+                                    </lists:SfListView>
+                                    <inputLayout:SfTextInputLayout 
+                                            Margin="0,-10,0,-25"
+                                            Hint="CUIP"
+                                            FocusedColor="#00AFA0"
+                                            InputViewPadding="10" 
+                                            ContainerType="Outlined">
+                                        <Entry Text="{Binding CurrentPerson.cuip, Mode=TwoWay}" TextColor="Black"/>
+                                    </inputLayout:SfTextInputLayout>
+                                    <inputLayout:SfTextInputLayout 
+                                            Margin="0,0,0,-25"
+                                            Hint="Tipo de Sangre"
+                                            FocusedColor="#00AFA0"
+                                            InputViewPadding="10" 
+                                            ContainerType="Outlined">
+                                        <Picker SelectedItem="{Binding CurrentPerson.tipoSangre,Mode=TwoWay}">
+                                            <Picker.ItemsSource>
+                                                <x:Array Type="{x:Type x:String}">
+                                                    <x:String>O+</x:String>
+                                                    <x:String>A+</x:String>
+                                                    <x:String>O-</x:String>
+                                                    <x:String>A-</x:String>
+                                                    <x:String>B+</x:String>
+                                                    <x:String>B-</x:String>
+                                                    <x:String>AB+</x:String>
+                                                    <x:String>AB-</x:String>
+                                                </x:Array>
+                                            </Picker.ItemsSource>
+                                        </Picker>
+                                    </inputLayout:SfTextInputLayout>
+                                    <inputLayout:SfTextInputLayout 
+                                            Margin="0,0,0,-25"
+                                            Hint="Observaciones"
+                                            FocusedColor="#00AFA0"
+                                            InputViewPadding="10" 
+                                            ContainerType="Outlined">
+                                        <Entry Text="{Binding CurrentPerson.observaciones, Mode=TwoWay}" TextColor="Black"/>
+                                    </inputLayout:SfTextInputLayout>
+                                </StackLayout>
+                            </DataTemplate>
+                        </sfPopup:PopupView.ContentTemplate>
+                    </sfPopup:PopupView>
+                </sfPopup:SfPopupLayout.PopupView>
+            </sfPopup:SfPopupLayout>
+            <sfPopup:SfPopupLayout x:Name="popupLayout">
+                <sfPopup:SfPopupLayout.PopupView>
+                    <sfPopup:PopupView HeaderTitle="Cambiar potencia de Lectura" AppearanceMode="OneButton" AcceptButtonText="Regresar" ShowCloseButton="False" HeightRequest="240">
+                        <sfPopup:PopupView.ContentTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <range:SfRangeSlider
+                                        x:Name="pwrSlider"
+                                        Value="{Binding RfPower, Mode=TwoWay}"
+                                        SnapsTo="StepValues"
+                                        ShowValueLabel="True"
+                                        TickFrequency="4"
+                                        ShowRange="False"
+                                        Minimum="5"
+                                        Maximum="30"
+                                        TrackThickness="6"
+                                        KnobColor="DarkRed"
+                                        ThumbSize="1"
+                                        StepFrequency="1"></range:SfRangeSlider>
+                                    <buttons:SfButton x:Name="ApplyPowrBtn" Clicked="SfButton_Clicked" Command="{Binding SetPowerCommand}" Text="Aplicar" FontSize="16" BackgroundColor="DodgerBlue" CornerRadius="3" HorizontalOptions="Center" IsCheckable="True"></buttons:SfButton>
+                                </StackLayout>
+                            </DataTemplate>
+                        </sfPopup:PopupView.ContentTemplate>
+                    </sfPopup:PopupView>
+                </sfPopup:SfPopupLayout.PopupView>
+            </sfPopup:SfPopupLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

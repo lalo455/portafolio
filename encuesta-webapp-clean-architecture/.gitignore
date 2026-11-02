@@ -1,0 +1,25 @@
+﻿# Build output
+bin/
+obj/
+publish/
+*.user
+*.suo
+.vs/
+# Secrets & local config
+appsettings.*.local.json
+secrets.json
+.env
+*.pfx
+*.key
+# Data & logs
+*.db
+*.db3
+*.sqlite
+*.log
+Logs/
+# Misc
+.idea/
+.vscode/
+node_modules/
+*.rar
+*.zip

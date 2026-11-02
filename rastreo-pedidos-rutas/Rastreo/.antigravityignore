@@ -1,0 +1,16 @@
+.git/
+bin/
+obj/
+packages/
+*.suo
+*.user
+.vs/
+.Content/
+Content/
+fonts/
+Library/
+Properties/
+Rastreo/
+Rastreo.sln
+.agent/
+.gemini/

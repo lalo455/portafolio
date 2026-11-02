@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="EVIRFID.Views.MassiveAddPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=netstandard"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:lists="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:local="clr-namespace:EVIRFID.ViewModels"
+    xmlns:model="clr-namespace:EVIRFID.Models"
+    xmlns:range="clr-namespace:Syncfusion.SfRangeSlider.XForms;assembly=Syncfusion.SfRangeSlider.XForms"
+    xmlns:sfPopup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms"
+    xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+    xmlns:viewmodels="clr-namespace:EVIRFID.ViewModels"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    Title="{Binding Title}"
+    x:DataType="local:MassiveAddViewModel">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding ExportarInventoryCommand}" Text="CARGAR" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.BindingContext>
+        <local:MassiveAddViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout>
+                <combobox:SfComboBox
+                    x:Name="comboBoxPrenda"
+                    HeightRequest="40"
+                    IsEditableMode="True"
+                    SelectedItem="{Binding NombrePrendaNueva}">
+                    <combobox:SfComboBox.ComboBoxSource>
+                        <ListCollection:List x:TypeArguments="x:String">
+                            <x:String>BIG HORN JACKET</x:String>
+                            <x:String>CHAMARRA SPORTOCK</x:String>
+                            <x:String>RIPSTOP TDU L/S SHIRT</x:String>
+                            <x:String>CAMISOLA</x:String>
+                            <x:String>CHAMARRA</x:String>
+                        </ListCollection:List>
+                    </combobox:SfComboBox.ComboBoxSource>
+                </combobox:SfComboBox>
+                <combobox:SfComboBox
+                    x:Name="comboBoxTalla"
+                    HeightRequest="40"
+                    IsEditableMode="True"
+                    SelectedItem="{Binding TallaPrendaNueva}">
+                    <combobox:SfComboBox.ComboBoxSource>
+                        <ListCollection:List x:TypeArguments="x:String">
+                            <x:String>XS</x:String>
+                            <x:String>S</x:String>
+                            <x:String>M</x:String>
+                            <x:String>L</x:String>
+                            <x:String>XL</x:String>
+                            <x:String>2XL</x:String>
+                            <x:String>3XL</x:String>
+                        </ListCollection:List>
+                    </combobox:SfComboBox.ComboBoxSource>
+                </combobox:SfComboBox>
+                <combobox:SfComboBox
+                    x:Name="comboBoxCorporacion"
+                    HeightRequest="40"
+                    IsEditableMode="True"
+                    SelectedItem="{Binding ClaveCorporacionNueva}">
+                    <combobox:SfComboBox.ComboBoxSource>
+                        <ListCollection:List x:TypeArguments="x:String">
+                            <x:String>CORPO1</x:String>
+                            <x:String>CORPO2</x:String>
+                        </ListCollection:List>
+                    </combobox:SfComboBox.ComboBoxSource>
+                </combobox:SfComboBox>
+            </StackLayout>
+            <syncfusion:SfDataGrid
+                x:Name="dataGrid"
+                AutoGenerateColumns="False"
+                ColumnSizer="Star"
+                IndentColumnWidth="12"
+                ItemsSource="{Binding ListaEpcs}">
+                <syncfusion:SfDataGrid.Columns x:TypeArguments="syncfusion:Columns">
+                    <syncfusion:GridTextColumn
+                        CellTextSize="10"
+                        HeaderText="Chip"
+                        MappingName="epc"
+                        MaximumWidth="160"
+                        MinimumWidth="160" />
+                    <syncfusion:GridTextColumn
+                        CellTextSize="10"
+                        HeaderText="Código Interno"
+                        MappingName="sxtid"
+                        MaximumWidth="160"
+                        MinimumWidth="160" />
+                    <syncfusion:GridTextColumn
+                        CellTextSize="10"
+                        ColumnSizer="Star"
+                        HeaderText="Tiempo de Lectura"
+                        MappingName="fechaAsignacion" />
+                    <syncfusion:GridTextColumn
+                        Width="0"
+                        HeaderText="Nombre"
+                        IsHidden="True"
+                        MappingName="nombre" />
+                </syncfusion:SfDataGrid.Columns>
+            </syncfusion:SfDataGrid>
+            <!--  Pie de Vista  -->
+            <BoxView
+                HeightRequest="3"
+                Opacity="0.7"
+                Color="Gray" />
+            <StackLayout Orientation="Horizontal">
+                <Label HorizontalOptions="Start" Text="Potencia: " Style="{StaticResource SecondaryLabel}"/>
+                <Label FontAttributes="Bold" Text="{Binding RfPower}" Style="{StaticResource SecondaryLabel}"/>
+                <Label HorizontalOptions="End" Text="Chips: " Style="{StaticResource SecondaryLabel}"/>
+                <Label
+                    Padding="0,0,20,0"
+                    FontAttributes="Bold"
+                    Style="{StaticResource SecondaryLabel}"
+                    Text="{Binding CuentaChips}" />
+            </StackLayout>
+            <StackLayout
+                HeightRequest="60"
+                HorizontalOptions="FillAndExpand"
+                Orientation="Horizontal">
+                <buttons:SfButton
+                    x:Name="PwrBtn"
+                    BackgroundColor="LightPink"
+                    Clicked="PwrBtn_Clicked"
+                    CornerRadius="3"
+                    FontSize="16"
+                    ImageAlignment="Top"
+                    ImageSource="rfpwr.png"
+                    ShowIcon="True"
+                    Text="PWR" />
+                <buttons:SfButton
+                    x:Name="ClearBtn"
+                    BackgroundColor="LightGray"
+                    Command="{Binding ClearEpcListCommand}"
+                    CornerRadius="3"
+                    FontSize="16"
+                    ImageAlignment="Top"
+                    ImageSource="clear.png"
+                    ShowIcon="True"
+                    Text="Limpiar" />
+                <buttons:SfButton
+                    x:Name="ScanBtn"
+                    BackgroundColor="DeepSkyBlue"
+                    Clicked="ScanBtn_Clicked"
+                    Command="{Binding ScanCommand}"
+                    CornerRadius="3"
+                    EnableRippleEffect="True"
+                    FontSize="22"
+                    HeightRequest="66"
+                    HorizontalOptions="FillAndExpand"
+                    ImageAlignment="Left"
+                    ImageSource="rfid.png"
+                    ImageWidth="50"
+                    IsCheckable="True"
+                    ShowIcon="True"
+                    Text="Leer" />
+            </StackLayout>
+            <sfPopup:SfPopupLayout x:Name="popupLayout">
+                <sfPopup:SfPopupLayout.PopupView>
+                    <sfPopup:PopupView
+                        AcceptButtonText="Regresar"
+                        AppearanceMode="OneButton"
+                        HeaderTitle="Cambiar potencia de Lectura"
+                        HeightRequest="240"
+                        ShowCloseButton="False">
+                        <sfPopup:PopupView.ContentTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <range:SfRangeSlider
+                                        x:Name="pwrSlider"
+                                        KnobColor="DarkRed"
+                                        Maximum="30"
+                                        Minimum="5"
+                                        ShowRange="False"
+                                        ShowValueLabel="True"
+                                        SnapsTo="StepValues"
+                                        StepFrequency="1"
+                                        ThumbSize="1"
+                                        TickFrequency="4"
+                                        TrackThickness="6"
+                                        Value="{Binding RfPower, Mode=TwoWay}" />
+                                    <buttons:SfButton
+                                        x:Name="ApplyPowrBtn"
+                                        BackgroundColor="DodgerBlue"
+                                        Command="{Binding SetPowerCommand}"
+                                        CornerRadius="3"
+                                        FontSize="16"
+                                        HorizontalOptions="Center"
+                                        IsCheckable="True"
+                                        Text="Aplicar" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </sfPopup:PopupView.ContentTemplate>
+                    </sfPopup:PopupView>
+                </sfPopup:SfPopupLayout.PopupView>
+            </sfPopup:SfPopupLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

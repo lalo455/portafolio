@@ -1,0 +1,100 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <BuildWithMSBuildOnMono>true</BuildWithMSBuildOnMono>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NETStandard.Library" Version="2.0.3" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2622" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.8.1" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.6" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="DevExpress.XamarinForms.CollectionView" Version="22.1.7" />
+    <PackageReference Include="DevExpress.XamarinForms.Editors" Version="22.1.7" />
+    <PackageReference Include="MiniExcel" Version="1.31.2" />
+    <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="22.2.12" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="22.2.12" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="22.2.12" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="22.2.12" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRangeSlider" Version="22.2.12" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="22.2.12" />
+    <PackageReference Include="Acr.UserDialogs" Version="7.2.0.564" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="22.2.12" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="22.2.12" />
+    <PackageReference Include="Xamarin.MQTT" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\ItemsPage %28copiar%29.xaml.cs">
+      <DependentUpon>UsersPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\UsersPage.xaml.cs">
+      <DependentUpon>UsersPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="App.xaml.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="sqlite-net-pcl" />
+    <None Remove="Xamarin.CommunityToolkit" />
+    <None Remove="Refractored.MvvmHelpers" />
+    <None Remove="CommunityToolkit.Mvvm" />
+    <None Remove="DevExpress.XamarinForms.CollectionView" />
+    <None Remove="DevExpress.XamarinForms.Editors" />
+    <None Remove="MiniExcel" />
+    <None Remove="Chainway_C72_DeviceAPI_Xamarin" />
+    <None Remove="Syncfusion.Xamarin.SfGauge" />
+    <None Remove="Syncfusion.Xamarin.Buttons" />
+    <None Remove="Syncfusion.Xamarin.SfListView" />
+    <None Remove="Syncfusion.Xamarin.SfPopupLayout" />
+    <None Remove="Syncfusion.Xamarin.SfRangeSlider" />
+    <None Remove="DeviceAPI" />
+    <None Remove="Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065" />
+    <None Remove="Syncfusion.Xamarin.SfBusyIndicator" />
+    <None Remove="Acr.UserDialogs" />
+    <None Remove="Syncfusion.Xamarin.SfDataGrid" />
+    <None Remove="clientnrfid.db3" />
+    <None Remove="Syncfusion.Xamarin.Core" />
+    <None Remove="Xam.Plugin.SimpleAudioPlayer" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="evirfid.db3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DeviceAPI">
+      <HintPath>..\CLIENTNRFID.Android\DLL\DeviceAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v13.0\Mono.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065" />
+    <Reference Include="DeviceAPI_Android">
+      <HintPath>..\CLIENTNRFID.Android\DLL\DeviceAPI_Android.dll</HintPath>
+    </Reference>
+    <Reference Include="DeviceAPI_Android">
+      <HintPath>..\EVIRFID.Android\DLL\DeviceAPI_Android.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="clientnrfid.db3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="clientnrfid.db3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

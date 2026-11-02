@@ -1,0 +1,119 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:WmsMovil"
+             xmlns:vm="clr-namespace:WmsMovil.ViewModels" 
+             xmlns:models="clr-namespace:WmsMovil.Models"
+             x:Class="WmsMovil.TraspasoPage"
+             BackgroundColor="#F4F6F9"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- HEADER MODERNO -->
+        <Border Grid.Row="0" BackgroundColor="White" StrokeThickness="0" Padding="15,10">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,5" Radius="10" Opacity="0.05" />
+            </Border.Shadow>
+            <Grid ColumnDefinitions="Auto, Auto, *" VerticalOptions="Center">
+                <ImageButton Grid.Column="0" Source="back.png" HeightRequest="25" WidthRequest="25" BackgroundColor="Transparent" Clicked="OnBackClicked" Margin="0,0,15,0"/>
+                <Image Grid.Column="1" Source="trolley.png" HeightRequest="30" />
+                <Label Grid.Column="2" Text="{local:Translate vw_manualTransfer_manualTransfer}" FontSize="18" TextColor="#2C3E50" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0"/>
+            </Grid>
+        </Border>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <Grid Grid.Row="1">
+            <ScrollView Padding="15" Margin="0,0,0,80">
+                <VerticalStackLayout Spacing="15">
+
+                    <!-- SECCIÓN 1: FORMULARIO -->
+                    <Frame CornerRadius="10" Padding="15" HasShadow="False" BorderColor="#DDDDDD">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="{local:Translate vw_common_customer}" FontAttributes="Bold" TextColor="Gray" FontSize="12"/>
+                            <Picker Title="{local:Translate vw_common_customer_select}" ItemsSource="{Binding Clientes}" ItemDisplayBinding="{Binding DisplayName}" SelectedItem="{Binding ClienteSeleccionado}" />
+
+                            <Label Text="{local:Translate vw_common_st_source}" FontAttributes="Bold" TextColor="Gray" FontSize="12"/>
+                            <Grid ColumnDefinitions="*, Auto, Auto">
+                                <Entry Grid.Column="0" Placeholder="0" Keyboard="Numeric" Text="{Binding SolicitudTraslado}" />
+                                <Button Grid.Column="1" Text="🔍" WidthRequest="50" Command="{Binding BuscarSTCommand}" BackgroundColor="#E0E0E0" TextColor="Black" Margin="5,0,0,0"/>
+                                <Button Grid.Column="2" Text="📄" WidthRequest="50" Command="{Binding ListarSolicitudesCommand}" BackgroundColor="#5BC0DE" TextColor="White" Margin="5,0,0,0"/>
+                            </Grid>
+
+                            <Label Text="{local:Translate vw_common_wh_source}" FontAttributes="Bold" TextColor="Gray" FontSize="12"/>
+                            <Picker Title="{local:Translate vw_common_wh_select}" ItemsSource="{Binding Almacenes}" ItemDisplayBinding="{Binding DisplayName}" SelectedItem="{Binding AlmacenOrigen}" />
+
+                            <Label Text="{local:Translate vw_common_wh_destination}" FontAttributes="Bold" TextColor="Gray" FontSize="12"/>
+                            <Picker Title="{local:Translate vw_common_wh_select}" ItemsSource="{Binding Almacenes}" ItemDisplayBinding="{Binding DisplayName}" SelectedItem="{Binding AlmacenDestino}" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- SECCIÓN 1.5: EL RECEPTOR DEL ESCÁNER QR -->
+                    <Frame CornerRadius="8" Padding="0" BackgroundColor="#E8F8F5" BorderColor="#48C9B0" HasShadow="False" IsVisible="{Binding IsQrMode}">
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+                            <Image Grid.Column="0" Source="qr_code.png" WidthRequest="25" Margin="15,0,0,0" Opacity="0.6"/>
+                            <Entry x:Name="ScannerEntry" Grid.Column="1" Text="{Binding CodigoEscaneado}" Placeholder="Apunte y escanee aquí..." ReturnCommand="{Binding ProcesarCodigoCommand}" ClearButtonVisibility="WhileEditing" Margin="10,0"/>
+                            <!-- Botón manual por si la Handheld no manda el Enter -->
+                            <Button Grid.Column="2" Text="Enviar" Command="{Binding ProcesarCodigoCommand}" BackgroundColor="#48C9B0" TextColor="White" Margin="0,5,5,5" HeightRequest="35" CornerRadius="5"/>
+                        </Grid>
+                    </Frame>
+
+                    <!-- SECCIÓN 2: RESUMEN Y BOTÓN DE ALERTAS -->
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto">
+                        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="10" VerticalOptions="Center">
+                            <Label Text="Etiquetas Escaneadas" FontAttributes="Bold" FontSize="16" TextColor="#333333"/>
+                            <Label Text="{Binding TotalEscaneados, StringFormat='({0})'}" TextColor="Red" FontAttributes="Bold" FontSize="16" />
+                        </HorizontalStackLayout>
+
+                        <!-- ESTE ES EL BOTÓN DE ALERTAS (Solo aparece si hay errores) -->
+                        <Button Grid.Row="0" Grid.Column="1" 
+                                Text="{Binding TotalAlertas, StringFormat='🧾 Alertas ({0})'}" 
+                                Command="{Binding AbrirAlertasCommand}" 
+                                BackgroundColor="#E74C3C" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="35" Padding="10,0" 
+                                IsVisible="{Binding TieneAlertas}"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding EstadoUI}" TextColor="#DAA520" FontAttributes="Italic" FontSize="12" Margin="0,5,0,0"/>
+                    </Grid>
+
+                    <!-- SECCIÓN 3: LISTA DE TARJETAS (ÚNICA Y LIMPIA) -->
+                    <CollectionView ItemsSource="{Binding LotesEscaneados}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:LoteValidado">
+                                <!-- El ColorFondo viene del C# (Cebra o Amarillo) -->
+                                <Border Margin="0,4" Padding="15" StrokeThickness="1" Stroke="#D5D8DC" StrokeShape="RoundRectangle 8" BackgroundColor="{Binding ColorFondo}">
+                                    <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto, Auto">
+
+                                        <!-- Fila 1: Lote y Borrar -->
+                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding DistNumber}" FontAttributes="Bold" FontSize="18" TextColor="#17202A" VerticalOptions="Center"/>
+                                        <ImageButton Grid.Row="0" Grid.Column="2" Source="delete.png" HeightRequest="28" WidthRequest="28" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TraspasoViewModel}}, Path=BorrarLoteCommand}" CommandParameter="{Binding .}"/>
+
+                                        <!-- Fila 2: Artículo, Cantidad y Cant SAP (Con alto contraste) -->
+                                        <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Spacing="15" Margin="0,10">
+                                            <Label Text="{Binding ItemCode, StringFormat='Art: {0}'}" TextColor="#2C3E50" FontSize="14" FontAttributes="Bold"/>
+                                            <!-- Cantidad Leída en Verde -->
+                                            <Label Text="{Binding OnHandQty, StringFormat='Cant: {0}'}" TextColor="#27AE60" FontSize="14" FontAttributes="Bold"/>
+                                            <!-- Cantidad SAP en Naranja -->
+                                            <Label Text="{Binding QtySAP, StringFormat='SAP: {0}'}" TextColor="#E67E22" FontSize="14" FontAttributes="Bold"/>
+                                        </HorizontalStackLayout>
+
+                                        <!-- Fila 3: Ubicación, Rack/Tarima y # Etiqueta -->
+                                        <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Spacing="15">
+                                            <Label Text="{Binding BinCode, StringFormat='📍 : {0}', TargetNullValue='📍 Sin Ubic.'}" TextColor="#34495E" FontSize="13"/>
+                                            <Label Text="{Binding CodigoTarima, StringFormat='📦 Tarima: {0}', TargetNullValue='📦 Tarima: N/A'}" TextColor="Gray" FontSize="12" FontAttributes="Bold"/>
+                                            <Label Text="{Binding Etqs, StringFormat='🏷️ {0}'}" TextColor="Gray" FontSize="13"/>
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- BOTÓN GENERAR MOVIMIENTO -->
+            <Button Text="{local:Translate vw_common_generateMovement}" 
+                    Command="{Binding GenerarMovimientoCommand}" 
+                    BackgroundColor="#DAA520" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="60" CornerRadius="0" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>
+        </Grid>
+    </Grid>
+</ContentPage>

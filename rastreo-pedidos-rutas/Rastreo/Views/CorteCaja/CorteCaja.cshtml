@@ -1,0 +1,146 @@
+
+
+@{
+    Layout = null;
+}
+@using System.Threading;
+@using System.Security.Claims;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Entregas WEB | Corte caja</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Librarys/Bootstrap/Css/bootstrap7.min.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/xeditable.css" rel="stylesheet" />
+    <link href="~/Librarys/Growl_v2/angular-growl.min.css" rel="stylesheet" />
+    @*<link href="~/Content/Estilos.css" rel="stylesheet" />*@
+    <link href="~/Librarys/Bootstrap/Css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Librarys/Messi/messi.min.css" rel="stylesheet" />
+    @*<link href="../Content/Tablas.css" rel="stylesheet" />
+        <link href="~/Content/Footer.css" rel="stylesheet" />
+        <link href="../Content/tabs.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="~/Librarys/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Librarys/Angular/angular.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.min.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.debug.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/bootstrap7.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery-ui.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-2.5.0.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Librarys/Angular/angular-ui-utils.min.js"></script>
+    <script src="~/Librarys/Messi/messi.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery.dataTables.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Librarys/dirPagination.js"></script>
+    <script src="~/Librarys/Growl_v2/angular-growl.min.js"></script>
+    <script src="~/Librarys/Jquery/xeditable.min.js"></script>
+    @*<script src="~/Librarys/Angular/dataGrid.js"></script>*@
+    <script src="~/Scripts/CorteCaja/corteCaja.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head>
+<body ng-app="corteCajaApp" ng-controller="corteCajaController" class="bg-light text-center">
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+
+            <i class="fas fa-cash-register" onclick="location.href='@Url.Action("Menu", "Menu")'"> </i> <!-- Logo -->
+            Corte de caja
+        </div>
+        <form class="form-inline my-2 my-lg-0">
+            <button onclick="window.history.back();" class="btn btn-primary " type="submit">
+                <i class="fa-solid fa-arrow-left" style="color: #ffffff;"></i>
+            </button>
+        </form>
+        <div class="user-info">
+
+            @{
+                <spam style="color: #FFFFFF;" id="UsuarioLogin">  @User.Identity.Name  </spam>
+            }
+            <br />
+            <a></a>&nbsp;
+
+
+            <a href="@Url.Action("Logout", "Login")" class="fas fa-sign-out" style="color: #FFD43B" title="Salir">  Salir  </a>
+
+        </div>
+    </div>
+    <p class="text-danger" ng-show="!registros">No hay entregas disponibles.</p>
+
+    <div class="alert alert-{{tipoMensaje}} alert-dismissible mt-3" ng-if="mensajeVisible">
+        {{ mensajeTexto }}
+        <button type="button" class="btn-close" ng-click="cerrarMensaje()"></button>
+    </div>
+
+    <div class="container mt-4" ng-if="registros">
+        <h3 class="text-center fw-bold">YOUR COMPANY</h3>
+        <h5 class="text-center text-secondary">LIQUIDACIÓN DE CORTE DE CAJA</h5>
+
+        <div class="row mt-3">
+            <div class="col-md-6"><strong>Fecha:</strong> {{fecha}}</div>
+            <div class="col-md-6"><strong>Folio:</strong> {{totales.Folio}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-6"><strong>Hora:</strong>  {{horaActual}}</div>
+        </div>
+
+        <div class="table-responsive mt-3">
+            <table class="table table-bordered">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>Folio de Entrega</th>
+                        <th>Cliente</th>
+                        <th>Piezas</th>
+                        <th>Importe</th>
+                        <th>Cliente de Contado / Crédito</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="entrega in entregas">
+                        <td>{{entrega.DocNum}}</td>
+                        <td>{{entrega.CardName}}N</td>
+                        <td>{{entrega.PiezasTotales | number: 2}}</td>
+                        <td>${{entrega.DocTotal | number: 2}}</td>
+                        <td>{{entrega.TipoPago}}</td>
+                    </tr>
+                </tbody>
+                <tfoot class="table-secondary">
+                    <tr>
+                        <td colspan="2" class="text-end"><strong>Total piezas de contado:</strong></td>
+                        <td>{{totales.TotalPiezasContado | number: 2}}</td>
+                        <td colspan="2" class="text-end"><strong>Total importe venta contado:</strong> ${{totales.TotalImporteContado | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-end"><strong>Total piezas a crédito:</strong></td>
+                        <td>{{totales.TotalPiezasCredito | number:2}}</td>
+                        <td colspan="2" class="text-end"><strong>Total importe venta crédito:</strong> ${{totales.TotalImporteCredito | number:2}}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-6" ng-show="!totales.EsRegistrado"><strong>Liquidó:</strong> @User.Identity.Name</div>
+            <div class="col-md-6" ng-show="totales.EsRegistrado"><strong>Liquidó:</strong> {{totales.Liquido}}</div>
+            <div class="col-md-6"><strong>Recibió liquidación:</strong> </div>
+        </div>
+
+        <div class="text-end mt-3">
+            <button ng-show="totales.EsRegistrado" class="btn btn-primary" ng-click="exportarCorteCaja()" ng-disabled="cargando"> {{ cargando ? "Generando .pdf..." : "Exportar .pdf" }}</button>
+            <button ng-show="!totales.EsRegistrado" class="btn btn-primary" ng-click="generarCorteCaja()" ng-disabled="cargando"> {{ cargando ? "Generando..." : "Generar" }}</button>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
+

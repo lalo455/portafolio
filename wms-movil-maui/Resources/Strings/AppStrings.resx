@@ -1,0 +1,1603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ctr_common_error_gettingRackInfo" xml:space="preserve">
+    <value>Error al obtener información del Rack</value>
+  </data>
+  <data name="ctr_common_noLabelRecovered" xml:space="preserve">
+    <value>No se recupero información de la etiqueta</value>
+  </data>
+  <data name="ctr_common_noLabelRecovered1" xml:space="preserve">
+    <value>No se recuperó información de la etiqueta</value>
+  </data>
+  <data name="ctr_common_noRecoveredRackBatchesInfo" xml:space="preserve">
+    <value>No se recupero información de Lotes del Rack</value>
+  </data>
+  <data name="ctr_common_noWHRecovered" xml:space="preserve">
+    <value>No se recuperaron almacenes</value>
+  </data>
+  <data name="ctr_common_unknownOption" xml:space="preserve">
+    <value>Opcion desconocida</value>
+  </data>
+  <data name="ctr_count_draftSaved" xml:space="preserve">
+    <value>Borrador Guardado Completo</value>
+  </data>
+  <data name="ctr_count_error_gettingBatchInfo" xml:space="preserve">
+    <value>Error al obtener información del Lote</value>
+  </data>
+  <data name="ctr_count_error_recoveringDraft" xml:space="preserve">
+    <value>Error al recuperar borrador guardado</value>
+  </data>
+  <data name="ctr_count_error_recoveringDraftList" xml:space="preserve">
+    <value>Error al recuperar la lista de Borradores</value>
+  </data>
+  <data name="ctr_count_error_savingPreviousCount" xml:space="preserve">
+    <value>Error en el Guardado Previo del Recuento</value>
+  </data>
+  <data name="ctr_count_noDraftDataRecovered" xml:space="preserve">
+    <value>No se recuperaron registros del Borrador seleccionado.</value>
+  </data>
+  <data name="ctr_count_noSavedData" xml:space="preserve">
+    <value>No existen registros guardados</value>
+  </data>
+  <data name="ctr_count_noWHInfoRecovered" xml:space="preserve">
+    <value>No se recuperó informacion completa del almacenes</value>
+  </data>
+  <data name="ctr_count_readAtLeastOneLabel" xml:space="preserve">
+    <value>Para guardar un borrador debe leer al menos una etiqueta</value>
+  </data>
+  <data name="ctr_count_unknownAction" xml:space="preserve">
+    <value>No se reconoce el tipo de acción indicado</value>
+  </data>
+  <data name="ctr_login_userDoesntExist" xml:space="preserve">
+    <value>El usuario no existe</value>
+  </data>
+  <data name="ctr_login_wrongUserOrPassword" xml:space="preserve">
+    <value>Usuario o Contraseña incorrectos</value>
+  </data>
+  <data name="ctr_manualTransfer_error_savingDataForRack" xml:space="preserve">
+    <value>Error al guardar los registros para actualizar Rack</value>
+  </data>
+  <data name="ctr_manualTransfer_error_savingDataForTransfer" xml:space="preserve">
+    <value>Error al guardar los registros para el traspaso</value>
+  </data>
+  <data name="ctr_manualTransfer_error_transfering" xml:space="preserve">
+    <value>Error en el Traspaso</value>
+  </data>
+  <data name="ctr_manualTransfer_noCustomersAndWHRecovered" xml:space="preserve">
+    <value>No se recupero información de clientes y almacenes</value>
+  </data>
+  <data name="ctr_manualTransfer_noCustomersRecovered" xml:space="preserve">
+    <value>No se recuperaron clientes</value>
+  </data>
+  <data name="ctr_manualTransfer_noLabelRecoveredVerifyIBatchStock" xml:space="preserve">
+    <value>No se recupero información de la etiqueta, verificar que el Lote: {0}, tenga Stock disponible.</value>
+  </data>
+  <data name="ctr_manualTransfer_noLabelRecoveredVerifyItemStock" xml:space="preserve">
+    <value>No se recupero información de la etiqueta, verificar que el Articulo NO Administrado: {0}, tenga Stock disponible.</value>
+  </data>
+  <data name="ctr_print_errorGeneratedProcessingPDF" xml:space="preserve">
+    <value>Se generó un error al momento de procesar el documento PDF.</value>
+  </data>
+  <data name="ctr_quality_batchesWithItemLocked" xml:space="preserve">
+    <value>Lotes de Almacen {0} con el Articulo: {1}, se encuentran BLOQUEADOS</value>
+  </data>
+  <data name="ctr_quality_batchesWithItemRealeased" xml:space="preserve">
+    <value>Lotes de Almacen {0} con el Articulo: {1}, se encuentran LIBERADOS</value>
+  </data>
+  <data name="ctr_quality_error_confirmingLocation" xml:space="preserve">
+    <value>Error al confirmar ubicación leída</value>
+  </data>
+  <data name="ctr_quality_error_gettingItemInfoFromWh" xml:space="preserve">
+    <value>Error al obtener información de Artículos del Almacén</value>
+  </data>
+  <data name="ctr_quality_error_recoveringBatchesFromWHWithItem" xml:space="preserve">
+    <value>Error al Recuperar Lotes del Almacen {0} con el Articulo: {1}</value>
+  </data>
+  <data name="ctr_quality_error_recoveringWhs" xml:space="preserve">
+    <value>Error al recuperar almacenes</value>
+  </data>
+  <data name="ctr_quality_error_savingDataForQuality" xml:space="preserve">
+    <value>Error al guardar los registros para calidad</value>
+  </data>
+  <data name="ctr_quality_error_updating" xml:space="preserve">
+    <value>Error al hacer la actualización</value>
+  </data>
+  <data name="ctr_quality_locationReadDoesntExist" xml:space="preserve">
+    <value>La ubicación leída no existe</value>
+  </data>
+  <data name="ctr_quality_noRecoveredItemInfoForWH" xml:space="preserve">
+    <value>No se recupero información de Artículos del Almacén</value>
+  </data>
+  <data name="ctr_quality_noRecoveredLocationsForWH" xml:space="preserve">
+    <value>No se recuperaron ubicaciones para el almacén {0}</value>
+  </data>
+  <data name="ctr_quality_status_unknown" xml:space="preserve">
+    <value>Estatus desconocido</value>
+  </data>
+  <data name="ctr_quality_updateApplied" xml:space="preserve">
+    <value>Actualizacion aplicada correctamente:</value>
+  </data>
+  <data name="ctr_remission_error_gettingBatchLineInfoFromPicking" xml:space="preserve">
+    <value>Error al obtener información de lotes del picking</value>
+  </data>
+  <data name="ctr_remission_error_gettingStatusOfOrder" xml:space="preserve">
+    <value>Error al obtener el Status del Pedido {0}, verificar.</value>
+  </data>
+  <data name="ctr_remission_error_recoveringCustomerList" xml:space="preserve">
+    <value>Error al recuperar la lista de clientes</value>
+  </data>
+  <data name="ctr_remission_error_recoveringOderNum" xml:space="preserve">
+    <value>Error al recuperar el Numero de Pedido</value>
+  </data>
+  <data name="ctr_remission_error_recoveringOrderDetail" xml:space="preserve">
+    <value>Error al recuperar el detalle del pedido</value>
+  </data>
+  <data name="ctr_remission_error_recoveringOrderList" xml:space="preserve">
+    <value>Error al recuperar la lista de Pedidos</value>
+  </data>
+  <data name="ctr_remission_error_recoveringPickingOrderList" xml:space="preserve">
+    <value>Error al recuperar la lista de Pedidos de Picking</value>
+  </data>
+  <data name="ctr_remission_error_savingData" xml:space="preserve">
+    <value>Error al guardar los registros</value>
+  </data>
+  <data name="ctr_remission_error_updatingRecords" xml:space="preserve">
+    <value>Error al actualizar los registros</value>
+  </data>
+  <data name="ctr_remission_error_verifyingAndCancellingOrderPicking" xml:space="preserve">
+    <value>Error en verificación y cancelacion de Pickings del Pedido </value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Valor en español</value>
+  </data>
+  <data name="lgc_comun_get_batchesUpdatedWithStatus" xml:space="preserve">
+    <value>Lotes Actualizados Correctamente con estatus {0}</value>
+  </data>
+  <data name="lgc_comun_get_dbConnectionUnavailable" xml:space="preserve">
+    <value>La conexión no esta disponible</value>
+  </data>
+  <data name="lgc_comun_put_counting_pathFileNotSet" xml:space="preserve">
+    <value>No ha configurado la ruta para el archivo de recuento</value>
+  </data>
+  <data name="lgc_comun_put_fileSuccessfullyCreated" xml:space="preserve">
+    <value>Archivo creado correctamente:  {0}</value>
+  </data>
+  <data name="lgc_comun_put_picking_basedOnOrderNum" xml:space="preserve">
+    <value>Basado en el pedido {0}</value>
+  </data>
+  <data name="lgc_comun_put_picking_new" xml:space="preserve">
+    <value>Nuevo Picking</value>
+  </data>
+  <data name="lgc_comun_put_picking_ofOrderNumCreated" xml:space="preserve">
+    <value>Se ha creado el Picking # {0} del Pedido {1}</value>
+  </data>
+  <data name="lgc_comun_put_picking_validationRealizedCorrectly" xml:space="preserve">
+    <value>Actualización de Picking Número {0}, del Pedido {1}, Codigo PICKING: {2}, realizado Correctamente.</value>
+  </data>
+  <data name="vw_common_action" xml:space="preserve">
+    <value>Accion</value>
+  </data>
+  <data name="vw_common_batch" xml:space="preserve">
+    <value>Lote</value>
+  </data>
+  <data name="vw_common_batchQty" xml:space="preserve">
+    <value>Qty Lotes</value>
+  </data>
+  <data name="vw_common_box" xml:space="preserve">
+    <value>Caja</value>
+  </data>
+  <data name="vw_common_boxOrPallet" xml:space="preserve">
+    <value>Caja/Pallet</value>
+  </data>
+  <data name="vw_common_code" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="vw_common_customer" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="vw_common_customer_select" xml:space="preserve">
+    <value>Seleccione cliente</value>
+  </data>
+  <data name="vw_common_delete" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="vw_common_enterBoxOrPallet" xml:space="preserve">
+    <value>Ingrese Caja o Pallet</value>
+  </data>
+  <data name="vw_common_enterLocation" xml:space="preserve">
+    <value>Ingrese Ubicacion</value>
+  </data>
+  <data name="vw_common_generateMovement" xml:space="preserve">
+    <value>Generar Movimiento</value>
+  </data>
+  <data name="vw_common_inventoryCount" xml:space="preserve">
+    <value>Recuento de Inventario</value>
+  </data>
+  <data name="vw_common_item" xml:space="preserve">
+    <value>Artículo</value>
+  </data>
+  <data name="vw_common_label" xml:space="preserve">
+    <value>Etiqueta</value>
+  </data>
+  <data name="vw_common_location" xml:space="preserve">
+    <value>Ubicacion</value>
+  </data>
+  <data name="vw_common_order" xml:space="preserve">
+    <value>Pedido</value>
+  </data>
+  <data name="vw_common_orderQty" xml:space="preserve">
+    <value>Qty Orden</value>
+  </data>
+  <data name="vw_common_order_num" xml:space="preserve">
+    <value>No. Pedido</value>
+  </data>
+  <data name="vw_common_pendingQty" xml:space="preserve">
+    <value>Qty Pendiente</value>
+  </data>
+  <data name="vw_common_picking" xml:space="preserve">
+    <value>Picking</value>
+  </data>
+  <data name="vw_common_printLabelAbreb" xml:space="preserve">
+    <value>Imprir Etq.</value>
+  </data>
+  <data name="vw_common_quality" xml:space="preserve">
+    <value>Calidad</value>
+  </data>
+  <data name="vw_common_quantity" xml:space="preserve">
+    <value>Cantidad</value>
+  </data>
+  <data name="vw_common_rack_current" xml:space="preserve">
+    <value>Actual Rack</value>
+  </data>
+  <data name="vw_common_rack_new" xml:space="preserve">
+    <value>Nuevo Rack</value>
+  </data>
+  <data name="vw_common_rack_readingBy" xml:space="preserve">
+    <value>Lectura por RACK</value>
+  </data>
+  <data name="vw_common_read" xml:space="preserve">
+    <value>Leído</value>
+  </data>
+  <data name="vw_common_reference" xml:space="preserve">
+    <value>Referencia</value>
+  </data>
+  <data name="vw_common_remission" xml:space="preserve">
+    <value>Remisión</value>
+  </data>
+  <data name="vw_common_wh" xml:space="preserve">
+    <value>Almacén</value>
+  </data>
+  <data name="vw_common_wh_destination" xml:space="preserve">
+    <value>Almacén Destino</value>
+  </data>
+  <data name="vw_common_wh_select" xml:space="preserve">
+    <value>Seleccione Almacén</value>
+  </data>
+  <data name="vw_common_wh_source" xml:space="preserve">
+    <value>Almacén Origen</value>
+  </data>
+  <data name="vw_count_count_num" xml:space="preserve">
+    <value>No Recuento</value>
+  </data>
+  <data name="vw_count_enterQuantity" xml:space="preserve">
+    <value>Ingrese cantidad</value>
+  </data>
+  <data name="vw_count_location_current" xml:space="preserve">
+    <value>Actual Ubicacion</value>
+  </data>
+  <data name="vw_count_location_new" xml:space="preserve">
+    <value>Nueva Ubicacion</value>
+  </data>
+  <data name="vw_count_qtyCountAbreb" xml:space="preserve">
+    <value>Ctd. Ctda</value>
+  </data>
+  <data name="vw_count_qtySAPAbreb" xml:space="preserve">
+    <value>Ctd. SAP</value>
+  </data>
+  <data name="vw_login_access" xml:space="preserve">
+    <value>Acceso</value>
+  </data>
+  <data name="vw_login_login" xml:space="preserve">
+    <value>Ingresar</value>
+  </data>
+  <data name="vw_login_login2" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="vw_login_password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="vw_login_user" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="vw_manualTransfer_manualTransfer" xml:space="preserve">
+    <value>Traspaso Manual</value>
+  </data>
+  <data name="vw_manualTransfer_masterLabel_rack" xml:space="preserve">
+    <value>Rack</value>
+  </data>
+  <data name="vw_manualTransfer_masterLabel_rack_reassign" xml:space="preserve">
+    <value>Reasignar Rack</value>
+  </data>
+  <data name="vw_menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="vw_menu_quality" xml:space="preserve">
+    <value>Menú Calidad</value>
+  </data>
+  <data name="vw_menu_remission" xml:space="preserve">
+    <value>Menú Remisión</value>
+  </data>
+  <data name="vw_menu_remission1" xml:space="preserve">
+    <value>Remision</value>
+  </data>
+  <data name="vw_menu_transfer" xml:space="preserve">
+    <value>Menú Traspaso</value>
+  </data>
+  <data name="vw_menu_transferTitle" xml:space="preserve">
+    <value>MenuTraspaso</value>
+  </data>
+  <data name="vw_menu_wms" xml:space="preserve">
+    <value>Menú WMS</value>
+  </data>
+  <data name="vw_quality_item_select" xml:space="preserve">
+    <value>Seleccione Artículo</value>
+  </data>
+  <data name="vw_quality_rack_reading" xml:space="preserve">
+    <value>Lectura RACK</value>
+  </data>
+  <data name="vw_quality_selectAValue" xml:space="preserve">
+    <value>Seleccione un valor</value>
+  </data>
+  <data name="vw_quality_transfer" xml:space="preserve">
+    <value>Traspaso</value>
+  </data>
+  <data name="vw_quality_update" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="vw_quality_updateTo" xml:space="preserve">
+    <value>Actualizar a </value>
+  </data>
+  <data name="vw_quality_wh_sourceAbrev" xml:space="preserve">
+    <value>Alm. Origen</value>
+  </data>
+  <data name="vw_remission_pickingRemission_pickingValidation" xml:space="preserve">
+    <value>Validación de Picking</value>
+  </data>
+  <data name="vw_remission_pickingRemission_picking_validate" xml:space="preserve">
+    <value>Validar Picking</value>
+  </data>
+  <data name="vw_remission_pickingRemission_required" xml:space="preserve">
+    <value>Requerido</value>
+  </data>
+  <data name="vw_remission_pickingRemission_validated" xml:space="preserve">
+    <value>Validado</value>
+  </data>
+  <data name="js_common_authorized" xml:space="preserve">
+    <value>AUTORIZADA</value>
+  </data>
+  <data name="js_common_batchFromWHAlreadyRead" xml:space="preserve">
+    <value>Ya se ha Leído el Lote {0} del Almacen {1}</value>
+  </data>
+  <data name="js_common_batch_alreadyBeenRead" xml:space="preserve">
+    <value>El Lote {0}, ya fue leído</value>
+  </data>
+  <data name="js_common_batch_assignedToItems" xml:space="preserve">
+    <value>El Lote {0}, se encuentra asignado a los siguientes articulos: </value>
+  </data>
+  <data name="js_common_batch_cannotExceedQty" xml:space="preserve">
+    <value>El LOTE: {0} NO PUEDE superar la cantidad de: {1}</value>
+  </data>
+  <data name="js_common_batch_hasAlreadyShipped" xml:space="preserve">
+    <value>El Lote ya ha sido EMBARCADO</value>
+  </data>
+  <data name="js_common_batch_hasAlreadyShippedParam" xml:space="preserve">
+    <value>El LOTE: {0} ya ha sido EMBARCADO</value>
+  </data>
+  <data name="js_common_batch_locked" xml:space="preserve">
+    <value>El Lote se encuentra BLOQUEADO</value>
+  </data>
+  <data name="js_common_batch_notAccessible" xml:space="preserve">
+    <value>El Lote NO se encuentra ACCESIBLE</value>
+  </data>
+  <data name="js_common_batch_notAccessibleParam" xml:space="preserve">
+    <value>El LOTE: {0} NO se encuentra ACCESIBLE</value>
+  </data>
+  <data name="js_common_boxOfBatchAlreadyRead" xml:space="preserve">
+    <value>Ya se ha Leído Caja {0} del Lote {1}</value>
+  </data>
+  <data name="js_common_boxOfItemAlreadyRead" xml:space="preserve">
+    <value>Ya se ha Leído Caja {0} del Artículo {1}</value>
+  </data>
+  <data name="js_common_closed" xml:space="preserve">
+    <value>CERRADO</value>
+  </data>
+  <data name="js_common_delivery_created" xml:space="preserve">
+    <value>Documento de Entrega creado correctamente: {0}</value>
+  </data>
+  <data name="js_common_enterOrderOrReference" xml:space="preserve">
+    <value>Debe ingresar No. Pedido ó No. de Referencia</value>
+  </data>
+  <data name="js_common_html_batch_alreadyRead" xml:space="preserve">
+    <value> &lt;br /&gt; El Lote {0}, ya fue leído</value>
+  </data>
+  <data name="js_common_html_batch_shipped" xml:space="preserve">
+    <value> &lt;br /&gt; El LOTE: {0} ya ha sido EMBARCADO</value>
+  </data>
+  <data name="js_common_html_batch_unaccessible" xml:space="preserve">
+    <value> &lt;br /&gt; El LOTE: {0} NO se encuentra ACCESIBLE</value>
+  </data>
+  <data name="js_common_html_item" xml:space="preserve">
+    <value> &lt;br /&gt; &gt; Articulo {0}</value>
+  </data>
+  <data name="js_common_html_item_inBatchNotInOrder" xml:space="preserve">
+    <value> &lt;br /&gt; El artículo {0}, del Lote {1}, no existe en el Pedido</value>
+  </data>
+  <data name="js_common_html_item_inWhCompleted" xml:space="preserve">
+    <value> &lt;br /&gt; Articulo {0}, con Almacen {1}, se ha completado.</value>
+  </data>
+  <data name="js_common_html_item_notInOrder" xml:space="preserve">
+    <value> &lt;br /&gt; El Articulo {0}, NO pertece al Pedido </value>
+  </data>
+  <data name="js_common_html_lineBatchWh" xml:space="preserve">
+    <value> &lt;br /&gt; Linea {0} - {1} - {2} : Almacen Lote &gt; {3}</value>
+  </data>
+  <data name="js_common_html_lineWithItemStatusFoundStock" xml:space="preserve">
+    <value>&lt;br /&gt;&lt;br /&gt; La Linea {0} con Artículo {1} tiene Estatus {2} , se encuentra {3} , tiene STOCK {4}</value>
+  </data>
+  <data name="js_common_html_wh_requestWHBatch" xml:space="preserve">
+    <value>&lt;br /&gt; Almacen Pedido: {0} : Almacen Lote &gt; {1}</value>
+  </data>
+  <data name="js_common_itemWithWHCompleted" xml:space="preserve">
+    <value>Articulo {0}, con Almacen {1}, se ha completado.</value>
+  </data>
+  <data name="js_common_item_noBatchsRead" xml:space="preserve">
+    <value>El Artículo no tiene Lotes leidos.</value>
+  </data>
+  <data name="js_common_item_notBelongOrder" xml:space="preserve">
+    <value>El Articulo {0}, NO pertece al Pedido </value>
+  </data>
+  <data name="js_common_item_unmngdRequiresTransfer" xml:space="preserve">
+    <value>El Articulo No Administrado {0} Requiere Transferencia: </value>
+  </data>
+  <data name="js_common_label_alreadyRead" xml:space="preserve">
+    <value>La etiqueta ya ha sido leida</value>
+  </data>
+  <data name="js_common_label_completeInfoNotSentPrint" xml:space="preserve">
+    <value>No se ha enviado Informacion completa de la etiqueta para su Impresión.</value>
+  </data>
+  <data name="js_common_lineWithItemStatusLocatedStock" xml:space="preserve">
+    <value>La Linea {0} con Artículo {1} tiene Estatus {2} , se encuentra {3} , tiene STOCK {4}</value>
+  </data>
+  <data name="js_common_open" xml:space="preserve">
+    <value>ABIERTA</value>
+  </data>
+  <data name="js_common_order_loadCorrectly" xml:space="preserve">
+    <value>Pedido cargado correctamente</value>
+  </data>
+  <data name="js_common_order_verifyMustContainLinesOpenAuthAvailable" xml:space="preserve">
+    <value>Verificar el pedido {0},  debe contener lineas abiertas, autorizadas y cuenten con STOCK</value>
+  </data>
+  <data name="js_common_rackHasAlreadyReadParam" xml:space="preserve">
+    <value>Ya se ha leido RACK: {0}</value>
+  </data>
+  <data name="js_common_transfers_batch_hasAlreadyReadParam" xml:space="preserve">
+    <value>El LOTE: {0} ya se ha Leido</value>
+  </data>
+  <data name="js_common_transfers_batch_lockedParam" xml:space="preserve">
+    <value>El LOTE: {0} se encuentra BLOQUEADO</value>
+  </data>
+  <data name="js_common_transfers_html_batch_locked" xml:space="preserve">
+    <value> &lt;br /&gt; El LOTE: {0} se encuentra BLOQUEADO</value>
+  </data>
+  <data name="js_common_transfers_html_batch_read" xml:space="preserve">
+    <value> &lt;br /&gt; El LOTE: {0} ya se ha Leido</value>
+  </data>
+  <data name="js_common_unauthorized" xml:space="preserve">
+    <value>NO AUTORIZADA</value>
+  </data>
+  <data name="js_count_batch_ofRackRead" xml:space="preserve">
+    <value>El Lote {0} del RACK ya fue Leido</value>
+  </data>
+  <data name="js_count_batch_requiresTransferLocatedAt" xml:space="preserve">
+    <value>El Lote {0}, Requiere Transferencia, se encuentra en: </value>
+  </data>
+  <data name="js_count_draft_uploaded" xml:space="preserve">
+    <value>Borrador cargado correctamente</value>
+  </data>
+  <data name="js_count_html_batch_ofRackRead" xml:space="preserve">
+    <value>&lt;br /&gt;&lt;br /&gt; El Lote {0} del RACK ya fue Leido </value>
+  </data>
+  <data name="js_count_html_batch_requiresTransfer" xml:space="preserve">
+    <value>&lt;br /&gt;&lt;br /&gt; El Lote {0}, Requiere Transferencia, se encuentra en: </value>
+  </data>
+  <data name="js_count_html_wh" xml:space="preserve">
+    <value> &lt;br /&gt; &gt; Almacen {0}</value>
+  </data>
+  <data name="js_count_item_unmngdRequiresTransferLocatedAt" xml:space="preserve">
+    <value>El Artículo NO Administrado {0}, Requiere Transferencia, se encuentra en: </value>
+  </data>
+  <data name="js_count_label_noInfoFound" xml:space="preserve">
+    <value>No se encontro información de la Etiqueta</value>
+  </data>
+  <data name="js_count_label_noInfoFoundInStore" xml:space="preserve">
+    <value>NO SE ENCONTRÓ información de la etiqueta EN EL ALMACÉN </value>
+  </data>
+  <data name="js_count_rackHasAlreadyRead" xml:space="preserve">
+    <value>Ya se ha leido RACK: </value>
+  </data>
+  <data name="js_error_failedToRetrieveData" xml:space="preserve">
+    <value>Error al recuperar datos</value>
+  </data>
+  <data name="js_error_inLoginService" xml:space="preserve">
+    <value>Error en Servicio de Login </value>
+  </data>
+  <data name="js_error_inService1" xml:space="preserve">
+    <value>Error en Servicio 1 </value>
+  </data>
+  <data name="js_error_inService10" xml:space="preserve">
+    <value>Error en Servicio 10 </value>
+  </data>
+  <data name="js_error_inService11" xml:space="preserve">
+    <value>Error en Servicio 11 </value>
+  </data>
+  <data name="js_error_inService2" xml:space="preserve">
+    <value>Error en Servicio 2 </value>
+  </data>
+  <data name="js_error_inService8" xml:space="preserve">
+    <value>Error en Servicio 8 </value>
+  </data>
+  <data name="js_error_validation" xml:space="preserve">
+    <value>Error de Validacion</value>
+  </data>
+  <data name="js_login_sysAdvice" xml:space="preserve">
+    <value>Aviso Sistema</value>
+  </data>
+  <data name="js_msg_error" xml:space="preserve">
+    <value>!! Error¡¡</value>
+  </data>
+  <data name="js_msg_info" xml:space="preserve">
+    <value> - Información - </value>
+  </data>
+  <data name="js_msg_success" xml:space="preserve">
+    <value>* Proceso Exitoso *</value>
+  </data>
+  <data name="js_msg_warning" xml:space="preserve">
+    <value>Advertencia!!</value>
+  </data>
+  <data name="js_quality_batch_onlyFromSrcToDestWHBeMoved" xml:space="preserve">
+    <value>Se realzará el movimiento unicamente de los lotes del almacen origen seleccionado al almacén destino seleccionado.</value>
+  </data>
+  <data name="js_quality_batch_shipped" xml:space="preserve">
+    <value>El Lote se encuentra EMBARCADO</value>
+  </data>
+  <data name="js_quality_batch_withItemInWHBlocked" xml:space="preserve">
+    <value>El Lote {0} con Artículo {1} en Almacén {2}, ya se encuentra BLOQUEADO.</value>
+  </data>
+  <data name="js_quality_batch_withItemInWHRead" xml:space="preserve">
+    <value>El Lote {0} con Artículo {1} en Almacén {2}, ya fue LEIDO</value>
+  </data>
+  <data name="js_quality_batch_withItemInWHShipped" xml:space="preserve">
+    <value>El Lote {0} con Artículo {0} en Almacén {2}, ya fue EMBARCADO</value>
+  </data>
+  <data name="js_quality_batch_withItemInWHUnlocked" xml:space="preserve">
+    <value>El Lote {0} con Artículo {1} en Almacén {2}, ya se encuentra DESBLOQUEADO.</value>
+  </data>
+  <data name="js_quality_batch_withItemNotBelongToItem" xml:space="preserve">
+    <value>El LOTE: {0} con Artículo {1} NO pertenece al Artículo seleccionado {2}</value>
+  </data>
+  <data name="js_quality_batch_withWHNotBelongToOriginWH" xml:space="preserve">
+    <value>El LOTE: {0} con Almacen {1} NO pertenece al Almacén Origen seleccionado {2}</value>
+  </data>
+  <data name="js_quality_html_batch_withItemInWHEmbarked" xml:space="preserve">
+    <value> &lt;br /&gt; El Lote {0} con Artículo {1} en Almacén {2}, ya fue EMBARCADO</value>
+  </data>
+  <data name="js_quality_html_batch_withItemInWHLocked" xml:space="preserve">
+    <value> &lt;br /&gt; El Lote {0} con Artículo {1} en Almacén {2}, ya se encuentra BLOQUEADO</value>
+  </data>
+  <data name="js_quality_html_batch_withItemInWHRead" xml:space="preserve">
+    <value> &lt;br /&gt; El Lote {0} con Artículo {1} en Almacén {2}, ya fue LEIDO</value>
+  </data>
+  <data name="js_quality_html_batch_withItemInWHUnlocked" xml:space="preserve">
+    <value> &lt;br /&gt; El Lote {0} con Artículo {1} en Almacén {2}, ya se encuentra DESBLOQUEADO</value>
+  </data>
+  <data name="js_quality_html_batch_withItemNotBelongsToItem" xml:space="preserve">
+    <value> &lt;br /&gt; El LOTE: {0} con Artículo {1} NO pertenece al Artículo seleccionado {2}</value>
+  </data>
+  <data name="js_quality_html_batch_withWHNotBelongsToSourceWH" xml:space="preserve">
+    <value> &lt;br /&gt; El LOTE: {0} con Almacen {1} NO pertenece al Almacén Origen seleccionado {2}</value>
+  </data>
+  <data name="js_quality_html_itemInWh" xml:space="preserve">
+    <value> &lt;br /&gt; &gt; Articulo {0} - en Almacén {1}</value>
+  </data>
+  <data name="js_quality_item_selectToUpdate" xml:space="preserve">
+    <value>Debe seleccionar Artículo a Actualizar</value>
+  </data>
+  <data name="js_quality_label_belongsUnmngdItemNotByBatch" xml:space="preserve">
+    <value>La etiqueta es de Articulo NO Administrado, no se maneja por Lote</value>
+  </data>
+  <data name="js_quality_label_noReadsHaveBeenPerformed" xml:space="preserve">
+    <value>No se han realizado lecturas de Etiquetas</value>
+  </data>
+  <data name="js_quality_sapInfoNotBelongsLabelAndHeader" xml:space="preserve">
+    <value>La Información SAP no corresponde a información de etiqueta e información de encabezado, verifique información en sistema.</value>
+  </data>
+  <data name="js_quality_selectItemOrReadLabels" xml:space="preserve">
+    <value>Debe seleccionar Artículo o realizar Lectura de Etiquetas</value>
+  </data>
+  <data name="js_quality_thereAreNoBatchesReadFromSrcWHforUpdAndTransfer" xml:space="preserve">
+    <value>No existen Lotes leidos del Almacén Origen para su Actualización y Traspaso</value>
+  </data>
+  <data name="js_quality_threadBoxWithBatchAssignedToItems" xml:space="preserve">
+    <value>La Caja de Hilo con Lote {0}, se encuentra asignado a los siguientes articulos: </value>
+  </data>
+  <data name="js_quality_wh_destMustBeDifFromOrigin" xml:space="preserve">
+    <value>Almacén Destino debe ser diferente al Almacén Origen</value>
+  </data>
+  <data name="js_quality_wh_selectBeforeReading" xml:space="preserve">
+    <value>Debe seleccionar Almacén Origen y Destino antes de realizar lectura de etiquetas.</value>
+  </data>
+  <data name="js_quality_wh_selectDestination" xml:space="preserve">
+    <value>Debe seleccionar Almacén Destino</value>
+  </data>
+  <data name="js_quality_wh_selectDestinationDifFromOrigin" xml:space="preserve">
+    <value>Debe seleccionar Almacén Destino diferente de Almacén Origen</value>
+  </data>
+  <data name="js_quality_wh_selectOrigin" xml:space="preserve">
+    <value>Debe seleccionar Almacén Origen</value>
+  </data>
+  <data name="js_quality_wh_selectOriginToTransfer" xml:space="preserve">
+    <value>Debe seleccionar Almacén Origen para realizar Traspaso</value>
+  </data>
+  <data name="js_remission_html_batch_fromWHRead" xml:space="preserve">
+    <value> &lt;br /&gt; Ya se ha Leído el Lote {0} del Almacen {1}</value>
+  </data>
+  <data name="js_remission_html_box_ofBatchRead" xml:space="preserve">
+    <value> &lt;br /&gt; Ya se ha Leído Caja {0} del Lote {1}</value>
+  </data>
+  <data name="js_remission_html_box_ofItemRead" xml:space="preserve">
+    <value> &lt;br /&gt; Ya se ha Leído Caja {0} del Artículo {1}</value>
+  </data>
+  <data name="js_remission_picking_boxOfBatchFromWHAlreadyRead" xml:space="preserve">
+    <value>Ya se ha Leído Caja {0} del Lote {1} del Almacen {2}</value>
+  </data>
+  <data name="js_remission_picking_boxOfItemFromWHAlreadyRead" xml:space="preserve">
+    <value>Ya se ha Leído Caja {0} del Artículo {1} del Almacen {2}</value>
+  </data>
+  <data name="js_remission_picking_html_batch_fromWHRead" xml:space="preserve">
+    <value> &lt;br /&gt; Ya se ha Leído el Lote {0} del Almacen {1}</value>
+  </data>
+  <data name="js_remission_picking_html_box_ofBatchFromWHRead" xml:space="preserve">
+    <value> &lt;br /&gt; Ya se ha Leído Caja {0} del Lote {1} del Almacen {2}</value>
+  </data>
+  <data name="js_remission_picking_html_box_ofBatchRead" xml:space="preserve">
+    <value> &lt;br /&gt; Ya se ha Leído Caja {0} del Lote {1}</value>
+  </data>
+  <data name="js_remission_picking_html_box_ofItemFromWHRead" xml:space="preserve">
+    <value> &lt;br /&gt; Ya se ha Leído Caja {0} del Artículo {1} del Almacen {2}</value>
+  </data>
+  <data name="js_remission_picking_html_box_ofItemRead" xml:space="preserve">
+    <value> &lt;br /&gt; Ya se ha Leído Caja {0} del Artículo {1}</value>
+  </data>
+  <data name="js_remission_picking_html_item_inBatchNotInValidated" xml:space="preserve">
+    <value> &lt;br /&gt; El artículo {0}, del Lote {1}, NO PERTENECE al Packing validado</value>
+  </data>
+  <data name="js_remission_picking_item_fromBatchNotBelongsToPacking" xml:space="preserve">
+    <value>El artículo {0}, del Lote {1}, NO PERTENECE al Packing validado</value>
+  </data>
+  <data name="js_remission_picking_item_fromBatchNotInOrder" xml:space="preserve">
+    <value>El artículo {0}, del Lote {1}, no existe en el Pedido</value>
+  </data>
+  <data name="js_remission_picking_orderNotHavePickingOrIsCancelled" xml:space="preserve">
+    <value>El pedido {0} no tiene Picking o se encuentra Cancelado, verificar.</value>
+  </data>
+  <data name="js_remission_picking_order_hasNotBeenCompleted" xml:space="preserve">
+    <value>No se ha completado el Pedido</value>
+  </data>
+  <data name="js_remission_picking_order_verifyOpenInSAP" xml:space="preserve">
+    <value>Verificar que el Pedido {0} en SAP se encuentra Abierto.</value>
+  </data>
+  <data name="js_remission_picking_packing_batchNotBelongVerifyItemQtyWH" xml:space="preserve">
+    <value>El Lote {0}, NO PERTENECE al Packing validado, verificar Articulo, Almacen y Cantidad correspondiente en Picking.</value>
+  </data>
+  <data name="js_remission_picking_packing_itemNotBelongVerifyItemQtyWH" xml:space="preserve">
+    <value>El Articulo {0}, Caja {1} con Cantidad {2}, NO PERTENECE al Packing validado, verificar Articulo, Almacen y Cantidad correspondiente en Picking.</value>
+  </data>
+  <data name="js_remission_picking_packing_loadCorrectly" xml:space="preserve">
+    <value>Packing cargado correctamente</value>
+  </data>
+  <data name="js_remission_picking_packing_yarnBoxQtyNotBelongVerifyItemQtyWH" xml:space="preserve">
+    <value>El Lote de Hilo {0}, Caja {1} con Cantidad {2}, NO PERTENECE al Packing validado, verificar Articulo, Almacen y Cantidad correspondiente en Picking.</value>
+  </data>
+  <data name="js_remission_picking_readInfoGreaterThanInOrder" xml:space="preserve">
+    <value>Lo leido es mayor que lo Validado en Pedido</value>
+  </data>
+  <data name="js_remission_picking_recommendedValidPickingWithAdmin" xml:space="preserve">
+    <value>Se recomienda validar con el Administrador de WMS el Picking del Pedido antes de continuar o reiniciar la lecturas de rollos del pedido.</value>
+  </data>
+  <data name="js_remission_remission_batch_noDeliverMoreThan" xml:space="preserve">
+    <value>El Lote {0}, no puede entregar más de {1}</value>
+  </data>
+  <data name="js_remission_remission_item_fromBatchNotInOrder" xml:space="preserve">
+    <value>El artículo {0}, del Lote {1}, no existe en la orden</value>
+  </data>
+  <data name="js_remission_remission_label_noInfoRetrieved" xml:space="preserve">
+    <value>No se recuperó información de la etiqueta</value>
+  </data>
+  <data name="js_remission_remission_totalOrderLines" xml:space="preserve">
+    <value>Total de Lineas del Pedido: {0}</value>
+  </data>
+  <data name="js_transfers_manual_batch_locked" xml:space="preserve">
+    <value>El Lote esta BLOQUEADO</value>
+  </data>
+  <data name="js_transfers_manual_batch_udateSuccess" xml:space="preserve">
+    <value>Actualizacion de Lotes realizada correctamente.</value>
+  </data>
+  <data name="js_transfers_manual_document_created" xml:space="preserve">
+    <value>Documento creado correctamente: {0}</value>
+  </data>
+  <data name="js_transfers_manual_html_batch_cantExeedAmount" xml:space="preserve">
+    <value> &lt;br /&gt; El LOTE: {0} NO PUEDE superar la cantidad de: {1}</value>
+  </data>
+  <data name="js_transfers_manual_label_exists" xml:space="preserve">
+    <value>La etiqueta ya existe</value>
+  </data>
+  <data name="js_transfers_manual_label_noInfoFoundInStoreParam" xml:space="preserve">
+    <value>NO SE ENCONTRÓ información de la etiqueta EN EL ALMACÉN {0}</value>
+  </data>
+  <data name="js_transfers_manual_label_ofUnmanagedItemCannotExceed" xml:space="preserve">
+    <value>La etiqueta del Articulo no administrado : {0}, NO PUEDE superar la cantidad de: {1}</value>
+  </data>
+  <data name="js_transfers_manual_label_withBatchAndItemCannotExceed" xml:space="preserve">
+    <value>La etiqueta con lote: {0} y artículo: {1} NO PUEDE superar la cantidad de: {2}</value>
+  </data>
+  <data name="js_transfers_manual_label_withBatchCannotExceed" xml:space="preserve">
+    <value>La etiqueta con lote: {0} NO PUEDE superar la cantidad de: {1}</value>
+  </data>
+  <data name="js_transfers_manual_label_withUnmanagedItemCannotExceed" xml:space="preserve">
+    <value>La etiqueta con artículo no administrado: {0} NO PUEDE superar la cantidad de: {1}</value>
+  </data>
+  <data name="js_transfers_manual_location_addOrChangeDestination" xml:space="preserve">
+    <value>Debe agregar Ubicación o Cambiar el Almacen Destino.</value>
+  </data>
+  <data name="js_transfers_manual_wh_selectDestAndOrigin" xml:space="preserve">
+    <value>Seleccione un almacén destino y origen</value>
+  </data>
+  <data name="js_transfers_rack_batch_alreadyExists" xml:space="preserve">
+    <value>El Lote ya existe</value>
+  </data>
+  <data name="js_transfers_rack_batch_isAlreadyShipped" xml:space="preserve">
+    <value>El Lote ya se encuentra EMBARCADO</value>
+  </data>
+  <data name="js_transfers_rack_batch_notAccessible" xml:space="preserve">
+    <value>El Lote se encuentra NO ACCESIBLE</value>
+  </data>
+  <data name="js_transfers_rack_batch_notAccessibleParam" xml:space="preserve">
+    <value>El LOTE: {0} se encuentra NO ACCESIBLE</value>
+  </data>
+  <data name="js_transfers_rack_batch_shippedParam" xml:space="preserve">
+    <value>El LOTE: {0} se encuentra EMBARCADO</value>
+  </data>
+  <data name="js_transfers_rack_html_batch_shipped" xml:space="preserve">
+    <value> &lt;br /&gt; El LOTE: {0} se encuentra EMBARCADO</value>
+  </data>
+  <data name="js_transfers_rack_html_batch_unaccessible" xml:space="preserve">
+    <value> &lt;br /&gt; El LOTE: {0} se encuentra NO ACCESIBLE</value>
+  </data>
+  <data name="js_transfers_rack_label_belongsUnmngdItemNotByBatchAndRack" xml:space="preserve">
+    <value>La etiqueta es de Articulo NO Administrado, no se maneja por Lote y RACK</value>
+  </data>
+  <data name="js_transfers_rack_rackBatch_updateSuccess" xml:space="preserve">
+    <value>Actualizacion de Rack en Lotes realizada correctamente.</value>
+  </data>
+  <data name="js_remission_batchNeedsTransfer" xml:space="preserve">
+    <value>El Lote {0} Requiere Transferencia: </value>
+  </data>
+  <data name="js_mnu_inv_count" xml:space="preserve">
+    <value>Recuento Inv</value>
+  </data>
+  <data name="js_mnu_picking" xml:space="preserve">
+    <value>Picking</value>
+  </data>
+  <data name="js_mnu_picking_valid" xml:space="preserve">
+    <value>Valid. Picking</value>
+  </data>
+  <data name="js_mnu_prod_receipt" xml:space="preserve">
+    <value>Recibo Prod</value>
+  </data>
+  <data name="js_mnu_prod_send" xml:space="preserve">
+    <value>Env. Producción</value>
+  </data>
+  <data name="js_mnu_prod_shipment" xml:space="preserve">
+    <value>Validacion Prod</value>
+  </data>
+  <data name="js_mnu_quality" xml:space="preserve">
+    <value>Calidad</value>
+  </data>
+  <data name="js_mnu_rack_reassign" xml:space="preserve">
+    <value>Reasigna Rack</value>
+  </data>
+  <data name="js_mnu_remmission" xml:space="preserve">
+    <value>Remisión</value>
+  </data>
+  <data name="js_mnu_remmission1" xml:space="preserve">
+    <value>Remisión</value>
+  </data>
+  <data name="js_mnu_ship_validation" xml:space="preserve">
+    <value>Val de Embarque</value>
+  </data>
+  <data name="js_mnu_shoveling" xml:space="preserve">
+    <value>Traspaleo</value>
+  </data>
+  <data name="js_mnu_transfers" xml:space="preserve">
+    <value>Traspasos</value>
+  </data>
+  <data name="js_mnu_trans_manual" xml:space="preserve">
+    <value>Traspaso Manual</value>
+  </data>
+  <data name="js_mnu_validation" xml:space="preserve">
+    <value>Validacion</value>
+  </data>
+  <data name="js_count_html_whAndStock" xml:space="preserve">
+    <value>&lt;br /&gt; &gt; {0} : Stock = {1}</value>
+  </data>
+  <data name="js_modal_batches_currentLocation" xml:space="preserve">
+    <value>Ubi. Actual</value>
+  </data>
+  <data name="js_modal_common_batch" xml:space="preserve">
+    <value>Lote</value>
+  </data>
+  <data name="js_modal_common_batchList" xml:space="preserve">
+    <value>Lista de Lote</value>
+  </data>
+  <data name="js_modal_common_date" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="js_modal_common_item" xml:space="preserve">
+    <value>Artículo</value>
+  </data>
+  <data name="js_modal_common_openOrders" xml:space="preserve">
+    <value>Pedidos Abiertos</value>
+  </data>
+  <data name="js_modal_common_orderNum" xml:space="preserve">
+    <value>N° Pedido</value>
+  </data>
+  <data name="js_modal_common_stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="js_modal_common_warehouse" xml:space="preserve">
+    <value>Almacén</value>
+  </data>
+  <data name="js_modal_drafts_countNum" xml:space="preserve">
+    <value>N° Recuento</value>
+  </data>
+  <data name="js_modal_drafts_creationDate" xml:space="preserve">
+    <value>Fecha Creación</value>
+  </data>
+  <data name="js_modal_drafts_drafts" xml:space="preserve">
+    <value>Borradores</value>
+  </data>
+  <data name="js_modal_location_location" xml:space="preserve">
+    <value>Ubicación</value>
+  </data>
+  <data name="js_modal_location_locationList" xml:space="preserve">
+    <value>Lista de Ubicaciones</value>
+  </data>
+  <data name="js_modal_orders_reference" xml:space="preserve">
+    <value>Referencia</value>
+  </data>
+  <data name="js_modal_pending_box" xml:space="preserve">
+    <value>Caja</value>
+  </data>
+  <data name="js_modal_pending_pendingListDifferentQuantity" xml:space="preserve">
+    <value>Lista de Pendientes | Cantidad distinta</value>
+  </data>
+  <data name="js_modal_pending_readQty" xml:space="preserve">
+    <value>Qty. Leído</value>
+  </data>
+  <data name="js_modal_pending_realQty" xml:space="preserve">
+    <value>Qty. Real</value>
+  </data>
+  <data name="js_modal_pickingOrders_pickingDate" xml:space="preserve">
+    <value>Fecha Picking</value>
+  </data>
+  <data name="js_modal_pickingOrders_pickingNum" xml:space="preserve">
+    <value>N° Picking</value>
+  </data>
+  <data name="js_modal_prodOrder_orderNum" xml:space="preserve">
+    <value>N° Orden</value>
+  </data>
+  <data name="js_modal_prodOrder_productionOrders" xml:space="preserve">
+    <value>Órdenes de Fabricación</value>
+  </data>
+  <data name="js_modal_request_code" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="js_modal_request_name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="js_modal_request_quantity" xml:space="preserve">
+    <value>Cantidad</value>
+  </data>
+  <data name="js_modal_request_requestLines" xml:space="preserve">
+    <value>Líneas de Solicitud</value>
+  </data>
+  <data name="js_modal_common_cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="ctr_common_noRecoveredRackLocationInfo" xml:space="preserve">
+    <value>No se recuperó información de Rack y Ubicación del Artículo</value>
+  </data>
+  <data name="ctr_common_error_gettingItemInfo" xml:space="preserve">
+    <value>Error al obtener información del Artículo</value>
+  </data>
+  <data name="js_modal_common_close" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="js_modal_location_rack" xml:space="preserve">
+    <value>Rack</value>
+  </data>
+  <data name="js_modal_location_rolls" xml:space="preserve">
+    <value>Rollos</value>
+  </data>
+  <data name="ctr_common_noWHRetrieved" xml:space="preserve">
+    <value>No se recuperó información de Almacenes</value>
+  </data>
+  <data name="ctr_master_delBatchLaminated" xml:space="preserve">
+    <value>Lote Laminado {0} actualizado correctamente.  Se elimina información de Tarima</value>
+  </data>
+  <data name="ctr_master_error_gettingMasterList" xml:space="preserve">
+    <value>Error al obtener información de Tarimas</value>
+  </data>
+  <data name="ctr_master_error_gettingPallet" xml:space="preserve">
+    <value>Error al obtener información de la Tarima {0}</value>
+  </data>
+  <data name="ctr_master_noBatchLaminated" xml:space="preserve">
+    <value>No se recuperó información de la Etiqueta.  Verificar el Lote {0}</value>
+  </data>
+  <data name="ctr_master_noMasterRecovered" xml:space="preserve">
+    <value>No hay registros de Tarimas</value>
+  </data>
+  <data name="ctr_master_noPalletRecovered" xml:space="preserve">
+    <value>No se recuperó información de la Tarima {0}</value>
+  </data>
+  <data name="ctr_master_error_newMaster" xml:space="preserve">
+    <value>Error en la Generación de Tarima</value>
+  </data>
+  <data name="ctr_master_error_updMaster" xml:space="preserve">
+    <value>Error en la Actualización de Tarima {0}</value>
+  </data>
+  <data name="js_modal_master_item" xml:space="preserve">
+    <value>Artículo</value>
+  </data>
+  <data name="js_modal_master_masterList" xml:space="preserve">
+    <value>Lista de Tarimas</value>
+  </data>
+  <data name="js_modal_master_pallet" xml:space="preserve">
+    <value>Tarima</value>
+  </data>
+  <data name="js_modal_master_rolls" xml:space="preserve">
+    <value>Total Lotes</value>
+  </data>
+  <data name="lgc_comun_put_entryIssueReceipt" xml:space="preserve">
+    <value>Emisión: {0} - Recibo {1}</value>
+  </data>
+  <data name="lgc_comun_put_numIssueReceipt" xml:space="preserve">
+    <value>Emisión: {0} - Recibo {1}</value>
+  </data>
+  <data name="lgc_comun_put_picking_ofOrderNumUpdated" xml:space="preserve">
+    <value>Picking # {0} del Pedido {1} ha sido actualizado</value>
+  </data>
+  <data name="lgc_comun_put_picking_upd" xml:space="preserve">
+    <value>Picking actualizado</value>
+  </data>
+  <data name="lgc_comun_put_picking_validationCreateRealizedCorrectly" xml:space="preserve">
+    <value>Creación de Picking Numero {0}, de la Orden {1}, código PICKING: {2}, fue Realizado Correctamente.</value>
+  </data>
+  <data name="vw_common_item_laminated" xml:space="preserve">
+    <value>Art. Laminado</value>
+  </data>
+  <data name="vw_common_large" xml:space="preserve">
+    <value>Largo</value>
+  </data>
+  <data name="vw_common_order_laminated" xml:space="preserve">
+    <value>OF Laminado</value>
+  </data>
+  <data name="vw_common_pallet" xml:space="preserve">
+    <value>Tarima</value>
+  </data>
+  <data name="vw_common_remove" xml:space="preserve">
+    <value>Remover</value>
+  </data>
+  <data name="vw_common_roll" xml:space="preserve">
+    <value>Pieza</value>
+  </data>
+  <data name="vw_common_weight" xml:space="preserve">
+    <value>Peso</value>
+  </data>
+  <data name="vw_common_width" xml:space="preserve">
+    <value>Ancho</value>
+  </data>
+  <data name="vw_master_LaminatedPallet" xml:space="preserve">
+    <value>Administración de Tarimas</value>
+  </data>
+  <data name="vw_master_MasterLabel" xml:space="preserve">
+    <value>Etiqueta Máster</value>
+  </data>
+  <data name="vw_production_IssueReceipt" xml:space="preserve">
+    <value>Emisión y Recibo de Producción Laminado</value>
+  </data>
+  <data name="vw_production_LaminatedGoodReceipt" xml:space="preserve">
+    <value>Recibo de Producción Laminado</value>
+  </data>
+  <data name="js_common_administrate" xml:space="preserve">
+    <value>Administrar</value>
+  </data>
+  <data name="js_common_Batch_notPermited" xml:space="preserve">
+    <value>El Lote {0} no es permitido</value>
+  </data>
+  <data name="js_common_create" xml:space="preserve">
+    <value>Crear</value>
+  </data>
+  <data name="js_common_notbyBatch" xml:space="preserve">
+    <value>La Etiqueta de Articulo NO Administrado no es permitida</value>
+  </data>
+  <data name="js_common_notYarn" xml:space="preserve">
+    <value>La Etiqueta de Hilo no es permitida</value>
+  </data>
+  <data name="js_common_yes" xml:space="preserve">
+    <value>Si</value>
+  </data>
+  <data name="js_imp_error_infoEmpty" xml:space="preserve">
+    <value>No se ha enviado informacion completa de la Etiqueta para su impresión</value>
+  </data>
+  <data name="js_master_delConfirm" xml:space="preserve">
+    <value>¿Desea eliminar la Tarima  {0} del Lote {1}?</value>
+  </data>
+  <data name="js_master_item_notPermited" xml:space="preserve">
+    <value>El Artículo para Tarima {0} no corresponde al Artículo Cargado {1}</value>
+  </data>
+  <data name="js_master_load" xml:space="preserve">
+    <value>La Tarima se ha cargado CORRECTAMENTE</value>
+  </data>
+  <data name="js_master_pallet_created" xml:space="preserve">
+    <value>Creación de Tarima  {0} realizada</value>
+  </data>
+  <data name="js_master_pallet_updated" xml:space="preserve">
+    <value>Actualización de Tarima  {0} realizada</value>
+  </data>
+  <data name="js_master_process" xml:space="preserve">
+    <value>La Tarima se esta procesando ACTUALMENTE</value>
+  </data>
+  <data name="js_mnu_master_pallet" xml:space="preserve">
+    <value>Admin. Tarima</value>
+  </data>
+  <data name="js_prod_batch_doubleRecord" xml:space="preserve">
+    <value>Se encontraron Registros de Lotes repetidos de la Etiqueta</value>
+  </data>
+  <data name="js_prod_batch_noRelease" xml:space="preserve">
+    <value>El Lote {0} no se encuentra Liberado</value>
+  </data>
+  <data name="js_prod_batch_nosameWhs" xml:space="preserve">
+    <value>El Almacén {0} del Lote {1} no coincide con el Almacén {2} del Artículo {3} en la OF {4}</value>
+  </data>
+  <data name="js_prod_createPallet" xml:space="preserve">
+    <value>Tarima Laminada {0} de Artículo Laminado {1}</value>
+  </data>
+  <data name="js_prod_error_createPallet" xml:space="preserve">
+    <value>No se agregó la siguiente información al Lote Laminado {0}</value>
+  </data>
+  <data name="js_prod_error_infocreatePallet" xml:space="preserve">
+    <value>Tarima &gt; {0}, Peso &gt; {1}, Metros Brutos &gt; {2}, Longitud &gt; {3}, Ancho &gt; {4}, Rack &gt; {0}, Rollo Crudo&gt; {5}</value>
+  </data>
+  <data name="ctr_login_noInfoSap" xml:space="preserve">
+    <value>No se han configurado las Credenciales SAP en el Usuario WMS</value>
+  </data>
+  <data name="js_common_lock" xml:space="preserve">
+    <value>Bloquear</value>
+  </data>
+  <data name="js_common_release" xml:space="preserve">
+    <value>Liberar</value>
+  </data>
+  <data name="js_common_confirm" xml:space="preserve">
+    <value>Confirmar</value>
+  </data>
+  <data name="js_transfers_manual_masterlabel_noInfoFoundInStoreParam" xml:space="preserve">
+    <value>El Lote {0} no se encuentra en Almacén {1}</value>
+  </data>
+  <data name="js_common_batch_lockedParam" xml:space="preserve">
+    <value>El Lote {0} se encuentra BLOQUEADO</value>
+  </data>
+  <data name="js_common_order_open" xml:space="preserve">
+    <value>Verificar que el Pedido {0} en SAP se encuentra Abierto</value>
+  </data>
+  <data name="sp_shipping_error_infoPickingDel" xml:space="preserve">
+    <value>No existe registro en WMS_PICKING, verificar registro: {0} en WMS.RemisionPacking</value>
+  </data>
+  <data name="sp_shipping_infoPickingDel" xml:space="preserve">
+    <value>Registros Eliminados: {0} | {1}</value>
+  </data>
+  <data name="sp_shipping_infoPickingOpen" xml:space="preserve">
+    <value>El Pedido {0} no cuenta con Picking abiertos</value>
+  </data>
+  <data name="sp_shipping_infoPickingUpd" xml:space="preserve">
+    <value>{0} Registros Picking del Pedido {1} Actualizados: CANCELADOS</value>
+  </data>
+  <data name="js_ship_batch_requiresTransfer" xml:space="preserve">
+    <value>El Lote {0} requiere Transferencia:</value>
+  </data>
+  <data name="ctr_common_errorVerifyLabel" xml:space="preserve">
+    <value>Error al verificar tipo etiqueta</value>
+  </data>
+  <data name="ctr_common_noVerifyLabel" xml:space="preserve">
+    <value>Información del tipo de Etiqueta, NO encontrada, verificar tipo de lectura, tipo de etiqueta o verificar en SAP</value>
+  </data>
+  <data name="ctr_master_error_InitialInfo" xml:space="preserve">
+    <value>Error al obtener información inicial para la etiqueta</value>
+  </data>
+  <data name="ctr_master_noInitialInfo" xml:space="preserve">
+    <value>No hay información inicial para la etiqueta</value>
+  </data>
+  <data name="sp_picking_delete_regMaster" xml:space="preserve">
+    <value>Registros Eliminados MASTER: {0}</value>
+  </data>
+  <data name="sp_picking_error_deleteregMaster" xml:space="preserve">
+    <value>No existe registro MASTER en WMS_PICKING, verificar registro de MASTER {0} en WMS.RemisionPacking</value>
+  </data>
+  <data name="vw_common_labels" xml:space="preserve">
+    <value>Etq</value>
+  </data>
+  <data name="vw_common_rackPallet" xml:space="preserve">
+    <value>Rack/Tarima</value>
+  </data>
+  <data name="vw_common_rolls" xml:space="preserve">
+    <value>Piezas</value>
+  </data>
+  <data name="vw_common_stock" xml:space="preserve">
+    <value>Cant. SAP</value>
+  </data>
+  <data name="js_common_batch_hasAlreadyShippedParam_noProcess" xml:space="preserve">
+    <value>El Lote {0} ya ha sido EMBARCADO, no se puede procesar Tarima</value>
+  </data>
+  <data name="js_common_batch_hasAlreadyShippedParam_noProcessRack" xml:space="preserve">
+    <value>El Lote {0} ya ha sido EMBARCADO, no se puede procesar Rack</value>
+  </data>
+  <data name="js_common_batch_LockParam_noProcess" xml:space="preserve">
+    <value>El Lote {0} se encuentra BLOQUEADO, no se puede procesar Tarima</value>
+  </data>
+  <data name="js_common_batch_LockParam_noProcessRack" xml:space="preserve">
+    <value>El Lote {0} se encuentra BLOQUEADO, no se puede procesar Rack</value>
+  </data>
+  <data name="js_common_batch_notAccessibleParam_noProcess" xml:space="preserve">
+    <value>El Lote {0} NO se encuentra ACCESIBLE, no se puede procesar Tarima</value>
+  </data>
+  <data name="js_common_batch_notAccessibleParam_noProcessRack" xml:space="preserve">
+    <value>El Lote {0} NO se encuentra ACCESIBLE, no se puede procesar Rack</value>
+  </data>
+  <data name="js_common_error_noRead" xml:space="preserve">
+    <value>La etiqueta no es posible leer, verificar en SAP</value>
+  </data>
+  <data name="js_common_html_wh_requestWHMaster" xml:space="preserve">
+    <value>&lt;br /&gt; Almacen Pedido: {0} : Almacen Master &gt; {1}</value>
+  </data>
+  <data name="js_common_LaminatedHasAlreadyReadParam" xml:space="preserve">
+    <value>Ya se ha leido Tarima {0}</value>
+  </data>
+  <data name="js_common_noLaminatedPallet" xml:space="preserve">
+    <value>La etiqueta de Tarima no es valida en este módulo</value>
+  </data>
+  <data name="js_common_noPrefixDefined" xml:space="preserve">
+    <value>No se ha definido el Prefijo de Tarima</value>
+  </data>
+  <data name="js_common_noProcessLaminated" xml:space="preserve">
+    <value>El Lote no se puede procesar, pertenece a la Tarima {0}</value>
+  </data>
+  <data name="js_common_noRack" xml:space="preserve">
+    <value>La etiqueta no puede procesarse como Rack</value>
+  </data>
+  <data name="js_common_notValid" xml:space="preserve">
+    <value>La Etiqueta no es permitida</value>
+  </data>
+  <data name="js_commun_batchLaminatedPalletRead" xml:space="preserve">
+    <value>Ya se ha Leído el Lote {0}, elimine el registro y vuelva a leer la Tarima</value>
+  </data>
+  <data name="js_commun_batchRackRead" xml:space="preserve">
+    <value>Ya se ha Leído el Lote {0}, elimine el registro y vuelva a leer el RACK</value>
+  </data>
+  <data name="js_commun_onlyItemxLaminated" xml:space="preserve">
+    <value>Verificar, solo 1 artículo por Tarima</value>
+  </data>
+  <data name="js_commun_onlyItemxRack" xml:space="preserve">
+    <value>Verificar, solo 1 artículo por Rack</value>
+  </data>
+  <data name="js_commun_onlyWhsxLaminated" xml:space="preserve">
+    <value>Verificar, solo 1 almacén por Tarima</value>
+  </data>
+  <data name="js_commun_onlyWhsxRack" xml:space="preserve">
+    <value>Verificar, solo 1 almacén por Rack</value>
+  </data>
+  <data name="js_modal_common_codeLaminated" xml:space="preserve">
+    <value>Codigo</value>
+  </data>
+  <data name="js_modal_ListLaminated" xml:space="preserve">
+    <value>Lista de Rollos</value>
+  </data>
+  <data name="js_modal_pending_rackPallet" xml:space="preserve">
+    <value>Rack/Tarima</value>
+  </data>
+  <data name="js_ship_laminated_notBelongPicking" xml:space="preserve">
+    <value>Tarima Laminado {0} NO PERTENECE al Picking validado</value>
+  </data>
+  <data name="js_ship_rack_notBelongPicking" xml:space="preserve">
+    <value>Rack {0} NO PERTENECE al Picking validado</value>
+  </data>
+  <data name="js_count_pallet_requiresTransferLocatedAt" xml:space="preserve">
+    <value>La Tarima {0}, requiere Transferencia, se encuentra en:</value>
+  </data>
+  <data name="vw_common_groupType" xml:space="preserve">
+    <value>Grupo Art.</value>
+  </data>
+  <data name="js_ship_pallet_requiresTransfer" xml:space="preserve">
+    <value>La Tarima {0} requiere Transferencia:</value>
+  </data>
+  <data name="ctr_manualTransfer_st_error_list_requestTransfer" xml:space="preserve">
+    <value>Error al recuperar informacion de Solicitudes de Traslado</value>
+  </data>
+  <data name="ctr_manualTransfer_st_error_print_reportTransfer" xml:space="preserve">
+    <value>Error en la Creacion del Documento de Reporte Traspaso</value>
+  </data>
+  <data name="ctr_manualTransfer_st_error_requestTransfer" xml:space="preserve">
+    <value>Error al recuperar informacion de la solicitud {0}</value>
+  </data>
+  <data name="ctr_manualTransfer_st_noInformation" xml:space="preserve">
+    <value>No se recuperó informacion para la solicitud: {0}</value>
+  </data>
+  <data name="ctr_manualTransfer_st_noItemsOpen" xml:space="preserve">
+    <value>No se recuperaron articulos para la solicitud {0}</value>
+  </data>
+  <data name="ctr_manualTransfer_st_no_requestOpen" xml:space="preserve">
+    <value>No se recuperaron Solicitudes de Traslado Abiertas con Lineas Abiertas</value>
+  </data>
+  <data name="ctr_manualTransfer_st_no_requestOpen_customer" xml:space="preserve">
+    <value>No se recuperaron Solicitudes de Traslado Abiertas con Lineas Abiertas del Cliente {0}</value>
+  </data>
+  <data name="js_common_pallet_st_Item_no_st" xml:space="preserve">
+    <value>El artículo de la Tarima {0} no pertenece a la solicitud de traslado</value>
+  </data>
+  <data name="js_common_pallet_st_noItems_request" xml:space="preserve">
+    <value>La tarima {0} no tiene lotes con artículos y/o almacenes de la Solicitud de Traslaso</value>
+  </data>
+  <data name="js_common_rackPallet_st_lines_complete" xml:space="preserve">
+    <value>Las siguientes lineas se han completado:</value>
+  </data>
+  <data name="js_common_rackPallet_st_lines_complete_complement" xml:space="preserve">
+    <value>Artículo: {0}, Almacén: {1}</value>
+  </data>
+  <data name="js_common_rack_st_Item_no_st" xml:space="preserve">
+    <value>El artículo del rack {0} no pertenece a la solicitud de traslado</value>
+  </data>
+  <data name="js_common_rack_st_noItems_request" xml:space="preserve">
+    <value>El rack {0} no tiene lotes con artículos y/o almacenes de la Solicitud de Traslaso</value>
+  </data>
+  <data name="js_common_st_batch_noWhs_Item" xml:space="preserve">
+    <value>El lote {0} no se encuentra en el almacén {1} del artículo {2}</value>
+  </data>
+  <data name="js_common_st_label_no_st" xml:space="preserve">
+    <value>La etiqueta no pertenece a la Solicitud:</value>
+  </data>
+  <data name="js_common_st_label_no_st_complement" xml:space="preserve">
+    <value>Lote: {0}, Artículo: {1}, Almacén: {2}</value>
+  </data>
+  <data name="js_common_st_label_no_st_complement_Item" xml:space="preserve">
+    <value>Artículo No Administrado: {0}, Almacén: {1}</value>
+  </data>
+  <data name="js_common_st_line_complete" xml:space="preserve">
+    <value>El artículo {0} con almacen {1} se ha completado</value>
+  </data>
+  <data name="js_common_st_noInsert" xml:space="preserve">
+    <value>Debe ingresar el número de Solicitud de Traslado</value>
+  </data>
+  <data name="js_common_st_total_complete" xml:space="preserve">
+    <value>Se han completado todas las lineas de la Solicitud de Traslado</value>
+  </data>
+  <data name="js_modal_common_st_customer" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="js_modal_common_st_document" xml:space="preserve">
+    <value>Documento</value>
+  </data>
+  <data name="js_modal_common_st_openRequest" xml:space="preserve">
+    <value>Solicitud de Traslado</value>
+  </data>
+  <data name="js_modal_common_st_totalOpenLines" xml:space="preserve">
+    <value>Total Lineas Abiertas</value>
+  </data>
+  <data name="vw_common_destination" xml:space="preserve">
+    <value>Destino</value>
+  </data>
+  <data name="vw_common_quantity_open" xml:space="preserve">
+    <value>Qty Pendiente</value>
+  </data>
+  <data name="vw_common_quantity_read" xml:space="preserve">
+    <value>Qty Leída</value>
+  </data>
+  <data name="vw_common_source" xml:space="preserve">
+    <value>Origen</value>
+  </data>
+  <data name="vw_common_st_quantity" xml:space="preserve">
+    <value>Cantidad ST</value>
+  </data>
+  <data name="vw_common_st_source" xml:space="preserve">
+    <value>Solicitud Traspaso</value>
+  </data>
+  <data name="js_mnu_secondSales" xml:space="preserve">
+    <value>Venta Segundas</value>
+  </data>
+  <data name="vw_common_secondSales" xml:space="preserve">
+    <value>Venta Segundas</value>
+  </data>
+  <data name="ctr_secondSales_error_saveBatch" xml:space="preserve">
+    <value>Error al guardar los registros de Lotes de Segundas para su Liberación</value>
+  </data>
+  <data name="ctr_secondSales_error_saveBatchReturn" xml:space="preserve">
+    <value>Error al guardar los registros de Lotes de Segundas para regresar a su Estatus Original</value>
+  </data>
+  <data name="ctr_secondSales_error_saveData" xml:space="preserve">
+    <value>Error en el registro previo de los datos para Remisión</value>
+  </data>
+  <data name="ctr_secondSales_noCustomer" xml:space="preserve">
+    <value>No se recupero información de cliente para venta de segundas</value>
+  </data>
+  <data name="js_modal_secondSales_item" xml:space="preserve">
+    <value>Artículo</value>
+  </data>
+  <data name="js_modal_secondSales_recordList" xml:space="preserve">
+    <value>Lista de Registros</value>
+  </data>
+  <data name="js_modal_secondSales_stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="js_modal_secondSales_stockAvailable" xml:space="preserve">
+    <value>Disponible</value>
+  </data>
+  <data name="js_modal_secondSales_stockRead" xml:space="preserve">
+    <value>Leído</value>
+  </data>
+  <data name="js_modal_secondSales_warehouse" xml:space="preserve">
+    <value>Almacén</value>
+  </data>
+  <data name="js_secondSales_labelComplete" xml:space="preserve">
+    <value>La etiqueta ya se ha completado, lea una nueva etiqueta o actualice la cantidad</value>
+  </data>
+  <data name="js_secondSales_NoPalletLabel" xml:space="preserve">
+    <value>No se procesan Tarimas de Laminado</value>
+  </data>
+  <data name="js_secondSales_noRecordsProcess" xml:space="preserve">
+    <value>No hay registros para procesar</value>
+  </data>
+  <data name="js_secondSales_qtyLess" xml:space="preserve">
+    <value>Cantidad menor a la solicitada</value>
+  </data>
+  <data name="js_secondSales_qtyUpd" xml:space="preserve">
+    <value>El acumulado leido no puede superar el stock de {0}</value>
+  </data>
+  <data name="js_secondSales_rackRead" xml:space="preserve">
+    <value>El rack {0} ya ha sido leido</value>
+  </data>
+  <data name="js_secondSales_recordsNoRelease" xml:space="preserve">
+    <value>Los siguientes registros no estan Liberados:</value>
+  </data>
+  <data name="js_secondSales_recordsNoStock" xml:space="preserve">
+    <value>Los siguientes registros ya NO cuentan con stock:</value>
+  </data>
+  <data name="js_secondSales_recordsNoWhs" xml:space="preserve">
+    <value>Los siguientes registros no se encuentran en los almacenes 03, 04  o 05:</value>
+  </data>
+  <data name="js_secondSales_recordsPallet" xml:space="preserve">
+    <value>Los siguientes registros son de Tarima de Laminado:</value>
+  </data>
+  <data name="js_secondSales_recordsRead" xml:space="preserve">
+    <value>Los siguientes registros ya han sido leidos:</value>
+  </data>
+  <data name="js_secondSales_recordsShip" xml:space="preserve">
+    <value>Los siguientes registros se encuentran Embarcados:</value>
+  </data>
+  <data name="js_secondSales_records_biw" xml:space="preserve">
+    <value>Lote: {0}, Artículo: {1}, Almacén: {2}</value>
+  </data>
+  <data name="js_secondSales_records_biwL" xml:space="preserve">
+    <value>Lote: {0}, Artículo: {1}, Almacén: {2}, Status: Bloqueado</value>
+  </data>
+  <data name="js_secondSales_records_biwNa" xml:space="preserve">
+    <value>Lote: {0}, Artículo: {1}, Almacén: {2}, Status: No Accesible</value>
+  </data>
+  <data name="js_secondSales_records_biwP" xml:space="preserve">
+    <value>Lote: {0}, Artículo: {1}, Almacén: {2}, Tarima: {3}</value>
+  </data>
+  <data name="js_secondSales_records_biwSf" xml:space="preserve">
+    <value>Artículo: {0}, Almacén: {1}, Stock: {1}, Stock leido: {3}</value>
+  </data>
+  <data name="js_secondSales_records_biwSh" xml:space="preserve">
+    <value>Lote: {0}, Artículo: {1}, Almacén: {2}, Stock: {3}, Stock leido: {4}</value>
+  </data>
+  <data name="js_secondSales_records_iw" xml:space="preserve">
+    <value>Artículo: {0}, Almacén: {1}</value>
+  </data>
+  <data name="lgc_secondSales_error_conSap" xml:space="preserve">
+    <value>Falla en Conexión a SAP</value>
+  </data>
+  <data name="lgc_secondSales_releaseBatch" xml:space="preserve">
+    <value>Liberacion de Lotes de Segunda, realizada correctamente</value>
+  </data>
+  <data name="lgc_secondSales_returnBatch" xml:space="preserve">
+    <value>Regreso a Estatus Original de Lotes de Segunda, realizada correctamente</value>
+  </data>
+  <data name="js_master_labelPallet" xml:space="preserve">
+    <value>La etiqueta con lote {0} pertenece a la Tarima {1}</value>
+  </data>
+  <data name="js_master_noItemGroup" xml:space="preserve">
+    <value>Grupo de articulo {0} no permitido, grupo actual {1}</value>
+  </data>
+  <data name="js_transfer_closedSuccess" xml:space="preserve">
+    <value>Solicitud de Traslado  {0}, Cerrada con éxito.</value>
+  </data>
+  <data name="js_transfer_closedSuccess2" xml:space="preserve">
+    <value>Solicitud de Traslado - Cerrado con exito</value>
+  </data>
+  <data name="js_transfer_error_close" xml:space="preserve">
+    <value>VERIFICAR Y CERRAR SOLICITUD DE TRASLADO DE FORMA MANUAL</value>
+  </data>
+  <data name="ctr_print_label_error" xml:space="preserve">
+    <value>No se ha definido la Ruta Etiqueta para Tarima Laminado</value>
+  </data>
+  <data name="ctr_print_label_errorShip" xml:space="preserve">
+    <value>No se ha definido la Ruta Etiqueta para Embarque</value>
+  </data>
+  <data name="js_print_label" xml:space="preserve">
+    <value>Etiqueta enviada a impresión</value>
+  </data>
+  <data name="js_print_label_errorRack" xml:space="preserve">
+    <value>No se ha enviado Informacion completa de la etiqueta para su Impresión, vuelva a leer etiqueta con rack {0}</value>
+  </data>
+  <data name="js_print_label_ship" xml:space="preserve">
+    <value>Etiqueta de embarque enviada a impresión</value>
+  </data>
+  <data name="js_ship_virtualBatch_hasRead" xml:space="preserve">
+    <value>El Lote virtual ya ha sido vendido</value>
+  </data>
+  <data name="ctr_remission_error_gettingDocCodeguid" xml:space="preserve">
+    <value>Error al validar código guía WMS en entregas SAP</value>
+  </data>
+  <data name="js_modal_common_clear" xml:space="preserve">
+    <value>Limpiar</value>
+  </data>
+  <data name="js_modal_common_title" xml:space="preserve">
+    <value>Modal Alertas</value>
+  </data>
+  <data name="js_modal_common_type" xml:space="preserve">
+    <value>Tipo</value>
+    <comment>Type</comment>
+  </data>
+  <data name="js_modal_common_titleColumn" xml:space="preserve">
+    <value>Titulo </value>
+  </data>
+  <data name="js_modal_common_text" xml:space="preserve">
+    <value>Texto</value>
+  </data>
+</root>

@@ -1,0 +1,89 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:WmsMovil.ViewModels"
+             xmlns:local="clr-namespace:WmsMovil" 
+             x:Class="WmsMovil.MainPage"
+             NavigationPage.HasNavigationBar="False">
+    <!-- ESTO QUITA LA BARRA FEA DE ARRIBA -->
+
+    <!-- Fondo dividido: Blanco arriba, Verde Agua abajo -->
+    <Grid RowDefinitions="*, *">
+        <BoxView Grid.Row="0" Color="#FFFFFF" />
+        <BoxView Grid.Row="1" Color="#48C9B0" />
+        <!-- Verde Agua -->
+
+        <!-- Tarjeta Flotante Central -->
+        <Border Grid.Row="0" Grid.RowSpan="2" 
+                WidthRequest="320" 
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 15"
+                StrokeThickness="0">
+
+            <!-- Sombra moderna -->
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,10" Radius="20" Opacity="0.2" />
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="20" Padding="30">
+
+                <!-- Logo -->
+                <Image Source="wms_logo.png" HeightRequest="80" HorizontalOptions="Center" Margin="0,0,0,10" />
+
+                <!-- Título -->
+                <Label Text="{local:Translate vw_login_access}" 
+                       FontSize="20" TextColor="#48C9B0" HorizontalOptions="Center" Margin="0,-15,0,10" />
+
+                <!-- Input Usuario Moderno -->
+                <Border BackgroundColor="#F5F7FA" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="15,5">
+                    <Entry Text="{Binding Usuario}" 
+                           Placeholder="{local:Translate vw_login_user}" 
+                           PlaceholderColor="#AAB7B8" TextColor="#2C3E50"
+                           Keyboard="Text" ClearButtonVisibility="WhileEditing"/>
+                </Border>
+
+                <!-- Input Contraseña con el OJO -->
+                <Border BackgroundColor="#F5F7FA" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="15,5">
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Entry Grid.Column="0" 
+                               Text="{Binding Password}" 
+                               Placeholder="{local:Translate vw_login_password}" 
+                               PlaceholderColor="#AAB7B8" TextColor="#2C3E50"
+                               IsPassword="{Binding IsPasswordHidden}" />
+
+                        <!-- Botón del Ojo -->
+                        <ImageButton Grid.Column="1" 
+                                     Source="eye.png" 
+                                     WidthRequest="25" HeightRequest="25" 
+                                     Opacity="0.5"
+                                     Command="{Binding TogglePasswordVisibilityCommand}" 
+                                     VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Botón Ingresar -->
+                <Button Text="{local:Translate vw_login_login}" 
+                        Command="{Binding LoginCommand}" 
+                        BackgroundColor="#48C9B0" 
+                        TextColor="White" 
+                        CornerRadius="8" 
+                        HeightRequest="50" 
+                        FontAttributes="Bold"
+                        Margin="0,10,0,0"
+                        IsVisible="{Binding IsNotBusy}">
+                    <Button.Shadow>
+                        <Shadow Brush="#48C9B0" Offset="0,5" Radius="10" Opacity="0.4" />
+                    </Button.Shadow>
+                </Button>
+
+                <!-- Spinner de Carga -->
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#48C9B0" HorizontalOptions="Center" Margin="0,10,0,0"/>
+
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Versión de la App -->
+        <Label Grid.Row="1" Text="{Binding VersionApp}" FontSize="12" TextColor="White" HorizontalOptions="End" VerticalOptions="End" Margin="15" />
+    </Grid>
+</ContentPage>

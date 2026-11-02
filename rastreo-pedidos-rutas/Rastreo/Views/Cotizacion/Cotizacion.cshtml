@@ -1,0 +1,144 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Librarys/Bootstrap/Css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Estilos.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/jquery-ui.css" rel="stylesheet" />
+    <link href="../Content/Tablas.css" rel="stylesheet" />
+    <link href="../Content/tabs.css" rel="stylesheet" />
+    <script src="~/Librarys/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Librarys/Angular/angular.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/bootstrap.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery-ui.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-2.5.0.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Librarys/Angular/angular-ui-utils.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery.dataTables.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Librarys/Angular/dataGrid.js"></script>
+    <script src="~/Scripts/appCotizacion.js"></script>
+    <title>Cotizacion</title>
+</head>
+<body ng-app="appCotizacion">
+    <div class="container" ng-controller="cotizacionController"> 
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-5" id="Fecha">
+                <div class="row form-group-sm rowFormulario">
+                    <label for="Fecha" class="col-lg-4 col-md-4 col-sm-5" id="lblFecha">Fecha </label>
+                    <div class="col-lg-6 col-md-6" id="InpFecha">
+                        <input class="form-control" name="Fecha" type="text" ng-value="ValoresInicio.Fecha | date:'dd/MM/yyyy'" ng-model="ValoresEncabezado.Fecha" jqdatepicker/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row form-group-sm rowFormulario">
+                        <label for="ClienteCod" class="col-lg-2 col-md-2 col-sm-4">Cliente </label>
+                        <div class="col-lg-10 col-md-10 col-sm-10">
+                            <div class="col-lg-2 col-md-2 col-sm-2" id="ClienteCod">
+                                <input class="form-control negritas" type="text" name="ClienteCod" placeholder="Codigo Cliente" disabled />
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3" id="ClienteDes">
+                                <input class="form-control negritas" type="text" name="ClienteDes" placeholder="Nombre Cliente" disabled />
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3" id="ClienteDes">
+                                <button type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row form-group-sm rowFormulario">
+                        <label for="Referencia" class="col-lg-2 col-md-2 col-sm-4">Referencia </label>
+                        <div class="col-lg-10 col-md-10 col-sm-10">
+                            <div class="col-lg-4 col-md-4 col-sm-4" id="ClienteCod">
+                                <input class="form-control negritas" type="text" name="Referencia" placeholder="Referencia" disabled />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row form-group-sm rowFormulario">
+                        <label for="Comentarios" class="col-lg-2 col-md-2 col-sm-4">Comentarios </label>
+                        <div class="col-lg-10 col-md-10 col-sm-10">
+                            <div class="col-lg-4 col-md-4 col-sm-4" id="Comentarios">
+                                <input class="form-control negritas" type="text" name="Comentarios" placeholder="Comentarios" disabled />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row form-group-sm rowFormulario">
+                        <label for="Almacen" class="col-lg-2 col-md-2 col-sm-4">Almacén </label>
+                        <div class="col-lg-10 col-md-10 col-sm-10">
+                            <div class="col-lg-4 col-md-4 col-sm-4" id="Almacen">
+                                <input class="form-control negritas" type="text" name="Almacen" placeholder="Almacen" disabled />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12" id="SecBtn">
+                <div class="row form-group-sm rowFormulario">
+                    <label for="BuscarArt" class="col-lg-2 col-md-2 col-sm-4 lblBuscarArt">Buscar Artículo</label>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="col-lg-4 col-md-4 col-sm-4" id="BuscarArt">
+                            <button type="button" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <table class="table table-responsive scroll" id="TablaArticulos">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Artículo</th>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>IVA</th>
+                            <th>Total</th>
+                            <th>Entrega</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*<tr ng-repeat="n in ArticulosConsumo | filter:searchText">
+                            <td ng-style="n.Estado == 'N' ? {'color':'red'} : {'color':'black'}" ng-click="LotesAConsumir(ArticulosConsumo[$index])">{{$index + 1}}</td>
+                            <td ng-style="n.Estado == 'N' ? {'color':'red'} : {'color':'black'}" ng-click="LotesAConsumir(ArticulosConsumo[$index])">{{n.ItemCode    }}</td>
+                            <td ng-style="n.Estado == 'N' ? {'color':'red'} : {'color':'black'}" ng-click="LotesAConsumir(ArticulosConsumo[$index])">{{n.ItemName}}</td>
+                            <td ng-style="n.Estado == 'N' ? {'color':'red'} : {'color':'black'}" ng-click="LotesAConsumir(ArticulosConsumo[$index])">{{n.BaseQty}}</td>
+                            <td ng-style="n.Estado == 'N' ? {'color':'red'} : {'color':'black'}" ng-click="LotesAConsumir(ArticulosConsumo[$index])">{{n.CantReq | limitTo: 6}}</td>
+                        </tr>*@
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row Enviar">
+            <div class="col-lg-4 col-md-4 col-sm-4" id="EnviarCotizacion">
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-send"></span> Enviar
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

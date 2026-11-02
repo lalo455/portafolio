@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application
+    x:Class="EVIRFID.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <!--
+        Define global resources and styles here, that apply to all pages in your app.
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#4dc0c6</Color>
+            <Color x:Key="TextThemeColor">#000000</Color>
+            <Color x:Key="MainPageBackgroundColor">#FFFFFF</Color>
+            <Color x:Key="AccentColor">#678780</Color>
+
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#332196F3" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="MainLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="Title" />
+                <Setter Property="FontFamily" Value="RB" />
+                <Setter Property="Margin" Value="0, -10, 0, 0" />
+            </Style>
+
+            <Style x:Key="SecondaryLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="Subtitle" />
+                <Setter Property="FontFamily" Value="RB" />
+                <Setter Property="Margin" Value="0, -10, 0, 0" />
+            </Style>
+
+            <Style x:Key="MainButton" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BorderColor" Value="LightBlue" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="Margin" Value="5,10,5,15" />
+            </Style>
+
+            <Style x:Key="SeparatorStyle" TargetType="BoxView">
+                <Setter Property="BackgroundColor" Value="{DynamicResource EditorSettingsSeparatorColor}" />
+                <Setter Property="HeightRequest" Value="1" />
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+

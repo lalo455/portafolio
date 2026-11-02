@@ -1,0 +1,48 @@
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Library/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Library/Growl/angular-growl.css" rel="stylesheet" />
+    <link href="~/Library/Estilos/Login.css" rel="stylesheet" />
+    <title>Login</title>
+</head>
+<body ng-app="accesoApp" ng-controller="accesoController" class="animated fadeIn fast">
+    <div growl></div>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <!-- Icon -->
+            <div class="fadeIn first">
+                
+                <h3>Acceso Entregas ClientI</h3>
+            </div>
+            <!-- Login Form -->
+            <form>
+                <input ng-model="Credenciales.Usuario" type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
+                <input ng-model="Credenciales.Password" type="password" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
+
+                <input ng-click="Ingresar()" id="btnLogin" type="submit" class="fadeIn fourth" value="Ingresar">
+                <img class="col-12 col-lg-3 col-md-4 col-sm-12" style="width: 22%;" ng-show="Lectura.Movimiento" src="~/Assets/loading_.gif" />
+            </form>
+            <!-- Remind Passowrd -->
+            @*<div id="formFooter">
+                    <a class="underlineHover" href="#">Go to the Site</a>
+                </div>*@
+        </div>
+    </div>
+    <div>
+        WMS v2.5
+    </div>
+    <script src="~/Library/JQuery/jquery-3.3.1.js" asp-append-version="true"></script>
+    <script src="~/Library/Angular/angular.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/bootstrap.js" asp-append-version="true"></script>
+    <script src="~/Library/Growl/angular-growl.min.js" asp-append-version="true"></script>
+    @*<script src="~/Scripts/LocalStorage.js"></script>*@
+    <script src="~/Scripts/Login.js" asp-append-version="true"></script>
+</body>
+</html>

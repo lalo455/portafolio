@@ -1,0 +1,277 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Library/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Library/Estilos/Styles.css" rel="stylesheet" />
+    <link href="~/Library/Growl/angular-growl.min.css" rel="stylesheet" />
+    <link href="~/Library/XEditable/xeditable.css" rel="stylesheet" />
+    <link href="~/Library/FontAwesome/fontawesome/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/Library/FontAwesome/fontawesome/css/solid.css" rel="stylesheet" />
+    <link href="~/Library/Messi/messi.min.css" rel="stylesheet" />
+    <link href="~/Library/Bootstrap/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <title>Registro Tiempo Muerto</title>
+
+    <style>
+        #datepicker {
+            width: 180px;
+        }
+
+        #datepicker > span:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body ng-app="regTMApp" ng-controller="regTMController" class="animated fadeIn fast">
+    <div growl></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="~/Assets/RegistroTM.png" width="30" height="30" class="d-inline-block align-top" alt=""> Registro Tiempo Muerto
+        </a>
+        <button onclick="location.href='@Url.Action("SubMenuTM", "Menu")'" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="~/Assets/back.png" />
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto"></ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button onclick="location.href='@Url.Action("SubMenuTM", "Menu")'" class="btn btn-light my-2 my-sm-0" type="submit">
+                    <img src="~/Assets/back.png" />
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-group row">
+            <label for="OrdFab" class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 col-form-label py-2 pr-0">Orden Fabricación</label>
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <div class="input-group">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Orden Fab"
+                           ng-model="TPM.NumOrdr"
+                           ng-disabled="TPM.DocEntry != ''">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" ng-click="Cargar()" ng-disabled="TPM.Lineas.length > 0">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <label for="ListaMaq" ng-show="TPM.DocEntry != ''" class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-form-label py-2 pr-0">Maquina</label>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4" ng-show="TPM.DocEntry != ''">
+                <div class="input-group">
+                    <input id="Maquina"
+                           type="text"
+                           class="form-control"
+                           placeholder="Maquina"
+                           ng-model="TPM.Maquina"
+                           ng-disabled="TPM.Maquina != ''">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" ng-show="TPM.DocEntry != ''">
+        <div class="form-group row">
+            <label for="Operador" class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-form-label py-2 pr-0">Operador</label>
+            <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                <select ng-model="TPM.Operador"
+                        class="form-control custom-select"
+                        ng-model-options="{getterSetter:true}"
+                        ng-options="rg.empID as rg.empID + ' - ' + rg.Operador for rg in Memoria.Operadores"
+                        ng-disabled="TPM.DocEntry == ''">
+                    <option style="display:none" value="">Seleccione Operador</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="Fecha" class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 col-form-label py-2 pr-0">Fecha</label>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <div id="datepicker"
+                     class="input-group date"
+                     data-date-format="dd/mm/yyyy">
+                    <input class="form-control"
+                           type="text"
+                           placeholder="Fecha Automática"
+                           ng-model="TPM.Fecha"
+                           readonly 
+                           ng-disabled="TPM.DocEntry == '' || TPM.Lineas.length > 0"/>
+
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary"
+                                type="button"
+                                ng-disabled="TPM.DocEntry == '' || TPM.Lineas.length > 0">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            @*<label for="Operador" class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-form-label py-2 pr-0">Operador</label>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <select ng-model="TPM.Operador"
+                        class="form-control custom-select"
+                        ng-model-options="{getterSetter:true}"
+                        ng-options="rg.empID as rg.empID + ' - ' + rg.Operador for rg in Memoria.Operadores"
+                        ng-disabled="TPM.DocEntry == ''">
+                    <option style="display:none" value="">Seleccione Operador</option>
+                </select>
+            </div>*@
+
+            <label for="Turno" class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 col-form-label py-2 pr-0">Turno</label>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <select ng-model="TPM.Turno"
+                        class="form-control custom-select"
+                        ng-model-options="{getterSetter:true}"
+                        ng-options="reg.Code as reg.Name for reg in Memoria.Turnos"
+                        ng-disabled="TPM.DocEntry == '' || TPM.Lineas.length > 0">
+                    <option style="display:none" value="">Seleccione Turno</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @*<label for="ListaTPM" class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-form-label py-2 pr-0">Tiempo Muerto</label>*@
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="input-group">
+                    <input id="TPM"
+                           type="text"
+                           class="form-control"
+                           placeholder="TPM"
+                           ng-model="TPM.DescTPM"
+                           disabled>
+
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary"
+                                type="button"
+                                ng-click="ListarTipoTPM()">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <label for="Tiempo" class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 col-form-label py-2 pr-0">Tiempo (min)</label>
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <div class="input-group">
+                    <input type="number"
+                           class="form-control"
+                           placeholder="Tiempo"
+                           ng-model="TPM.Tiempo"
+                           ng-disabled="TPM.DocEntry == ''">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 offset-md-6 offset-lg-6 offset-xl-6 offset-sm-6 offset-3 text-center">
+                <button type="button"
+                        class="btn btn-success"
+                        ng-click="AgregarRegistro()"
+                        ng-disabled="TPM.DocEntry == ''
+                        || TPM.Maquina == ''
+                        || TPM.Operador == ''
+                        || TPM.DescScrap == ''
+                        || TPM.Tiempo == ''">
+                    Agregar Registro
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-lg-offset-0" style="padding:0em;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding:0em; padding-left:1em; margin-top:7px;">
+                    <div class="megaTras">
+                        <table class='headerTras'>
+                            <tr>
+                                <td class="colTH6">#</td>
+                                @*<td class="colTH3">Artículo</td>*@
+                                <td class="colTH5">Turno</td>
+                                <td class="colTH3">TPM</td>
+                                <td class="colTH3">Tiempo</td>
+                                <td class="colTH5">Accion</td>
+                            </tr>
+                        </table>
+                        <table style="width:100%; margin-top:40px;">
+                            <tbody>
+                                <tr id="Reg{{$index}}" ng-repeat="Ln in TPM.Lineas">
+                                    <td class="colTT6">{{$index + 1}}</td>
+                                    @*<td class="colTH3">{{Ln.ItemCode}}</td>*@
+                                    <td class="colTH5">{{Ln.Turno}}</td>
+                                    <td class="colTH3">{{Ln.DescTPM}}</td>
+                                    <td class="colTH3">{{Ln.Tiempo}}</td>
+                                    <td class="colTT5"><img src="~/Assets/delete.png" ng-click="Eliminar($index)" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row pb-4 mt-4">
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12 text-center">
+                <button ng-hide="Lectura.Movimiento"
+                        type="button"
+                        class="btn btn-lg btn-warning"
+                        style="background-color:#DAA520"
+                        ng-click="Crear()"
+                        ng-disabled="TPM.Lineas.length == 0">
+                    Confirmar Transacción
+                </button>
+
+                <img class="col-12 col-lg-3 col-md-4 col-sm-12" style="width: 22%;" ng-show="Lectura.Movimiento" src="~/Assets/loading_.gif" />
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Library/JQuery/jquery-3.3.1.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/bootstrap.js" asp-append-version="true"></script>
+    <script src="~/Library/Angular/angular.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Growl/angular-growl.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/ui-bootstrap-tpls.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/ui-bootstrap-tpls-3.0.6.min.js" asp-append-version="true"></script>
+    <script src="~/Library/XEditable/xeditable.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Messi/messi.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Angular/angular-locale_es-mx.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/bootstrap-datepicker.min.js" asp-append-version="true"></script>
+    <script src="~/Scripts/TiempoMuerto/RegistroTM.js" asp-append-version="true"></script>
+
+    <script>
+        $(function () {
+            $.fn.datepicker.dates['es'] = {
+                days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                daysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+                daysMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                today: 'Hoy',
+                clear: 'Limpiar',
+                format: 'dd/mm/yyyy',
+                titleFormat: "MM yyyy",
+                weekStart: 1
+            };
+
+            $("#datepicker").datepicker({
+                language: 'es',
+                autoclose: true,
+                todayHighlight: true,
+                endDate: new Date()
+            }).datepicker('update', new Date());
+        });
+    </script>
+
+</body>
+</html>

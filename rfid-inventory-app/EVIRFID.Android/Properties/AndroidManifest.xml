@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.5" package="mx.azimuth.evirfidapp" android:versionCode="5">
+	<uses-sdk android:minSdkVersion="27" android:targetSdkVersion="34" />
+	<application android:label="EVIRFIDApp.Android" android:theme="@style/MainTheme" android:icon="@drawable/evi"></application>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.MANAGE_MEDIA" />
+	<uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+	<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+	<uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+	<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	<uses-permission android:name="android.permission.NFC" />
+	<uses-permission android:name="android.permission.NFC_PREFERRED_PAYMENT_INFO" />
+	<uses-permission android:name="android.permission.NFC_TRANSACTION_EVENT" />
+	<uses-permission android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND" />
+	<uses-permission android:name="android.permission.TRANSMIT_IR" />
+	<uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+	<uses-permission android:name="android.permission.UWB_RANGING" />
+	<uses-permission android:name="android.permission.BIND_CONTROLS" />
+	<uses-permission android:name="android.permission.BIND_NFC_SERVICE" />
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
+	<uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
+	<uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
+	<uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+	<uses-permission android:name="android.permission.INTERNET" />
+</manifest>

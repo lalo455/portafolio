@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Ping Demo";
+}
+
+<h2>Prueba de conexión (PingClass)</h2>
+
+<p>
+    Este botón valida conexión con el servidor configurado en <b>PingClass</b>.
+</p>
+
+<button type="button" class="btn btn-primary" onclick="probarPing()">Probar conexión</button>
+
+<hr />
+
+<div id="resultado" style="margin-top:20px; font-family:monospace; font-size:1rem;"></div>
+
+<!-- IMPORTAR CLASE JS DE PING -->
+<script src="~/js/PingClass.js"></script>
+
+<script>
+    async function probarPing() {
+        // mensaje de "procesando"
+        document.getElementById("resultado").innerHTML = "Validando conexión... ⏳";
+
+        // llama al endpoint /api/ping-check
+        const ok = await PingClassJS.isValid();
+
+        if (!ok) {
+            // mostrar mensaje y detener flujo (como pidió tu jefe)
+            alert(PingClassJS.GetError());
+            document.getElementById("resultado").innerHTML =
+                "<span style='color:red'>❌ Sin conexión: " + PingClassJS.GetError() + "</span>";
+            return;
+        }
+
+        // Si pasó el ping, puedes continuar flujo normal
+        
+
+        document.getElementById("resultado").innerHTML =
+            "<span style='color:green'>✔️ Continuar flujo normal...</span>";
+
+        // Aquí el flujo normal (ejemplo)
+        // window.location.href = '/Inspeccion/Index'; // si quisieras redirigir
+    }
+</script>
+
+<style>
+    button.btn-primary {
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+</style>

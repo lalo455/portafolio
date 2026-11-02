@@ -1,0 +1,1602 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ctr_common_error_gettingRackInfo" xml:space="preserve">
+    <value>Error getting information from the Rack</value>
+  </data>
+  <data name="ctr_common_noLabelRecovered" xml:space="preserve">
+    <value>No label information retrieved</value>
+  </data>
+  <data name="ctr_common_noLabelRecovered1" xml:space="preserve">
+    <value>No label information retrieved</value>
+  </data>
+  <data name="ctr_common_noRecoveredRackBatchesInfo" xml:space="preserve">
+    <value>Batch information was not retrieved from the Rack</value>
+  </data>
+  <data name="ctr_common_noWHRecovered" xml:space="preserve">
+    <value>Warehouses were not recovered</value>
+  </data>
+  <data name="ctr_common_unknownOption" xml:space="preserve">
+    <value>Unknown option</value>
+  </data>
+  <data name="ctr_count_draftSaved" xml:space="preserve">
+    <value>Draft Saved</value>
+  </data>
+  <data name="ctr_count_error_gettingBatchInfo" xml:space="preserve">
+    <value>Error recovering Batch info</value>
+  </data>
+  <data name="ctr_count_error_recoveringDraft" xml:space="preserve">
+    <value>Error retrieving saved draft</value>
+  </data>
+  <data name="ctr_count_error_recoveringDraftList" xml:space="preserve">
+    <value>Error retrieving Drafts list</value>
+  </data>
+  <data name="ctr_count_error_savingPreviousCount" xml:space="preserve">
+    <value>Error in the Previous Saving of the Count</value>
+  </data>
+  <data name="ctr_count_noDraftDataRecovered" xml:space="preserve">
+    <value>No records were retrieved from the selected Draft.</value>
+  </data>
+  <data name="ctr_count_noSavedData" xml:space="preserve">
+    <value>There are no saved records</value>
+  </data>
+  <data name="ctr_count_noWHInfoRecovered" xml:space="preserve">
+    <value>Complete storage information was not retrieved</value>
+  </data>
+  <data name="ctr_count_readAtLeastOneLabel" xml:space="preserve">
+    <value>To save a draft you must read at least one label</value>
+  </data>
+  <data name="ctr_count_unknownAction" xml:space="preserve">
+    <value>Unknown action type or unrecognized</value>
+  </data>
+  <data name="ctr_login_userDoesntExist" xml:space="preserve">
+    <value>Username does not exist</value>
+  </data>
+  <data name="ctr_login_wrongUserOrPassword" xml:space="preserve">
+    <value>Wrong username or password</value>
+  </data>
+  <data name="ctr_manualTransfer_error_savingDataForRack" xml:space="preserve">
+    <value>Error saving logs to update Rack</value>
+  </data>
+  <data name="ctr_manualTransfer_error_savingDataForTransfer" xml:space="preserve">
+    <value>Error saving records for transfer</value>
+  </data>
+  <data name="ctr_manualTransfer_error_transfering" xml:space="preserve">
+    <value>Transfer Error</value>
+  </data>
+  <data name="ctr_manualTransfer_noCustomersAndWHRecovered" xml:space="preserve">
+    <value>Customer and warehouse information was not recovered</value>
+  </data>
+  <data name="ctr_manualTransfer_noCustomersRecovered" xml:space="preserve">
+    <value>No customers recovered</value>
+  </data>
+  <data name="ctr_manualTransfer_noLabelRecoveredVerifyIBatchStock" xml:space="preserve">
+    <value>No label information was retrieved, verify that Lot: {0} has Stock available.</value>
+  </data>
+  <data name="ctr_manualTransfer_noLabelRecoveredVerifyItemStock" xml:space="preserve">
+    <value>No label information was retrieved, verify that the Item NOT Managed: {0}, has Stock available.</value>
+  </data>
+  <data name="ctr_print_errorGeneratedProcessingPDF" xml:space="preserve">
+    <value>An error was generated while processing the PDF document.</value>
+  </data>
+  <data name="ctr_quality_batchesWithItemLocked" xml:space="preserve">
+    <value>Warehouse Batches {0} with Item: {1}, are LOCKED</value>
+  </data>
+  <data name="ctr_quality_batchesWithItemRealeased" xml:space="preserve">
+    <value>Warehouse Batches {0} with the Article: {1}, are RELEASED</value>
+  </data>
+  <data name="ctr_quality_error_confirmingLocation" xml:space="preserve">
+    <value>Error confirming read location</value>
+  </data>
+  <data name="ctr_quality_error_gettingItemInfoFromWh" xml:space="preserve">
+    <value>Error getting information from Warehouse Items</value>
+  </data>
+  <data name="ctr_quality_error_recoveringBatchesFromWHWithItem" xml:space="preserve">
+    <value>Error Retrieving Batches from Warehouse {0} with Item: {1}</value>
+  </data>
+  <data name="ctr_quality_error_recoveringWhs" xml:space="preserve">
+    <value>Error recovering warehouses</value>
+  </data>
+  <data name="ctr_quality_error_savingDataForQuality" xml:space="preserve">
+    <value>Error saving records for quality</value>
+  </data>
+  <data name="ctr_quality_error_updating" xml:space="preserve">
+    <value>Error updating</value>
+  </data>
+  <data name="ctr_quality_locationReadDoesntExist" xml:space="preserve">
+    <value>Location read does not exist</value>
+  </data>
+  <data name="ctr_quality_noRecoveredItemInfoForWH" xml:space="preserve">
+    <value>Information on Warehouse Items was not retrieved</value>
+  </data>
+  <data name="ctr_quality_noRecoveredLocationsForWH" xml:space="preserve">
+    <value>No locations retrieved for store {0}</value>
+  </data>
+  <data name="ctr_quality_status_unknown" xml:space="preserve">
+    <value>Unknown status</value>
+  </data>
+  <data name="ctr_quality_updateApplied" xml:space="preserve">
+    <value>Update applied successfully:</value>
+  </data>
+  <data name="ctr_remission_error_gettingBatchLineInfoFromPicking" xml:space="preserve">
+    <value>Error when obtaining batch information from picking</value>
+  </data>
+  <data name="ctr_remission_error_gettingStatusOfOrder" xml:space="preserve">
+    <value>Error getting Order Status {0}, verify.</value>
+  </data>
+  <data name="ctr_remission_error_recoveringCustomerList" xml:space="preserve">
+    <value>Error retrieving customer list</value>
+  </data>
+  <data name="ctr_remission_error_recoveringOderNum" xml:space="preserve">
+    <value>Error retrieving the Order Number</value>
+  </data>
+  <data name="ctr_remission_error_recoveringOrderDetail" xml:space="preserve">
+    <value>Error retrieving order details</value>
+  </data>
+  <data name="ctr_remission_error_recoveringOrderList" xml:space="preserve">
+    <value>Error retrieving the Orders list</value>
+  </data>
+  <data name="ctr_remission_error_recoveringPickingOrderList" xml:space="preserve">
+    <value>Error retrieving the list of Picking Orders</value>
+  </data>
+  <data name="ctr_remission_error_savingData" xml:space="preserve">
+    <value>Error saving data</value>
+  </data>
+  <data name="ctr_remission_error_updatingRecords" xml:space="preserve">
+    <value>Error updating records</value>
+  </data>
+  <data name="ctr_remission_error_verifyingAndCancellingOrderPicking" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Value in english</value>
+  </data>
+  <data name="lgc_comun_get_batchesUpdatedWithStatus" xml:space="preserve">
+    <value>Batches Updated Correctly with status {0}</value>
+  </data>
+  <data name="lgc_comun_get_dbConnectionUnavailable" xml:space="preserve">
+    <value>The connection is not available</value>
+  </data>
+  <data name="lgc_comun_put_counting_pathFileNotSet" xml:space="preserve">
+    <value>You have not set the path for the counting file</value>
+  </data>
+  <data name="lgc_comun_put_fileSuccessfullyCreated" xml:space="preserve">
+    <value>File successfully created: {0}</value>
+  </data>
+  <data name="lgc_comun_put_picking_basedOnOrderNum" xml:space="preserve">
+    <value>Based on order {0}</value>
+  </data>
+  <data name="lgc_comun_put_picking_new" xml:space="preserve">
+    <value>New picking</value>
+  </data>
+  <data name="lgc_comun_put_picking_ofOrderNumCreated" xml:space="preserve">
+    <value>Picking # {0} of Order {1} has been created</value>
+  </data>
+  <data name="lgc_comun_put_picking_validationRealizedCorrectly" xml:space="preserve">
+    <value>Update the Picking Number {0}, of the Order {1}, PICKING Code: {2}, was realized Correctly.</value>
+  </data>
+  <data name="vw_common_action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="vw_common_batch" xml:space="preserve">
+    <value>Batch</value>
+  </data>
+  <data name="vw_common_batchQty" xml:space="preserve">
+    <value>Batch Qty</value>
+  </data>
+  <data name="vw_common_box" xml:space="preserve">
+    <value>Box</value>
+  </data>
+  <data name="vw_common_boxOrPallet" xml:space="preserve">
+    <value>Boxes/Rolls</value>
+  </data>
+  <data name="vw_common_code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="vw_common_customer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="vw_common_customer_select" xml:space="preserve">
+    <value>Select Customer</value>
+  </data>
+  <data name="vw_common_delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="vw_common_enterBoxOrPallet" xml:space="preserve">
+    <value>Enter Box or Pallet</value>
+  </data>
+  <data name="vw_common_enterLocation" xml:space="preserve">
+    <value>Enter Location</value>
+  </data>
+  <data name="vw_common_generateMovement" xml:space="preserve">
+    <value>Generate Movement</value>
+  </data>
+  <data name="vw_common_inventoryCount" xml:space="preserve">
+    <value>Inventory Count</value>
+  </data>
+  <data name="vw_common_item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="vw_common_label" xml:space="preserve">
+    <value>Label</value>
+  </data>
+  <data name="vw_common_location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="vw_common_order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="vw_common_orderQty" xml:space="preserve">
+    <value>Order Qty</value>
+  </data>
+  <data name="vw_common_order_num" xml:space="preserve">
+    <value>Order Num</value>
+  </data>
+  <data name="vw_common_pendingQty" xml:space="preserve">
+    <value>Pending Qty</value>
+  </data>
+  <data name="vw_common_picking" xml:space="preserve">
+    <value>Picking</value>
+  </data>
+  <data name="vw_common_printLabelAbreb" xml:space="preserve">
+    <value>Print Lbl.</value>
+  </data>
+  <data name="vw_common_quality" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="vw_common_quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="vw_common_rack_current" xml:space="preserve">
+    <value>Current Rack</value>
+  </data>
+  <data name="vw_common_rack_new" xml:space="preserve">
+    <value>New Rack</value>
+  </data>
+  <data name="vw_common_rack_readingBy" xml:space="preserve">
+    <value>Reading by RACK</value>
+  </data>
+  <data name="vw_common_read" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="vw_common_reference" xml:space="preserve">
+    <value>Reference</value>
+  </data>
+  <data name="vw_common_remission" xml:space="preserve">
+    <value>Shipping</value>
+  </data>
+  <data name="vw_common_wh" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="vw_common_wh_destination" xml:space="preserve">
+    <value>Destination Warehouse</value>
+  </data>
+  <data name="vw_common_wh_select" xml:space="preserve">
+    <value>Select Warehouse</value>
+  </data>
+  <data name="vw_common_wh_source" xml:space="preserve">
+    <value>Source Warehouse</value>
+  </data>
+  <data name="vw_count_count_num" xml:space="preserve">
+    <value>Count Num</value>
+  </data>
+  <data name="vw_count_enterQuantity" xml:space="preserve">
+    <value>Enter quantity</value>
+  </data>
+  <data name="vw_count_location_current" xml:space="preserve">
+    <value>Current Location</value>
+  </data>
+  <data name="vw_count_location_new" xml:space="preserve">
+    <value>New Location</value>
+  </data>
+  <data name="vw_count_qtyCountAbreb" xml:space="preserve">
+    <value>Qty. Count</value>
+  </data>
+  <data name="vw_count_qtySAPAbreb" xml:space="preserve">
+    <value>Qty. SAP</value>
+  </data>
+  <data name="vw_login_access" xml:space="preserve">
+    <value>Access</value>
+  </data>
+  <data name="vw_login_login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="vw_login_login2" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="vw_login_password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="vw_login_user" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="vw_manualTransfer_manualTransfer" xml:space="preserve">
+    <value>Manual Transfer</value>
+  </data>
+  <data name="vw_manualTransfer_masterLabel_rack" xml:space="preserve">
+    <value>Rack</value>
+  </data>
+  <data name="vw_manualTransfer_masterLabel_rack_reassign" xml:space="preserve">
+    <value>Reassign Rack</value>
+  </data>
+  <data name="vw_menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="vw_menu_quality" xml:space="preserve">
+    <value>Quality Menu</value>
+  </data>
+  <data name="vw_menu_remission" xml:space="preserve">
+    <value>Shipping Menu</value>
+  </data>
+  <data name="vw_menu_remission1" xml:space="preserve">
+    <value>Shipping</value>
+  </data>
+  <data name="vw_menu_transfer" xml:space="preserve">
+    <value>Transfer Menu</value>
+  </data>
+  <data name="vw_menu_transferTitle" xml:space="preserve">
+    <value>Transfer Menu</value>
+  </data>
+  <data name="vw_menu_wms" xml:space="preserve">
+    <value>WMS Menu</value>
+  </data>
+  <data name="vw_quality_item_select" xml:space="preserve">
+    <value>Select Item</value>
+  </data>
+  <data name="vw_quality_rack_reading" xml:space="preserve">
+    <value>RACK reading</value>
+  </data>
+  <data name="vw_quality_selectAValue" xml:space="preserve">
+    <value>Select a value</value>
+  </data>
+  <data name="vw_quality_transfer" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
+  <data name="vw_quality_update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="vw_quality_updateTo" xml:space="preserve">
+    <value>Update to</value>
+  </data>
+  <data name="vw_quality_wh_sourceAbrev" xml:space="preserve">
+    <value>Source Wh.</value>
+  </data>
+  <data name="vw_remission_pickingRemission_pickingValidation" xml:space="preserve">
+    <value>Picking Validation</value>
+  </data>
+  <data name="vw_remission_pickingRemission_picking_validate" xml:space="preserve">
+    <value>Validate Picking</value>
+  </data>
+  <data name="vw_remission_pickingRemission_required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="vw_remission_pickingRemission_validated" xml:space="preserve">
+    <value>Validated</value>
+  </data>
+  <data name="js_common_authorized" xml:space="preserve">
+    <value>AUTHORIZED</value>
+  </data>
+  <data name="js_common_batchFromWHAlreadyRead" xml:space="preserve">
+    <value>Batch {0} from Warehouse {1} already Read</value>
+  </data>
+  <data name="js_common_batch_alreadyBeenRead" xml:space="preserve">
+    <value>Batch {0} has already been read</value>
+  </data>
+  <data name="js_common_batch_assignedToItems" xml:space="preserve">
+    <value>Batch {0} is assigned to the following items:</value>
+  </data>
+  <data name="js_common_batch_cannotExceedQty" xml:space="preserve">
+    <value>The BATCH: {0} CANNOT exceed the amount of: {1}</value>
+  </data>
+  <data name="js_common_batch_hasAlreadyShipped" xml:space="preserve">
+    <value>The Batch has already been SHIPPED</value>
+  </data>
+  <data name="js_common_batch_hasAlreadyShippedParam" xml:space="preserve">
+    <value>BATCH: {0} has already been SHIPPED</value>
+  </data>
+  <data name="js_common_batch_locked" xml:space="preserve">
+    <value>The batch is LOCKED</value>
+  </data>
+  <data name="js_common_batch_notAccessible" xml:space="preserve">
+    <value>The Batch is NOT ACCESSIBLE</value>
+  </data>
+  <data name="js_common_batch_notAccessibleParam" xml:space="preserve">
+    <value>BATCH: {0} is NOT ACCESSIBLE</value>
+  </data>
+  <data name="js_common_boxOfBatchAlreadyRead" xml:space="preserve">
+    <value>Box {0} of Batch {1} already Read</value>
+  </data>
+  <data name="js_common_boxOfItemAlreadyRead" xml:space="preserve">
+    <value>Box {0} of Item {1} already Read</value>
+  </data>
+  <data name="js_common_closed" xml:space="preserve">
+    <value>CLOSED</value>
+  </data>
+  <data name="js_common_delivery_created" xml:space="preserve">
+    <value>Delivery Document successfully created: {0}</value>
+  </data>
+  <data name="js_common_enterOrderOrReference" xml:space="preserve">
+    <value>You must enter Order No. or Reference No.</value>
+  </data>
+  <data name="js_common_html_batch_alreadyRead" xml:space="preserve">
+    <value> &lt;br /&gt; Batch {0}, has already been read</value>
+  </data>
+  <data name="js_common_html_batch_shipped" xml:space="preserve">
+    <value>  &lt;br /&gt; BATCH: {0} has already been SHIPPED</value>
+  </data>
+  <data name="js_common_html_batch_unaccessible" xml:space="preserve">
+    <value>  &lt;br /&gt; BATCH: {0} is NOT ACCESSIBLE</value>
+  </data>
+  <data name="js_common_html_item" xml:space="preserve">
+    <value> &lt;br /&gt; &gt; Item {0}</value>
+  </data>
+  <data name="js_common_html_item_inBatchNotInOrder" xml:space="preserve">
+    <value> &lt;br /&gt; Item {0}, of Batch {1}, does not exist in the Order</value>
+  </data>
+  <data name="js_common_html_item_inWhCompleted" xml:space="preserve">
+    <value> &lt;br /&gt; Item {0}, with Warehouse {1}, has been completed.</value>
+  </data>
+  <data name="js_common_html_item_notInOrder" xml:space="preserve">
+    <value> &lt;br /&gt; The Item {0}, does NOT belong to the Order</value>
+  </data>
+  <data name="js_common_html_lineBatchWh" xml:space="preserve">
+    <value> &lt;br /&gt; Line {0} - {1} - {2} : Batch Warehouse &gt; {3}</value>
+  </data>
+  <data name="js_common_html_lineWithItemStatusFoundStock" xml:space="preserve">
+    <value>&lt;br /&gt;&lt;br /&gt; Line {0} with Item {1} has Status {2} , is found {3} , has STOCK {4}</value>
+  </data>
+  <data name="js_common_html_wh_requestWHBatch" xml:space="preserve">
+    <value>&lt;br /&gt; Warehouse Request: {0} : Warehouse Batch &gt; {1}</value>
+  </data>
+  <data name="js_common_itemWithWHCompleted" xml:space="preserve">
+    <value>Item {0}, with Warehouse {1}, has been completed.</value>
+  </data>
+  <data name="js_common_item_noBatchsRead" xml:space="preserve">
+    <value>The Item does not have Batchs read.</value>
+  </data>
+  <data name="js_common_item_notBelongOrder" xml:space="preserve">
+    <value>Item {0} does NOT belong to the Order</value>
+  </data>
+  <data name="js_common_item_unmngdRequiresTransfer" xml:space="preserve">
+    <value>Unmanaged Item {0} Requires Transfer:</value>
+  </data>
+  <data name="js_common_label_alreadyRead" xml:space="preserve">
+    <value>The label has already been read</value>
+  </data>
+  <data name="js_common_label_completeInfoNotSentPrint" xml:space="preserve">
+    <value>Complete Label Information has not been sent for Printing.</value>
+  </data>
+  <data name="js_common_lineWithItemStatusLocatedStock" xml:space="preserve">
+    <value>Line {0} with Item {1} has Status {2} , is located {3} , has STOCK {4}</value>
+  </data>
+  <data name="js_common_open" xml:space="preserve">
+    <value>OPEN</value>
+  </data>
+  <data name="js_common_order_loadCorrectly" xml:space="preserve">
+    <value>Order loaded correctly</value>
+  </data>
+  <data name="js_common_order_verifyMustContainLinesOpenAuthAvailable" xml:space="preserve">
+    <value>Verify the order {0}, it must contain open lines, authorized and with available STOCK</value>
+  </data>
+  <data name="js_common_rackHasAlreadyReadParam" xml:space="preserve">
+    <value>RACK has already been read: {0}</value>
+  </data>
+  <data name="js_common_transfers_batch_hasAlreadyReadParam" xml:space="preserve">
+    <value>BATCH: {0} has already been Read</value>
+  </data>
+  <data name="js_common_transfers_batch_lockedParam" xml:space="preserve">
+    <value>BATCH: {0} is LOCKED</value>
+  </data>
+  <data name="js_common_transfers_html_batch_locked" xml:space="preserve">
+    <value>  &lt;br /&gt; BATCH: {0} is LOCKED</value>
+  </data>
+  <data name="js_common_transfers_html_batch_read" xml:space="preserve">
+    <value>  &lt;br /&gt; BATCH: {0} has already been Read</value>
+  </data>
+  <data name="js_common_unauthorized" xml:space="preserve">
+    <value>UNAUTHORIZED</value>
+  </data>
+  <data name="js_count_batch_ofRackRead" xml:space="preserve">
+    <value>Batch {0} of the RACK has already been Read</value>
+  </data>
+  <data name="js_count_batch_requiresTransferLocatedAt" xml:space="preserve">
+    <value>Batch {0}, Requires Transfer, is located at:</value>
+  </data>
+  <data name="js_count_draft_uploaded" xml:space="preserve">
+    <value>Draft uploaded successfully</value>
+  </data>
+  <data name="js_count_html_batch_ofRackRead" xml:space="preserve">
+    <value>&lt;br /&gt;&lt;br /&gt; The Batch {0} of the RACK has already been Read</value>
+  </data>
+  <data name="js_count_html_batch_requiresTransfer" xml:space="preserve">
+    <value>&lt;br /&gt;&lt;br /&gt; Batch {0}, Requires Transfer, is located at:</value>
+  </data>
+  <data name="js_count_html_wh" xml:space="preserve">
+    <value> &lt;br /&gt; &gt; Warehouse {0}</value>
+  </data>
+  <data name="js_count_item_unmngdRequiresTransferLocatedAt" xml:space="preserve">
+    <value>Item not managed by batches {0}, Requires Transfer, is located at:</value>
+  </data>
+  <data name="js_count_label_noInfoFound" xml:space="preserve">
+    <value>No label information found</value>
+  </data>
+  <data name="js_count_label_noInfoFoundInStore" xml:space="preserve">
+    <value>NO label information FOUND IN STORE</value>
+  </data>
+  <data name="js_count_rackHasAlreadyRead" xml:space="preserve">
+    <value>RACK has already been read:</value>
+  </data>
+  <data name="js_error_failedToRetrieveData" xml:space="preserve">
+    <value>Failed to retrieve data</value>
+  </data>
+  <data name="js_error_inLoginService" xml:space="preserve">
+    <value>Login Service Error</value>
+  </data>
+  <data name="js_error_inService1" xml:space="preserve">
+    <value>Error in Service 1</value>
+  </data>
+  <data name="js_error_inService10" xml:space="preserve">
+    <value>Error in Service 10</value>
+  </data>
+  <data name="js_error_inService11" xml:space="preserve">
+    <value>Error in Service 11</value>
+  </data>
+  <data name="js_error_inService2" xml:space="preserve">
+    <value>Error in Service 2</value>
+  </data>
+  <data name="js_error_inService8" xml:space="preserve">
+    <value>Error in Service 8</value>
+  </data>
+  <data name="js_error_validation" xml:space="preserve">
+    <value>Validation Error</value>
+  </data>
+  <data name="js_login_sysAdvice" xml:space="preserve">
+    <value>System Advice</value>
+  </data>
+  <data name="js_msg_error" xml:space="preserve">
+    <value>Error!!</value>
+  </data>
+  <data name="js_msg_info" xml:space="preserve">
+    <value> - Information -</value>
+  </data>
+  <data name="js_msg_success" xml:space="preserve">
+    <value>* Successful Process *</value>
+  </data>
+  <data name="js_msg_warning" xml:space="preserve">
+    <value>Warning!!</value>
+  </data>
+  <data name="js_quality_batch_onlyFromSrcToDestWHBeMoved" xml:space="preserve">
+    <value>Only the batches from the selected source warehouse to the selected destination warehouse will be moved.</value>
+  </data>
+  <data name="js_quality_batch_shipped" xml:space="preserve">
+    <value>The Batch is SHIPPED</value>
+  </data>
+  <data name="js_quality_batch_withItemInWHBlocked" xml:space="preserve">
+    <value>Batch {0} with Item {1} in Warehouse {2} is already BLOCKED.</value>
+  </data>
+  <data name="js_quality_batch_withItemInWHRead" xml:space="preserve">
+    <value>Batch {0} with Item {1} in Warehouse {2}, has already been READ</value>
+  </data>
+  <data name="js_quality_batch_withItemInWHShipped" xml:space="preserve">
+    <value>Batch {0} with Item {0} in Warehouse {2}, has already been SHIPPED</value>
+  </data>
+  <data name="js_quality_batch_withItemInWHUnlocked" xml:space="preserve">
+    <value>Batch {0} with Item {1} in Warehouse {2} is already UNLOCKED.</value>
+  </data>
+  <data name="js_quality_batch_withItemNotBelongToItem" xml:space="preserve">
+    <value>The BATCH: {0} with Item {1} does NOT belong to the selected Item {2}</value>
+  </data>
+  <data name="js_quality_batch_withWHNotBelongToOriginWH" xml:space="preserve">
+    <value>The BATCH: {0} with Warehouse {1} does NOT belong to the selected Origin Warehouse {2}</value>
+  </data>
+  <data name="js_quality_html_batch_withItemInWHEmbarked" xml:space="preserve">
+    <value> &lt;br /&gt; Batch {0} with Item {1} in Warehouse {2}, has already been SHIPPED</value>
+  </data>
+  <data name="js_quality_html_batch_withItemInWHLocked" xml:space="preserve">
+    <value> &lt;br /&gt; Batch {0} with Item {1} in Warehouse {2}, is already BLOCKED</value>
+  </data>
+  <data name="js_quality_html_batch_withItemInWHRead" xml:space="preserve">
+    <value> &lt;br /&gt; Batch {0} with Item {1} in Warehouse {2}, has already been READ</value>
+  </data>
+  <data name="js_quality_html_batch_withItemInWHUnlocked" xml:space="preserve">
+    <value> &lt;br /&gt; Batch {0} with Item {1} in Warehouse {2}, is already UNLOCKED</value>
+  </data>
+  <data name="js_quality_html_batch_withItemNotBelongsToItem" xml:space="preserve">
+    <value> &lt;br /&gt; The BATCH: {0} with Item {1} does NOT belong to the selected Item {2}</value>
+  </data>
+  <data name="js_quality_html_batch_withWHNotBelongsToSourceWH" xml:space="preserve">
+    <value> &lt;br /&gt; The BATCH: {0} with Warehouse {1} does NOT belong to the selected Origin Warehouse {2}</value>
+  </data>
+  <data name="js_quality_html_itemInWh" xml:space="preserve">
+    <value> &lt;br /&gt; &gt; Item {0} - in Stock {1}</value>
+  </data>
+  <data name="js_quality_item_selectToUpdate" xml:space="preserve">
+    <value>You must select Item to Update</value>
+  </data>
+  <data name="js_quality_label_belongsUnmngdItemNotByBatch" xml:space="preserve">
+    <value>The label it is not managed by Batch</value>
+  </data>
+  <data name="js_quality_label_noReadsHaveBeenPerformed" xml:space="preserve">
+    <value>No Label reads have been performed</value>
+  </data>
+  <data name="js_quality_sapInfoNotBelongsLabelAndHeader" xml:space="preserve">
+    <value>The SAP information does not correspond to label information and header information, verify information in the system.</value>
+  </data>
+  <data name="js_quality_selectItemOrReadLabels" xml:space="preserve">
+    <value>You must select Item or Read Labels</value>
+  </data>
+  <data name="js_quality_thereAreNoBatchesReadFromSrcWHforUpdAndTransfer" xml:space="preserve">
+    <value>There are no Batches read from the Source Warehouse for Updating and Transfer</value>
+  </data>
+  <data name="js_quality_threadBoxWithBatchAssignedToItems" xml:space="preserve">
+    <value>The Thread Box with Batch {0}, is assigned to the following items:</value>
+  </data>
+  <data name="js_quality_wh_destMustBeDifFromOrigin" xml:space="preserve">
+    <value>Destination Warehouse must be different from the Origin Warehouse</value>
+  </data>
+  <data name="js_quality_wh_selectBeforeReading" xml:space="preserve">
+    <value>You must select the Origin and Destination Warehouse before reading labels.</value>
+  </data>
+  <data name="js_quality_wh_selectDestination" xml:space="preserve">
+    <value>You must select Destination Warehouse</value>
+  </data>
+  <data name="js_quality_wh_selectDestinationDifFromOrigin" xml:space="preserve">
+    <value>You must select Destination Warehouse different from Origin Warehouse</value>
+  </data>
+  <data name="js_quality_wh_selectOrigin" xml:space="preserve">
+    <value>You must select Origin Warehouse</value>
+  </data>
+  <data name="js_quality_wh_selectOriginToTransfer" xml:space="preserve">
+    <value>You must select Origin Warehouse to carry out Transfer</value>
+  </data>
+  <data name="js_remission_html_batch_fromWHRead" xml:space="preserve">
+    <value> &lt;br /&gt; Batch {0} from Warehouse {1} already Read</value>
+  </data>
+  <data name="js_remission_html_box_ofBatchRead" xml:space="preserve">
+    <value> &lt;br /&gt; Box {0} of Batch {1} already Read</value>
+  </data>
+  <data name="js_remission_html_box_ofItemRead" xml:space="preserve">
+    <value> &lt;br /&gt; Box {0} of Item {1} already Read</value>
+  </data>
+  <data name="js_remission_picking_boxOfBatchFromWHAlreadyRead" xml:space="preserve">
+    <value>Ya se ha Leído Caja {0} del Lote {1} del Almacen {2}</value>
+  </data>
+  <data name="js_remission_picking_boxOfItemFromWHAlreadyRead" xml:space="preserve">
+    <value>Ya se ha Leído Caja {0} del Artículo {1} del Almacen {2}</value>
+  </data>
+  <data name="js_remission_picking_html_batch_fromWHRead" xml:space="preserve">
+    <value> &lt;br /&gt; Batch {0} from Warehouse {1} already Read</value>
+  </data>
+  <data name="js_remission_picking_html_box_ofBatchFromWHRead" xml:space="preserve">
+    <value> &lt;br /&gt; Box {0} of Batch {1} from Warehouse {2} already Read</value>
+  </data>
+  <data name="js_remission_picking_html_box_ofBatchRead" xml:space="preserve">
+    <value> &lt;br /&gt; Box {0} of Batch {1} already Read</value>
+  </data>
+  <data name="js_remission_picking_html_box_ofItemFromWHRead" xml:space="preserve">
+    <value> &lt;br /&gt; Box {0} of Item {1} from Warehouse {2} already Read</value>
+  </data>
+  <data name="js_remission_picking_html_box_ofItemRead" xml:space="preserve">
+    <value> &lt;br /&gt; Box {0} of Item {1} already Read</value>
+  </data>
+  <data name="js_remission_picking_html_item_inBatchNotInValidated" xml:space="preserve">
+    <value> &lt;br /&gt; Item {0}, from Batch {1}, DOES NOT BELONG to the validated Packing</value>
+  </data>
+  <data name="js_remission_picking_item_fromBatchNotBelongsToPacking" xml:space="preserve">
+    <value>Item {0}, from Batch {1}, DOES NOT BELONG to the validated Packing</value>
+  </data>
+  <data name="js_remission_picking_item_fromBatchNotInOrder" xml:space="preserve">
+    <value>Item {0}, from Batch {1}, does not exist in the Order</value>
+  </data>
+  <data name="js_remission_picking_orderNotHavePickingOrIsCancelled" xml:space="preserve">
+    <value>The order {0} does not have Picking or is Canceled, check.</value>
+  </data>
+  <data name="js_remission_picking_order_hasNotBeenCompleted" xml:space="preserve">
+    <value>The Order has not been completed</value>
+  </data>
+  <data name="js_remission_picking_order_verifyOpenInSAP" xml:space="preserve">
+    <value>Verify that Order {0} in SAP is Open.</value>
+  </data>
+  <data name="js_remission_picking_packing_batchNotBelongVerifyItemQtyWH" xml:space="preserve">
+    <value>Batch {0}, DOES NOT BELONG to the validated Packing, verify Item, Warehouse and corresponding Quantity in Picking.</value>
+  </data>
+  <data name="js_remission_picking_packing_itemNotBelongVerifyItemQtyWH" xml:space="preserve">
+    <value>The Item {0}, Box {1} with Quantity {2}, DOES NOT BELONG to the validated Packing, verify Item, Warehouse and corresponding Quantity in Picking.</value>
+  </data>
+  <data name="js_remission_picking_packing_loadCorrectly" xml:space="preserve">
+    <value>Packing loaded correctly</value>
+  </data>
+  <data name="js_remission_picking_packing_yarnBoxQtyNotBelongVerifyItemQtyWH" xml:space="preserve">
+    <value>The Batch of Yarn {0}, Box {1} with Quantity {2}, DOES NOT BELONG to the validated Packing, verify Item, Warehouse and corresponding Quantity in Picking.</value>
+  </data>
+  <data name="js_remission_picking_readInfoGreaterThanInOrder" xml:space="preserve">
+    <value>The read information is greater than what is Validated in Order</value>
+  </data>
+  <data name="js_remission_picking_recommendedValidPickingWithAdmin" xml:space="preserve">
+    <value>It is recommended to validate the Picking of the Order with the WMS Administrator before continuing or restarting the reading of the rolls of the order.</value>
+  </data>
+  <data name="js_remission_remission_batch_noDeliverMoreThan" xml:space="preserve">
+    <value>Batch {0} cannot deliver more than {1}</value>
+  </data>
+  <data name="js_remission_remission_item_fromBatchNotInOrder" xml:space="preserve">
+    <value>Item {0}, from Batch {1}, does not exist in the order</value>
+  </data>
+  <data name="js_remission_remission_label_noInfoRetrieved" xml:space="preserve">
+    <value>No Label information retrieved</value>
+  </data>
+  <data name="js_remission_remission_totalOrderLines" xml:space="preserve">
+    <value>Total Order Lines: {0}</value>
+  </data>
+  <data name="js_transfers_manual_batch_locked" xml:space="preserve">
+    <value>The batch is LOCKED</value>
+  </data>
+  <data name="js_transfers_manual_batch_udateSuccess" xml:space="preserve">
+    <value>Batch update successful.</value>
+  </data>
+  <data name="js_transfers_manual_document_created" xml:space="preserve">
+    <value>Document created successfully: {0}</value>
+  </data>
+  <data name="js_transfers_manual_html_batch_cantExeedAmount" xml:space="preserve">
+    <value> &lt;br /&gt; The BATCH: {0} CANNOT exceed the amount of: {1}</value>
+  </data>
+  <data name="js_transfers_manual_label_exists" xml:space="preserve">
+    <value>Label already exists</value>
+  </data>
+  <data name="js_transfers_manual_label_noInfoFoundInStoreParam" xml:space="preserve">
+    <value>NO label information FOUND IN STORE {0}</value>
+  </data>
+  <data name="js_transfers_manual_label_ofUnmanagedItemCannotExceed" xml:space="preserve">
+    <value>The label of the unmanaged Item: {0}, CANNOT exceed the amount: {1}</value>
+  </data>
+  <data name="js_transfers_manual_label_withBatchAndItemCannotExceed" xml:space="preserve">
+    <value>The label with batch: {0} and item: {1} CANNOT exceed the quantity: {2}</value>
+  </data>
+  <data name="js_transfers_manual_label_withBatchCannotExceed" xml:space="preserve">
+    <value>The label with batch: {0} CANNOT exceed the quantity: {1}</value>
+  </data>
+  <data name="js_transfers_manual_label_withUnmanagedItemCannotExceed" xml:space="preserve">
+    <value>The label with unmanaged item: {0} CANNOT exceed the number: {1}</value>
+  </data>
+  <data name="js_transfers_manual_location_addOrChangeDestination" xml:space="preserve">
+    <value>You must add Location or Change the Destination Store.</value>
+  </data>
+  <data name="js_transfers_manual_wh_selectDestAndOrigin" xml:space="preserve">
+    <value>Select a destination and origin warehouse</value>
+  </data>
+  <data name="js_transfers_rack_batch_alreadyExists" xml:space="preserve">
+    <value>The batch already exists</value>
+  </data>
+  <data name="js_transfers_rack_batch_isAlreadyShipped" xml:space="preserve">
+    <value>The Batch is already SHIPPED</value>
+  </data>
+  <data name="js_transfers_rack_batch_notAccessible" xml:space="preserve">
+    <value>The Batch is NOT ACCESSIBLE</value>
+  </data>
+  <data name="js_transfers_rack_batch_notAccessibleParam" xml:space="preserve">
+    <value>BATCH: {0} is NOT ACCESSIBLE</value>
+  </data>
+  <data name="js_transfers_rack_batch_shippedParam" xml:space="preserve">
+    <value>BATCH: {0} is SHIPPED</value>
+  </data>
+  <data name="js_transfers_rack_html_batch_shipped" xml:space="preserve">
+    <value>  &lt;br /&gt; BATCH: {0} is SHIPPED</value>
+  </data>
+  <data name="js_transfers_rack_html_batch_unaccessible" xml:space="preserve">
+    <value>  &lt;br /&gt; BATCH: {0} is NOT ACCESSIBLE</value>
+  </data>
+  <data name="js_transfers_rack_label_belongsUnmngdItemNotByBatchAndRack" xml:space="preserve">
+    <value>The label is not managed by Batch and RACK</value>
+  </data>
+  <data name="js_transfers_rack_rackBatch_updateSuccess" xml:space="preserve">
+    <value>Rack Batch Update Successful.</value>
+  </data>
+  <data name="js_remission_batchNeedsTransfer" xml:space="preserve">
+    <value>The Batch {0} Needs Transference: </value>
+  </data>
+  <data name="js_mnu_inv_count" xml:space="preserve">
+    <value>Inventory Count</value>
+  </data>
+  <data name="js_mnu_picking" xml:space="preserve">
+    <value>Picking</value>
+  </data>
+  <data name="js_mnu_picking_valid" xml:space="preserve">
+    <value>Valid. picking</value>
+  </data>
+  <data name="js_mnu_prod_receipt" xml:space="preserve">
+    <value>Prod. Receipt</value>
+  </data>
+  <data name="js_mnu_prod_send" xml:space="preserve">
+    <value>Send to Prod.</value>
+  </data>
+  <data name="js_mnu_prod_shipment" xml:space="preserve">
+    <value>Prod. Validation</value>
+  </data>
+  <data name="js_mnu_quality" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="js_mnu_rack_reassign" xml:space="preserve">
+    <value>Rack Reassign.</value>
+  </data>
+  <data name="js_mnu_remmission" xml:space="preserve">
+    <value>Shipping</value>
+  </data>
+  <data name="js_mnu_remmission1" xml:space="preserve">
+    <value>Shipping</value>
+  </data>
+  <data name="js_mnu_ship_validation" xml:space="preserve">
+    <value>Shipment Valid.</value>
+  </data>
+  <data name="js_mnu_shoveling" xml:space="preserve">
+    <value>Shoveling</value>
+  </data>
+  <data name="js_mnu_transfers" xml:space="preserve">
+    <value>Transfers</value>
+  </data>
+  <data name="js_mnu_trans_manual" xml:space="preserve">
+    <value>Manual Transfer</value>
+  </data>
+  <data name="js_mnu_validation" xml:space="preserve">
+    <value>Quality Control</value>
+  </data>
+  <data name="js_count_html_whAndStock" xml:space="preserve">
+    <value>&lt;br /&gt; &gt; {0} : Stock = {1}</value>
+  </data>
+  <data name="js_modal_batches_currentLocation" xml:space="preserve">
+    <value>Current Loc.</value>
+  </data>
+  <data name="js_modal_common_batch" xml:space="preserve">
+    <value>Batch</value>
+  </data>
+  <data name="js_modal_common_batchList" xml:space="preserve">
+    <value>Batch List</value>
+  </data>
+  <data name="js_modal_common_date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="js_modal_common_item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="js_modal_common_openOrders" xml:space="preserve">
+    <value>Open Orders</value>
+  </data>
+  <data name="js_modal_common_orderNum" xml:space="preserve">
+    <value>Order No.</value>
+  </data>
+  <data name="js_modal_common_stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="js_modal_common_warehouse" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="js_modal_drafts_countNum" xml:space="preserve">
+    <value>Count No.</value>
+  </data>
+  <data name="js_modal_drafts_creationDate" xml:space="preserve">
+    <value>Creation Date</value>
+  </data>
+  <data name="js_modal_drafts_drafts" xml:space="preserve">
+    <value>Drafts</value>
+  </data>
+  <data name="js_modal_location_location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="js_modal_location_locationList" xml:space="preserve">
+    <value>Location List</value>
+  </data>
+  <data name="js_modal_orders_reference" xml:space="preserve">
+    <value>Reference</value>
+  </data>
+  <data name="js_modal_pending_box" xml:space="preserve">
+    <value>Box</value>
+  </data>
+  <data name="js_modal_pending_pendingListDifferentQuantity" xml:space="preserve">
+    <value>Pending List | Different quantity</value>
+  </data>
+  <data name="js_modal_pending_readQty" xml:space="preserve">
+    <value>Read Qty.</value>
+  </data>
+  <data name="js_modal_pending_realQty" xml:space="preserve">
+    <value>Real Qty.</value>
+  </data>
+  <data name="js_modal_pickingOrders_pickingDate" xml:space="preserve">
+    <value>Picking Date</value>
+  </data>
+  <data name="js_modal_pickingOrders_pickingNum" xml:space="preserve">
+    <value>Picking No.</value>
+  </data>
+  <data name="js_modal_prodOrder_orderNum" xml:space="preserve">
+    <value>Order No.</value>
+  </data>
+  <data name="js_modal_prodOrder_productionOrders" xml:space="preserve">
+    <value>Production Orders</value>
+  </data>
+  <data name="js_modal_request_code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="js_modal_request_name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="js_modal_request_quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="js_modal_request_requestLines" xml:space="preserve">
+    <value>Request Lines</value>
+  </data>
+  <data name="js_modal_common_cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ctr_common_noRecoveredRackLocationInfo" xml:space="preserve">
+    <value>Rack and Location information was not retrieved from the Item</value>
+  </data>
+  <data name="ctr_common_error_gettingItemInfo" xml:space="preserve">
+    <value>Error getting information from the Item</value>
+  </data>
+  <data name="js_modal_common_close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="js_modal_location_rack" xml:space="preserve">
+    <value>Rack</value>
+  </data>
+  <data name="js_modal_location_rolls" xml:space="preserve">
+    <value>Rolls</value>
+  </data>
+  <data name="ctr_common_noWHRetrieved" xml:space="preserve">
+    <value>No Warehouses information retrieved</value>
+  </data>
+  <data name="ctr_master_delBatchLaminated" xml:space="preserve">
+    <value>Batch {0} updated correctly.  Pallet information removed</value>
+  </data>
+  <data name="ctr_master_error_gettingMasterList" xml:space="preserve">
+    <value>Error getting information from the Pallets</value>
+  </data>
+  <data name="ctr_master_error_gettingPallet" xml:space="preserve">
+    <value>Error getting information from Pallet {0}</value>
+  </data>
+  <data name="ctr_master_noBatchLaminated" xml:space="preserve">
+    <value>No information retrieved from Label.  Verify the Batch {0}</value>
+  </data>
+  <data name="ctr_master_noMasterRecovered" xml:space="preserve">
+    <value>No Pallets retrieved</value>
+  </data>
+  <data name="ctr_master_noPalletRecovered" xml:space="preserve">
+    <value>No information retrieved from Pallet {0}</value>
+  </data>
+  <data name="ctr_master_error_newMaster" xml:space="preserve">
+    <value>Error Createing Pallet</value>
+  </data>
+  <data name="ctr_master_error_updMaster" xml:space="preserve">
+    <value>Error Updating Pallet {0}</value>
+  </data>
+  <data name="js_modal_master_item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="js_modal_master_masterList" xml:space="preserve">
+    <value>Pallet List</value>
+  </data>
+  <data name="js_modal_master_pallet" xml:space="preserve">
+    <value>Pallet</value>
+  </data>
+  <data name="js_modal_master_rolls" xml:space="preserve">
+    <value>Total Rolls</value>
+  </data>
+  <data name="lgc_comun_put_entryIssueReceipt" xml:space="preserve">
+    <value>Good Issue: {0} - Good Receipt {1}</value>
+  </data>
+  <data name="lgc_comun_put_numIssueReceipt" xml:space="preserve">
+    <value>Good Issue: {0} - Good Receipt {1}</value>
+  </data>
+  <data name="lgc_comun_put_picking_ofOrderNumUpdated" xml:space="preserve">
+    <value>Picking # {0} of Order {1} has been updated</value>
+  </data>
+  <data name="lgc_comun_put_picking_upd" xml:space="preserve">
+    <value>Update Picking</value>
+  </data>
+  <data name="lgc_comun_put_picking_validationCreateRealizedCorrectly" xml:space="preserve">
+    <value>Creation the Picking Number {0}, of the Order {1}, PICKING Code: {2}, was realized Correctly.</value>
+  </data>
+  <data name="vw_common_item_laminated" xml:space="preserve">
+    <value>Laminated Item</value>
+  </data>
+  <data name="vw_common_large" xml:space="preserve">
+    <value>Large</value>
+  </data>
+  <data name="vw_common_order_laminated" xml:space="preserve">
+    <value>Laminated Order</value>
+  </data>
+  <data name="vw_common_pallet" xml:space="preserve">
+    <value>Pallet</value>
+  </data>
+  <data name="vw_common_remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="vw_common_roll" xml:space="preserve">
+    <value>Part</value>
+  </data>
+  <data name="vw_common_weight" xml:space="preserve">
+    <value>Weight</value>
+  </data>
+  <data name="vw_common_width" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="vw_master_LaminatedPallet" xml:space="preserve">
+    <value>Pallet Management</value>
+  </data>
+  <data name="vw_master_MasterLabel" xml:space="preserve">
+    <value>Master Label</value>
+  </data>
+  <data name="vw_production_IssueReceipt" xml:space="preserve">
+    <value>Laminated Issue and Receipt</value>
+  </data>
+  <data name="vw_production_LaminatedGoodReceipt" xml:space="preserve">
+    <value>Laminated Good Receipt</value>
+  </data>
+  <data name="js_common_administrate" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="js_common_Batch_notPermited" xml:space="preserve">
+    <value>The Batch {0} is not allowed</value>
+  </data>
+  <data name="js_common_create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="js_common_notbyBatch" xml:space="preserve">
+    <value>Unmanaged Item Label is not allowed</value>
+  </data>
+  <data name="js_common_notYarn" xml:space="preserve">
+    <value>Yarn Label is not allowed</value>
+  </data>
+  <data name="js_common_yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="js_imp_error_infoEmpty" xml:space="preserve">
+    <value>Complete Label information has not been sent for printing</value>
+  </data>
+  <data name="js_master_delConfirm" xml:space="preserve">
+    <value>Do you want to remove the Pallet {0} from Batch {1} ?</value>
+  </data>
+  <data name="js_master_item_notPermited" xml:space="preserve">
+    <value>Item {0} does not belong to the Pallet Item Loaded {1}</value>
+  </data>
+  <data name="js_master_load" xml:space="preserve">
+    <value>Pallet loading CORRECTLY</value>
+  </data>
+  <data name="js_master_pallet_created" xml:space="preserve">
+    <value>Pallet {0} created correctly</value>
+  </data>
+  <data name="js_master_pallet_updated" xml:space="preserve">
+    <value>Pallet {0} updated correctly</value>
+  </data>
+  <data name="js_master_process" xml:space="preserve">
+    <value>Pallet is CURRENTLY being processed</value>
+  </data>
+  <data name="js_mnu_master_pallet" xml:space="preserve">
+    <value>Pallet Mgmt</value>
+  </data>
+  <data name="js_prod_batch_doubleRecord" xml:space="preserve">
+    <value>Repeated records found from Label</value>
+  </data>
+  <data name="js_prod_batch_noRelease" xml:space="preserve">
+    <value>Batch {0} is not Released</value>
+  </data>
+  <data name="js_prod_batch_nosameWhs" xml:space="preserve">
+    <value>Warehouse {0} from Batch {1} does not match with Warehouse {2} from Item {3} in the Production Order {4}</value>
+  </data>
+  <data name="js_prod_createPallet" xml:space="preserve">
+    <value>Laminated Pallet {0} from Laminated Item {1}</value>
+  </data>
+  <data name="js_prod_error_createPallet" xml:space="preserve">
+    <value>The next Information was not not added to Laminated Batch {0}</value>
+  </data>
+  <data name="js_prod_error_infocreatePallet" xml:space="preserve">
+    <value>Pallet &gt; {0}, Weight &gt; {1}, Gross Meters &gt; {2}, Length &gt; {3}, Width &gt; {4}, Rack &gt; {0}, Raw Roll &gt; {5}</value>
+  </data>
+  <data name="ctr_login_noInfoSap" xml:space="preserve">
+    <value>SAP Credentials has not been configured in WMS User</value>
+  </data>
+  <data name="js_common_lock" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="js_common_release" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="js_common_confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="js_transfers_manual_masterlabel_noInfoFoundInStoreParam" xml:space="preserve">
+    <value>Batch {0} not found in Warehouse {1}</value>
+  </data>
+  <data name="js_common_batch_lockedParam" xml:space="preserve">
+    <value>Batch {0} is LOCKED</value>
+  </data>
+  <data name="js_common_order_open" xml:space="preserve">
+    <value>Verify that Order {0} is Open in SAP</value>
+  </data>
+  <data name="sp_shipping_error_infoPickingDel" xml:space="preserve">
+    <value>Record {0} doesn't exist in WMS_PICKING, verify record in WMS.RemisionPacking</value>
+  </data>
+  <data name="sp_shipping_infoPickingDel" xml:space="preserve">
+    <value>Records Deleted: {0} | {1}</value>
+  </data>
+  <data name="sp_shipping_infoPickingOpen" xml:space="preserve">
+    <value>The Order {0} does not have open Picking</value>
+  </data>
+  <data name="sp_shipping_infoPickingUpd" xml:space="preserve">
+    <value>{0} Picking Records from Order {1} was Updated to CANCELED</value>
+  </data>
+  <data name="js_ship_batch_requiresTransfer" xml:space="preserve">
+    <value>Batch {0}, Requires Transfer:</value>
+  </data>
+  <data name="ctr_common_errorVerifyLabel" xml:space="preserve">
+    <value>Error to verify label type</value>
+  </data>
+  <data name="ctr_common_noVerifyLabel" xml:space="preserve">
+    <value>Information of label type, no found, verify reading type, label type or verify in SAP</value>
+  </data>
+  <data name="ctr_master_error_InitialInfo" xml:space="preserve">
+    <value>Error getting label initial information</value>
+  </data>
+  <data name="ctr_master_noInitialInfo" xml:space="preserve">
+    <value>Scanned label information not found</value>
+  </data>
+  <data name="sp_picking_delete_regMaster" xml:space="preserve">
+    <value>Records Deleted from Master : {0}</value>
+  </data>
+  <data name="sp_picking_error_deleteregMaster" xml:space="preserve">
+    <value>Record Master {0} doesn't exist in WMS_PICKING, verify record Master in WMS.RemisionPacking</value>
+  </data>
+  <data name="vw_common_labels" xml:space="preserve">
+    <value>Labels</value>
+  </data>
+  <data name="vw_common_rackPallet" xml:space="preserve">
+    <value>Rack/Pallet</value>
+  </data>
+  <data name="vw_common_rolls" xml:space="preserve">
+    <value>Parts</value>
+  </data>
+  <data name="vw_common_stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="js_common_batch_hasAlreadyShippedParam_noProcess" xml:space="preserve">
+    <value>Batch: {0} has already been SHIPPED, Pallet cannot be processed</value>
+  </data>
+  <data name="js_common_batch_hasAlreadyShippedParam_noProcessRack" xml:space="preserve">
+    <value>Batch: {0} has already been SHIPPED, Rack cannot be processed</value>
+  </data>
+  <data name="js_common_batch_LockParam_noProcess" xml:space="preserve">
+    <value>Batch: {0} is LOCKED, Pallet cannot be processed</value>
+  </data>
+  <data name="js_common_batch_LockParam_noProcessRack" xml:space="preserve">
+    <value>Batch: {0} is LOCKED, Rack cannot be processed</value>
+  </data>
+  <data name="js_common_batch_notAccessibleParam_noProcess" xml:space="preserve">
+    <value>Batch: {0} is NOT ACCESSIBLE, Pallet cannot be processed</value>
+  </data>
+  <data name="js_common_batch_notAccessibleParam_noProcessRack" xml:space="preserve">
+    <value>Batch: {0} is NOT ACCESSIBLE, Rack cannot be processed</value>
+  </data>
+  <data name="js_common_error_noRead" xml:space="preserve">
+    <value>The label cannot be read, verify in SAP</value>
+  </data>
+  <data name="js_common_html_wh_requestWHMaster" xml:space="preserve">
+    <value>&lt;br /&gt; Warehouse Request: {0} : Warehouse Pallet &gt; {1}</value>
+  </data>
+  <data name="js_common_LaminatedHasAlreadyReadParam" xml:space="preserve">
+    <value>Pallet {0} has already been read</value>
+  </data>
+  <data name="js_common_noLaminatedPallet" xml:space="preserve">
+    <value>The Pallet label is not valid in this module</value>
+  </data>
+  <data name="js_common_noPrefixDefined" xml:space="preserve">
+    <value>Pallet Prefix no defined</value>
+  </data>
+  <data name="js_common_noProcessLaminated" xml:space="preserve">
+    <value>The batch cannot be processed, belongs  to Pallet {0}</value>
+  </data>
+  <data name="js_common_noRack" xml:space="preserve">
+    <value>The label cannot be processed as a rack</value>
+  </data>
+  <data name="js_common_notValid" xml:space="preserve">
+    <value>The label is not valid</value>
+  </data>
+  <data name="js_commun_batchLaminatedPalletRead" xml:space="preserve">
+    <value>Batch {0} has already been read, delete the record and read again Pallet</value>
+  </data>
+  <data name="js_commun_batchRackRead" xml:space="preserve">
+    <value>Batch {0} has already been read, delete the record and read again the Rack</value>
+  </data>
+  <data name="js_commun_onlyItemxLaminated" xml:space="preserve">
+    <value>Verify, only 1 item per Pallet</value>
+  </data>
+  <data name="js_commun_onlyItemxRack" xml:space="preserve">
+    <value>Verify, only 1 item per Rack</value>
+  </data>
+  <data name="js_commun_onlyWhsxLaminated" xml:space="preserve">
+    <value>Verify, only 1 warehouse per Pallet</value>
+  </data>
+  <data name="js_commun_onlyWhsxRack" xml:space="preserve">
+    <value>Verify, only 1 warehouse per Rack</value>
+  </data>
+  <data name="js_modal_common_codeLaminated" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="js_modal_ListLaminated" xml:space="preserve">
+    <value>Roll List</value>
+  </data>
+  <data name="js_modal_pending_rackPallet" xml:space="preserve">
+    <value>Rack/Pallet</value>
+  </data>
+  <data name="js_ship_laminated_notBelongPicking" xml:space="preserve">
+    <value>Pallet {0} does NOT belong to the Picking</value>
+  </data>
+  <data name="js_ship_rack_notBelongPicking" xml:space="preserve">
+    <value>Rack {0} does NOT belong to the Picking</value>
+  </data>
+  <data name="js_count_pallet_requiresTransferLocatedAt" xml:space="preserve">
+    <value>Pallet {0}, requires Transfer, is located at:</value>
+  </data>
+  <data name="vw_common_groupType" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="js_ship_pallet_requiresTransfer" xml:space="preserve">
+    <value>Pallet {0}, Requires Transfer:</value>
+  </data>
+  <data name="ctr_manualTransfer_st_error_list_requestTransfer" xml:space="preserve">
+    <value>Error to recover information from transfer requests</value>
+  </data>
+  <data name="ctr_manualTransfer_st_error_print_reportTransfer" xml:space="preserve">
+    <value>Error to create Transfer report</value>
+  </data>
+  <data name="ctr_manualTransfer_st_error_requestTransfer" xml:space="preserve">
+    <value>Error to recover information from transfer request {0}</value>
+  </data>
+  <data name="ctr_manualTransfer_st_noInformation" xml:space="preserve">
+    <value>Information is not retrieved from transfer request {0}</value>
+  </data>
+  <data name="ctr_manualTransfer_st_noItemsOpen" xml:space="preserve">
+    <value>No items from transfer request {0}</value>
+  </data>
+  <data name="ctr_manualTransfer_st_no_requestOpen" xml:space="preserve">
+    <value>No open transfer requests with open lines</value>
+  </data>
+  <data name="ctr_manualTransfer_st_no_requestOpen_customer" xml:space="preserve">
+    <value>No open transfer requests with open lines from customer {0}</value>
+  </data>
+  <data name="js_common_pallet_st_Item_no_st" xml:space="preserve">
+    <value>Pallet item {0} don't belong to Request</value>
+  </data>
+  <data name="js_common_pallet_st_noItems_request" xml:space="preserve">
+    <value>Items or Warehouse from de Pallet {0} don't belong to Transfer Request</value>
+  </data>
+  <data name="js_common_rackPallet_st_lines_complete" xml:space="preserve">
+    <value>The following lines have been completed:</value>
+  </data>
+  <data name="js_common_rackPallet_st_lines_complete_complement" xml:space="preserve">
+    <value>Item: {0}, Wharehouse: {1}</value>
+  </data>
+  <data name="js_common_rack_st_Item_no_st" xml:space="preserve">
+    <value>Rack item {0} don't belong to Request</value>
+  </data>
+  <data name="js_common_rack_st_noItems_request" xml:space="preserve">
+    <value>Items or Warehouse from de Rack {0} don't belong to Transfer Request</value>
+  </data>
+  <data name="js_common_st_batch_noWhs_Item" xml:space="preserve">
+    <value>The batch {0} is not in the warehouse {1} of request item {2}</value>
+  </data>
+  <data name="js_common_st_label_no_st" xml:space="preserve">
+    <value>Label don't belong to request</value>
+  </data>
+  <data name="js_common_st_label_no_st_complement" xml:space="preserve">
+    <value>Batch: {0}, Item: {1}, Wharehouse: {2}</value>
+  </data>
+  <data name="js_common_st_label_no_st_complement_Item" xml:space="preserve">
+    <value>Unmanaged Item: {0}, Wharehouse: {1}</value>
+  </data>
+  <data name="js_common_st_line_complete" xml:space="preserve">
+    <value>Item {0} in warehouse {1} has been completed</value>
+  </data>
+  <data name="js_common_st_noInsert" xml:space="preserve">
+    <value>Enter the Transfer Request number</value>
+  </data>
+  <data name="js_common_st_total_complete" xml:space="preserve">
+    <value>Transfer Request has been completed</value>
+  </data>
+  <data name="js_modal_common_st_customer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="js_modal_common_st_document" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="js_modal_common_st_openRequest" xml:space="preserve">
+    <value>Transfer Request</value>
+  </data>
+  <data name="js_modal_common_st_totalOpenLines" xml:space="preserve">
+    <value>Total Open Lines</value>
+  </data>
+  <data name="vw_common_destination" xml:space="preserve">
+    <value>Destination</value>
+  </data>
+  <data name="vw_common_quantity_open" xml:space="preserve">
+    <value>Pending Qty</value>
+  </data>
+  <data name="vw_common_quantity_read" xml:space="preserve">
+    <value>Read Qty</value>
+  </data>
+  <data name="vw_common_source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="vw_common_st_quantity" xml:space="preserve">
+    <value>TR Qty</value>
+  </data>
+  <data name="vw_common_st_source" xml:space="preserve">
+    <value>Transfer Request</value>
+  </data>
+  <data name="js_mnu_secondSales" xml:space="preserve">
+    <value>Seconds Sales</value>
+  </data>
+  <data name="vw_common_secondSales" xml:space="preserve">
+    <value>Seconds Sales</value>
+  </data>
+  <data name="ctr_secondSales_error_saveBatch" xml:space="preserve">
+    <value>Error saving second-batch data for released</value>
+  </data>
+  <data name="ctr_secondSales_error_saveBatchReturn" xml:space="preserve">
+    <value>Error saving second-batch data for return original status</value>
+  </data>
+  <data name="ctr_secondSales_error_saveData" xml:space="preserve">
+    <value>Error saving delivery data</value>
+  </data>
+  <data name="ctr_secondSales_noCustomer" xml:space="preserve">
+    <value>Customer information for second sales was not retrieved</value>
+  </data>
+  <data name="js_modal_secondSales_item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="js_modal_secondSales_recordList" xml:space="preserve">
+    <value>Record List</value>
+  </data>
+  <data name="js_modal_secondSales_stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="js_modal_secondSales_stockAvailable" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="js_modal_secondSales_stockRead" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="js_modal_secondSales_warehouse" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="js_secondSales_labelComplete" xml:space="preserve">
+    <value>Label has been completed, read a new label or update quantity</value>
+  </data>
+  <data name="js_secondSales_NoPalletLabel" xml:space="preserve">
+    <value>Pallet Label is not allowed</value>
+  </data>
+  <data name="js_secondSales_noRecordsProcess" xml:space="preserve">
+    <value>No records to process</value>
+  </data>
+  <data name="js_secondSales_qtyLess" xml:space="preserve">
+    <value>Quantity less than required</value>
+  </data>
+  <data name="js_secondSales_qtyUpd" xml:space="preserve">
+    <value>The cumulative quantity cannot exceed the stock {0}</value>
+  </data>
+  <data name="js_secondSales_rackRead" xml:space="preserve">
+    <value>Rack {0} has been read</value>
+  </data>
+  <data name="js_secondSales_recordsNoRelease" xml:space="preserve">
+    <value>The following records are not released:</value>
+  </data>
+  <data name="js_secondSales_recordsNoStock" xml:space="preserve">
+    <value>The following records don't have available stock:</value>
+  </data>
+  <data name="js_secondSales_recordsNoWhs" xml:space="preserve">
+    <value>The following records are not in the following warehouse 03, 04, 05:</value>
+  </data>
+  <data name="js_secondSales_recordsPallet" xml:space="preserve">
+    <value>The following records belong to Laminate Pallet:</value>
+  </data>
+  <data name="js_secondSales_recordsRead" xml:space="preserve">
+    <value>The following records have been read:</value>
+  </data>
+  <data name="js_secondSales_recordsShip" xml:space="preserve">
+    <value>The following records have been shipped:</value>
+  </data>
+  <data name="js_secondSales_records_biw" xml:space="preserve">
+    <value>Batch: {0}, Item: {1}, Warehouse: {2}</value>
+  </data>
+  <data name="js_secondSales_records_biwL" xml:space="preserve">
+    <value>Batch: {0}, Item: {1}, Warehouse: {2}, Status: Locked</value>
+  </data>
+  <data name="js_secondSales_records_biwNa" xml:space="preserve">
+    <value>Batch: {0}, Item: {1}, Warehouse: {2}, Status: Not Accessible</value>
+  </data>
+  <data name="js_secondSales_records_biwP" xml:space="preserve">
+    <value>Batch: {0}, Item: {1}, Warehouse: {2}, Pallet: {3}</value>
+  </data>
+  <data name="js_secondSales_records_biwSf" xml:space="preserve">
+    <value>Item: {0}, Warehouse: {1}, Stock: {1}, Stock read: {3}</value>
+  </data>
+  <data name="js_secondSales_records_biwSh" xml:space="preserve">
+    <value>Batch: {0}, Item: {1}, Warehouse: {2}, Stock: {3}, Stock read: {4}</value>
+  </data>
+  <data name="js_secondSales_records_iw" xml:space="preserve">
+    <value>Item: {0}, Warehouse: {1}</value>
+  </data>
+  <data name="lgc_secondSales_error_conSap" xml:space="preserve">
+    <value>Error to connect SAP</value>
+  </data>
+  <data name="lgc_secondSales_releaseBatch" xml:space="preserve">
+    <value>Released batch-second correctly</value>
+  </data>
+  <data name="lgc_secondSales_returnBatch" xml:space="preserve">
+    <value>Batch-second return to original status, correctly</value>
+  </data>
+  <data name="js_master_labelPallet" xml:space="preserve">
+    <value>Label with batch {0} belongs to Laminated Pallet: {1}</value>
+  </data>
+  <data name="js_master_noItemGroup" xml:space="preserve">
+    <value>{0} Item group not allowed, current item group: {1}</value>
+  </data>
+  <data name="js_transfer_closedSuccess" xml:space="preserve">
+    <value>Transfer request {0}, closed successfully</value>
+  </data>
+  <data name="js_transfer_closedSuccess2" xml:space="preserve">
+    <value>Transfer request - closed successfully</value>
+  </data>
+  <data name="js_transfer_error_close" xml:space="preserve">
+    <value>Verify and close the transfer request manually</value>
+  </data>
+  <data name="ctr_print_label_error" xml:space="preserve">
+    <value>The Label route for Laminate Pallet has not been defined</value>
+  </data>
+  <data name="ctr_print_label_errorShip" xml:space="preserve">
+    <value>The Label route for Shipping has not been defined</value>
+  </data>
+  <data name="js_print_label" xml:space="preserve">
+    <value>Label sent to print</value>
+  </data>
+  <data name="js_print_label_errorRack" xml:space="preserve">
+    <value>Complete Label Information has not been sent for Printing. Read again rack label {0}</value>
+  </data>
+  <data name="js_print_label_ship" xml:space="preserve">
+    <value>Shipping label sent to print</value>
+  </data>
+  <data name="js_ship_virtualBatch_hasRead" xml:space="preserve">
+    <value>Virtual batch has already been Read</value>
+  </data>
+  <data name="ctr_remission_error_gettingDocCodeguid" xml:space="preserve">
+    <value>Error validating WMS guide code in SAP deliveries</value>
+  </data>
+  <data name="js_modal_common_clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="js_modal_common_title" xml:space="preserve">
+    <value>Alert Modal</value>
+  </data>
+  <data name="js_modal_common_type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="js_modal_common_titleColumn" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="js_modal_common_text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+</root>

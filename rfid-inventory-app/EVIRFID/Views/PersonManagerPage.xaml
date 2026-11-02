@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EVIRFID.Views.PersonManagerPage"
+    Title="{Binding Title}"
+    xmlns:local="clr-namespace:EVIRFID.ViewModels"
+    xmlns:model="clr-namespace:EVIRFID.Models"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:viewmodels="clr-namespace:EVIRFID.ViewModels"
+    xmlns:lists="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:sfPopup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms"
+    xmlns:range="clr-namespace:Syncfusion.SfRangeSlider.XForms;assembly=Syncfusion.SfRangeSlider.XForms"
+    xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    x:DataType="local:PersonManagerViewModel">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Nuevo" Command="{Binding AddPersonCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.BindingContext>
+        <local:PersonManagerViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout Padding="0,0,0,0">
+            <StackLayout Orientation="Horizontal" Margin="0,5,0,0">
+                <SearchBar x:Name="filterText" HeightRequest="50"
+           Placeholder="Búsqueda por Nombre, CUIP o Puesto"
+           Text="{Binding Filtro, Mode=TwoWay}"
+           SearchCommand="{Binding LoadFilteredPersonsCommand}" WidthRequest="260"/>
+                <buttons:SfButton x:Name="ClearBtn" Text="Ver detalle" ImageSource="search.png" Command="{Binding ShowPersonDetailsCommand}" FontSize="16" BackgroundColor="SeaGreen" CornerRadius="3" ShowIcon="True" HorizontalOptions="EndAndExpand" ImageAlignment="Top"/>
+            </StackLayout>
+            <lists:SfListView x:Name="listViewPersonas"
+                                  BackgroundColor="LightSteelBlue"
+                                  ItemsSource="{Binding Personas}"
+                                  SelectedItem="{Binding SelectedPerson}"
+                                  SelectionChangedCommand="{Binding CopyPersonCommand}"
+                                  SelectionBackgroundColor="DeepSkyBlue"
+                                  AutoFitMode="DynamicHeight"
+                                  SelectionMode="Single"
+                                  AllowSwiping="True">
+                <lists:SfListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Person">
+                        <StackLayout BackgroundColor="WhiteSmoke" Margin="2,2,2,2">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding cuip}" FontSize="12" FontAttributes="Bold"/>
+                                <Label Text="{Binding adscripcion}" FontAttributes="Bold" FontSize="12" TextColor="Orange" HorizontalOptions="EndAndExpand" Margin="0,0,2,0"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding nombre}" FontAttributes="Bold" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start"/>
+                                <Label Text="Sangre:" FontSize="14" TextColor="DarkRed" HorizontalOptions="EndAndExpand"/>
+                                <Label Text="{Binding tipoSangre}" FontSize="14" TextColor="DarkRed" Margin="0,0,2,0" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" Margin="0,0,0,3">
+                                <buttons:SfChipGroup Type="Action">
+                                    <buttons:SfChipGroup.Items>
+                                        <buttons:SfChip Text="Calzado" FontSize="10" BackgroundColor="Gray" IsCheckable="False" TextColor="White" IsVisible="{Binding calzadoEntregado}"/>
+                                        <buttons:SfChip Text="Cinturón" FontSize="10" BackgroundColor="LightGreen" IsCheckable="False" TextColor="Orange" IsVisible="{Binding calzadoEntregado}"/>
+                                        <buttons:SfChip Text="Kepi" FontSize="10" BackgroundColor="LightSalmon" IsCheckable="False" TextColor="Orange" IsVisible="{Binding calzadoEntregado}"/>
+                                        <buttons:SfChip Text="Pantalón" FontSize="10" BackgroundColor="LightBlue" IsCheckable="False" TextColor="Orange" IsVisible="{Binding calzadoEntregado}"/>
+                                        <buttons:SfChip Text="Impermeable" FontSize="10" BackgroundColor="Yellow" IsCheckable="False" TextColor="Orange" IsVisible="{Binding calzadoEntregado}"/>
+                                    </buttons:SfChipGroup.Items>
+                                </buttons:SfChipGroup>
+                                <StackLayout>
+                                    <Label Text="#Items:" VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand" FontSize="Micro"></Label>
+                                    <Label Text="{Binding itemsAsignados}" VerticalTextAlignment="Center" Margin="0,0,5,0" FontSize="11" FontAttributes="Bold" HorizontalOptions="EndAndExpand" ></Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </lists:SfListView.ItemTemplate>
+            </lists:SfListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

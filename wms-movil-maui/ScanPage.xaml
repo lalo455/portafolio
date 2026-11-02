@@ -1,0 +1,52 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:WmsMovil.ViewModels"
+             x:Class="WmsMovil.ScanPage"
+             BackgroundColor="#F5F5F5"
+             Title="Prueba de Hardware">
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="15">
+
+            <!-- Switch RFID / QR -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
+                <Label Text="QR" VerticalOptions="Center" FontSize="18" FontAttributes="Bold" TextColor="Gray"/>
+                <Switch IsToggled="{Binding IsRfidMode}" OnColor="#DAA520" ThumbColor="White"/>
+                <Label Text="RFID" VerticalOptions="Center" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
+            </HorizontalStackLayout>
+
+            <!-- Control de Potencia (Solo visible en RFID) -->
+            <StackLayout IsVisible="{Binding IsRfidMode}" Spacing="5" Margin="0,10">
+                <Label Text="{Binding RfPower, StringFormat='Potencia: {0}'}" HorizontalOptions="Center" FontSize="16" FontAttributes="Bold" TextColor="#333333"/>
+                <Slider Minimum="1" Maximum="30" Value="{Binding RfPower}" MinimumTrackColor="#DAA520" MaximumTrackColor="#CCCCCC" ThumbColor="#DAA520"/>
+            </StackLayout>
+
+            <!-- Lector QR Universal (Solo visible en QR) -->
+            <Frame IsVisible="{Binding IsQrMode}" CornerRadius="10" Padding="0" HasShadow="False" BorderColor="#DAA520" BackgroundColor="#FFF8DC" Margin="0,10">
+                <Entry x:Name="QrEntry"
+                       Text="{Binding QrText}" 
+                       Placeholder="Escanee el código QR aquí..." 
+                       ReturnCommand="{Binding QrScannedCommand}"
+                       ClearButtonVisibility="WhileEditing"
+                       Margin="10,0"/>
+            </Frame>
+
+            <Label Text="{Binding EstadoUI}" HorizontalOptions="Center" FontSize="16" TextColor="#DAA520" FontAttributes="Bold"/>
+        </VerticalStackLayout>
+
+        <!-- Lista de Tags -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding ScannedTags}" Margin="0,10,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,5" Padding="15" CornerRadius="8" HasShadow="False" BorderColor="#DDDDDD">
+                        <Label Text="{Binding .}" FontSize="16" TextColor="#333333" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botón Limpiar -->
+        <Button Grid.Row="2" Text="Limpiar Memoria" BackgroundColor="#8B0000" TextColor="White" CornerRadius="10" Command="{Binding LimpiarCommand}" />
+    </Grid>
+</ContentPage>

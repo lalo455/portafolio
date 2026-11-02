@@ -1,0 +1,427 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C4EC926A-00DF-4E21-851B-4C403EC85B4F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WMS</RootNamespace>
+    <AssemblyName>WMS</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.1.35\lib\net461\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.2.2\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.2.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.2.2\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.2.2\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.3.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.3.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\back.png" />
+    <Content Include="Assets\Calidad.png" />
+    <Content Include="Assets\Consulta.png" />
+    <Content Include="Assets\delete.png" />
+    <Content Include="Assets\EditarScrap.png" />
+    <Content Include="Assets\EditarTM.png" />
+    <Content Include="Assets\Env_Produccion.png" />
+    <Content Include="Assets\erase.png" />
+    <Content Include="Assets\EtqMaster.png" />
+    <Content Include="Assets\execution.png" />
+    <Content Include="Assets\e_.png" />
+    <Content Include="Assets\E_WMS.png" />
+    <Content Include="Assets\forklift.png" />
+    <Content Include="Assets\inspection.png" />
+    <Content Include="Assets\load.gif" />
+    <Content Include="Assets\loading_.gif" />
+    <Content Include="Assets\logout.png" />
+    <Content Include="Assets\qr-code.png" />
+    <Content Include="Assets\Recibo_Prod.png" />
+    <Content Include="Assets\Recuento_Inv.png" />
+    <Content Include="Assets\refresh.png" />
+    <Content Include="Assets\RegistroScrap.png" />
+    <Content Include="Assets\RegistroTM.png" />
+    <Content Include="Assets\Remision.png" />
+    <Content Include="Assets\Scrap.png" />
+    <Content Include="Assets\TiempoMuerto.png" />
+    <Content Include="Assets\tracking.png" />
+    <Content Include="Assets\Traspaleo.png" />
+    <Content Include="Assets\Traspasos.png" />
+    <Content Include="Assets\Validacion_Prod.png" />
+    <Content Include="Assets\Val_de_Embarque.png" />
+    <Content Include="Assets\wheelbarrow.png" />
+    <Content Include="Global.asax" />
+    <Content Include="Library\Angular\angular-locale_es-mx.js" />
+    <Content Include="Library\Angular\angular.min.js" />
+    <Content Include="Library\Bootstrap\css\bootstrap-datepicker.min.css" />
+    <Content Include="Library\Bootstrap\css\bootstrap.css" />
+    <Content Include="Library\Bootstrap\js\bootstrap-datepicker.min.js" />
+    <Content Include="Library\Bootstrap\js\bootstrap.js" />
+    <Content Include="Library\Bootstrap\js\tether.min.js" />
+    <Content Include="Library\Bootstrap\js\ui-bootstrap-2.5.0.min.js" />
+    <Content Include="Library\Bootstrap\js\ui-bootstrap-tpls-3.0.6.min.js" />
+    <Content Include="Library\Bootstrap\js\ui-bootstrap-tpls.js" />
+    <Content Include="Library\Bootstrap\js\ui-bootstrap-tpls.min.js" />
+    <Content Include="Library\Datapicker\angular-datapicker.min.js" />
+    <Content Include="Library\Datapicker\angular-datepicker.min.css" />
+    <Content Include="Library\Estilos\Login.css" />
+    <Content Include="Library\Estilos\Styles.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\all.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\all.min.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\brands.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\brands.min.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\fontawesome.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\fontawesome.min.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\regular.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\regular.min.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\solid.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\solid.min.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\svg-with-js.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\svg-with-js.min.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\v4-shims.css" />
+    <Content Include="Library\FontAwesome\fontawesome\css\v4-shims.min.css" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-brands-400.svg" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-regular-400.svg" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-solid-900.svg" />
+    <Content Include="Library\Freebie\font-awesome.min.css" />
+    <Content Include="Library\Freebie\navigation-icons.css" />
+    <Content Include="Library\Growl\angular-growl.css" />
+    <Content Include="Library\Growl\angular-growl.js" />
+    <Content Include="Library\Growl\angular-growl.min.css" />
+    <Content Include="Library\Growl\angular-growl.min.js" />
+    <Content Include="Library\JQuery\jquery-3.3.1.js" />
+    <Content Include="Library\Messi\messi.min.css" />
+    <Content Include="Library\Messi\messi.min.js" />
+    <Content Include="Library\XEditable\xeditable.css" />
+    <Content Include="Library\XEditable\xeditable.min.js" />
+    <Content Include="Modales\ListaBorradores.html" />
+    <Content Include="Modales\ListaLotesCalidad.html" />
+    <Content Include="Modales\ListaLotes.html" />
+    <Content Include="Modales\ListaMaquinas.html" />
+    <Content Include="Modales\ListaMaster.html" />
+    <Content Include="Modales\ListaMasterWhs.html" />
+    <Content Include="Modales\ListaOF.html" />
+    <Content Include="Modales\ListaSolicitud.html" />
+    <Content Include="Modales\ListaTipoScrap.html" />
+    <Content Include="Modales\ListaTipoTPM.html" />
+    <Content Include="Modales\ListaUbicacion.html" />
+    <Content Include="Modales\Pedidos.html" />
+    <Content Include="Scripts\Calidad\Calidad.js" />
+    <Content Include="Scripts\Consulta\Consulta.js" />
+    <Content Include="Scripts\decimal.js" />
+    <Content Include="Scripts\Embarque\ValidacionEmbarque.js" />
+    <Content Include="Scripts\EtqMaster\EtiquetaMaster.js" />
+    <Content Include="Scripts\Funciones.js" />
+    <Content Include="Scripts\LocalStorage.js" />
+    <Content Include="Scripts\Login.js" />
+    <Content Include="Scripts\Menu_SubMenu.js" />
+    <Content Include="Scripts\Produccion\EmisionReciboProduccion.js" />
+    <Content Include="Scripts\Produccion\Produccion.js" />
+    <Content Include="Scripts\Produccion\ReciboProduccion.js" />
+    <Content Include="Scripts\Recuento\RecuentoInv.js" />
+    <Content Include="Scripts\Remision\Remision.js" />
+    <Content Include="Scripts\Scrap\EditarScrap.js" />
+    <Content Include="Scripts\Scrap\RegistroScrap.js" />
+    <Content Include="Scripts\TiempoMuerto\EditarTM.js" />
+    <Content Include="Scripts\TiempoMuerto\RegistroTM.js" />
+    <Content Include="Scripts\Traspaleo\Traspaleo.js" />
+    <Content Include="Scripts\Traspasos\TrsManual.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\CalidadController.cs" />
+    <Compile Include="Controllers\ConsultaController.cs" />
+    <Compile Include="Controllers\EtiquetaMasterController.cs" />
+    <Compile Include="Controllers\ImpresionController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\ProduccionController.cs" />
+    <Compile Include="Controllers\RecuentoController.cs" />
+    <Compile Include="Controllers\RemisionController.cs" />
+    <Compile Include="Controllers\ScrapController.cs" />
+    <Compile Include="Controllers\TiempoMuertoController.cs" />
+    <Compile Include="Controllers\TraspaleoController.cs" />
+    <Compile Include="Controllers\TraspasoManualController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Logic\Comun\CrystalReportsUtilerias.cs" />
+    <Compile Include="Logic\Comun\DiApiConexion.cs" />
+    <Compile Include="Logic\Comun\Integrar.cs" />
+    <Compile Include="Logic\Comun\Obtener.cs" />
+    <Compile Include="Logic\Stores\StoreProcedure.cs" />
+    <Compile Include="Models\Acceso.cs" />
+    <Compile Include="Models\Calidad.cs" />
+    <Compile Include="Models\Comun.cs" />
+    <Compile Include="Models\Detalle.cs" />
+    <Compile Include="Models\Embarque.cs" />
+    <Compile Include="Models\Etiqueta.cs" />
+    <Compile Include="Models\EtqMaster.cs" />
+    <Compile Include="Models\Mensajes.cs" />
+    <Compile Include="Models\Menu.cs" />
+    <Compile Include="Models\Produccion.cs" />
+    <Compile Include="Models\Recuento.cs" />
+    <Compile Include="Models\Recuperar.cs" />
+    <Compile Include="Models\Remision.cs" />
+    <Compile Include="Models\SAP.cs" />
+    <Compile Include="Models\Scrap.cs" />
+    <Compile Include="Models\TPM.cs" />
+    <Compile Include="Models\Traspaleo.cs" />
+    <Compile Include="Models\TrsManual.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Log.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="Library\Angular\angular.min.js.map" />
+    <Content Include="Library\Bootstrap\css\bootstrap.css.map" />
+    <Content Include="Library\Bootstrap\js\bootstrap.js.map" />
+    <Content Include="Library\JQuery\jquery-3.3.1.min.map" />
+    <Content Include="Library\FontAwesome\fontawesome-free-5.11.2-web.zip" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-brands-400.eot" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-brands-400.woff" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-regular-400.eot" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-regular-400.woff" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-solid-900.eot" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-solid-900.woff" />
+    <Content Include="Library\FontAwesome\fontawesome\webfonts\fa-solid-900.woff2" />
+    <Content Include="Library\Datapicker\angular-datepicker.sourcemap.map" />
+    <None Include="packages.config" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Menu\Menu.cshtml" />
+    <Content Include="Views\TraspasoManual\TrsManual.cshtml" />
+    <Content Include="Views\Remision\Remision.cshtml" />
+    <Content Include="Views\Produccion\Produccion.cshtml" />
+    <Content Include="Views\Produccion\ReciboProduccion.cshtml" />
+    <Content Include="Views\Recuento\RecuentoInv.cshtml" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <Content Include="Views\Embarque\ValidacionEmbarque.cshtml" />
+    <Content Include="Views\Calidad\Calidad.cshtml" />
+    <Content Include="Views\Traspaleo\Traspaleo.cshtml" />
+    <Content Include="Views\Produccion\EmisionReciboProduccion.cshtml" />
+    <None Include="Properties\PublishProfiles\Publicacion WMS x64.pubxml" />
+    <None Include="Properties\PublishProfiles\Publicacion WMS.pubxml" />
+    <Content Include="Views\EtiquetaMaster\EtiquetaMaster.cshtml" />
+    <Content Include="Views\Consulta\Consulta.cshtml" />
+    <Content Include="Views\Scrap\RegistroScrap.cshtml" />
+    <Content Include="Views\Scrap\EdicionScrap.cshtml" />
+    <Content Include="Views\Menu\SubMenuScrap.cshtml" />
+    <Content Include="Views\TiempoMuerto\RegistroTM.cshtml" />
+    <Content Include="Views\TiempoMuerto\EdicionTM.cshtml" />
+    <Content Include="Views\Menu\SubMenuTM.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SAPbobsCOM">
+      <Guid>{FC8030BE-F5D2-4B8E-8F92-44228FE30100}</Guid>
+      <VersionMajor>10</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64391</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:64391/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup Label="Normalise stack trace file locations">
+    <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=X:\</PathMap>
+  </PropertyGroup>
+</Project>

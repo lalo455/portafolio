@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EVIRFID.Views.NewPersonPage"
+             Shell.PresentationMode="ModalAnimated"
+             Title="Nueva Persona"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:local="clr-namespace:EVIRFID.ViewModels"
+             ios:Page.UseSafeArea="true">
+
+    <ContentPage.BindingContext>
+        <local:NewPersonViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout Spacing="3" Padding="15">
+            <inputLayout:SfTextInputLayout
+                    Hint="Nombre"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    FocusedColor="#00AFA0"
+                    HelperText="Nombre del Elemento">
+                <Entry Text="{Binding Nombre,Mode=TwoWay}" />
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout
+                    Hint="Adscripción"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    FocusedColor="#00AFA0"
+                    HelperText="Adscripción del Elemento">
+                <Entry Text="{Binding Adscripcion,Mode=TwoWay}" />
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout
+                    Hint="CUIP"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    FocusedColor="#00AFA0"
+                    HelperText="CUIP del Elemento">
+                <Entry Text="{Binding Cuip,Mode=TwoWay}" />
+            </inputLayout:SfTextInputLayout>
+
+            <inputLayout:SfTextInputLayout
+                    Hint="Tipo de Sangre"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    FocusedColor="#00AFA0"
+                    HelperText="Tipo de Sangre">
+                <Entry Text="{Binding Sangre,Mode=TwoWay}" />
+            </inputLayout:SfTextInputLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancelar" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Guardar" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>
+

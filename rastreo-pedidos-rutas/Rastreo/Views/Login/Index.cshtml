@@ -1,0 +1,68 @@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | PRUEBAS</title>
+    <link href="~/Librarys/Bootstrap/Css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Librarys/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Librarys/Angular/angular.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/bootstrap.js"></script>
+    <script src="~/Scripts/AccesoApp.js"></script>
+    <link href="~/Content/Estilos.css" rel="stylesheet" />
+</head>
+<body ng-app="accesoApp">
+    <div class="container" ng-controller="accesoController">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-6 col-md-6" id="ImagenAcceso">
+                    @*<img src="~/Images/CRMAcme2.png" class="ImagenCRM"/>*@
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-3 col-sm-offset-3 col-md-offset-5 col-xs-offset-1">
+                    <div class="col-lg-12 col-md-12">
+                        <h3 id="Heading"><a style="color: #004A75; font-family: sans-serif; font-weight:bold; font-size: 14px;" href="#">YOUR SLOGAN</a></h3>
+                        <h2 ><a style="color: #004A75; font-family: sans-serif; font-weight:bold; font-size: 14px;">Entregas WEB</a></h2>
+                        <span>YOUR ADDRESS</span>
+                        <span>TEL: 000 000 0000</span>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <span class="text-warning" ng-show="mensajesError.MostrarMensaje">{{mensajesError.MensajeGeneral}}&nbsp;</span>
+                        <br />
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-12">
+                        <form class="form-horizontal" ng-submit="Login()">
+                            <div class="form-group">
+                                <label for="NombreUsuario" class="col-lg-3 col-md-3 col-sm-3">Usuario</label>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <input type="text" class="form-control" id="NombreUsuario" name="NombreUsuario"
+                                           placeholder="Usuario" ng-model="Credenciales.Usuario" ng-enter="BtnLogin()" />
+                                    <span class="text-warning" ng-show="mensajesError.Propiedad == 'Usuario'">{{mensajesError.MensajeUsuario}}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="PasswordUsuario" class="col-lg-3 col-md-3 col-sm-3">Contraseña</label>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <input type="password" class="form-control" id="PasswordUsuario" name="PasswordUsuario"
+                                           placeholder="Contraseña" ng-model="Credenciales.Password" ng-enter="BtnLogin()" />
+                                    <span class="text-warning" ng-show="mensajesError.Propiedad == 'Password'">{{mensajesError.MensajePass}}</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-10">
+                        <div class="col-lg-7 col-md-7" id="Ingresar">
+                            <input id="BtnLogin" type="submit" value="Ingresar" ng-click="BtnLogin()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

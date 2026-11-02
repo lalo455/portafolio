@@ -1,0 +1,45 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Scrap</title>
+    <link href="~/Library/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Library/Estilos/Styles.css" rel="stylesheet" />
+    <link href="~/Library/Freebie/navigation-icons.css" rel="stylesheet" />
+    <link href="~/Library/Freebie/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+<body ng-app="menu_submenuApp" ng-controller="menu_submenuController" class="animated fadeIn fast">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="~/Assets/Scrap.png" width="30" height="30" class="d-inline-block align-top" alt=""> Menú Scrap
+        </a>
+        <button onclick="location.href='@Url.Action("Menu", "Menu")'" class="navbar-toggler" type="button" data-toggle="" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="~/Assets/back.png" />
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto"></ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button onclick="location.href='@Url.Action("Menu", "Menu")'" class="btn btn-light my-2 my-sm-0" type="submit">
+                    <img src="~/Assets/back.png" />
+                </button>
+            </form>
+        </div>
+    </nav>
+    <nav class="menu-navigation-icons py-4">
+        <a href="/{{moduloT.Controlador}}/{{moduloT.Vista}}" class="{{moduloT.color}}" ng-repeat="moduloT in ListaMenuScrap">
+            <img src="{{moduloT.imagen}}" style="max-width:64px;" />
+            <h6 id="tm">
+                {{moduloT.NombreMenu}}
+            </h6>
+        </a>
+    </nav>
+    <script src="~/Library/JQuery/jquery-3.3.1.js" asp-append-version="true"></script>
+    <script src="~/Library/Angular/angular.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/bootstrap.js" asp-append-version="true"></script>
+    <script src="~/Scripts/Menu_SubMenu.js" asp-append-version="true"></script>
+</body>
+</html>

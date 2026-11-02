@@ -1,0 +1,120 @@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Librarys/Bootstrap/Css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Librarys/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Librarys/Angular/angular.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/bootstrap.js"></script>
+    <script src="~/Scripts/AccesoApp.js"></script>
+    @*<link href="~/Content/Estilos.css" rel="stylesheet" />*@
+    <link href="~/Content/Login.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+
+</head>
+<body ng-app="accesoApp">
+    <section>
+        <div class="overlay"></div>
+        <div class="container layout d-flex justify-content-center align-items-center" ng-controller="accesoController">
+            <div class="row w-100">
+
+                <div class="col-lg-6 col-md-4  left-panel text-center " id="ImagenAcceso">
+
+                    <img src="~/Content/images/logoPedidos.png" alt="Pedidos Web Logo" class="img-responsive left-logo center-block" />
+
+                    <div class="divider-vertical"></div>
+                </div>
+
+                <!-- Panel Derecho -->
+                <div class="col-lg-6 col-md-8  right-panel">
+                    <div class="text-center mb-4">
+                        <img src="~/Images/ROMIHN.png" class="img-responsive ImagenCRM logoRomihn" alt="" />
+                    </div>
+
+                    <div class="contenedor-externo">
+                        <div class="acceso-container">
+                            <div class="title-acceso">Acceso</div>
+                            <a href="#" class="text-acceso">Your Company</a>
+                        </div>
+                    </div>
+
+
+                    <!-- Mensaje de error -->
+                    <div class="text-center">
+                        <span class="text-warning" ng-show="mensajesError.MostrarMensaje">{{mensajesError.MensajeGeneral}}&nbsp;</span>
+                    </div>
+
+                    <!-- Formulario -->
+                    <form class="form-horizontal form-content" ng-submit="Login()">
+                        <!-- Usuario -->
+                        <div class="form-group d-flex justify-content-center">
+                            <div class="input-container">
+                                <i class="fa fa-user input-icon"></i>
+                                <input type="text" class="form-control styled-input" id="NombreUsuario" name="NombreUsuario"
+                                       placeholder="Usuario" ng-model="Credenciales.Usuario" ng-enter="BtnLogin()" />
+                                <span class="text-warning" ng-show="mensajesError.Propiedad == 'Usuario'">
+                                    {{mensajesError.MensajeUsuario}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Contraseña -->
+                        <div class="form-group d-flex justify-content-center">
+                            <div class="input-container">
+                                <i class="fa fa-lock input-icon"></i>
+                                <input type="password" class="form-control styled-input" id="password" name="PasswordUsuario"
+                                       placeholder="Contraseña" ng-model="Credenciales.Password" ng-enter="BtnLogin()" />
+                                <i class="fa fa-eye toggle-password" id="togglePassword"></i>
+                                <span class="text-warning" ng-show="mensajesError.Propiedad == 'Usuario'">
+                                    {{mensajesError.MensajePass}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Botón Ingresar -->
+                        <div class="form-group text-center id=" Ingresar"">
+                            <button id="BtnLogin" type="submit" class="style-button" ng-click="BtnLogin()">Ingresar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+    <script>
+        const icon = document.getElementById('togglePassword');
+        let password = document.getElementById('password');
+
+        /* Event fired when <i> is clicked */
+        icon.addEventListener('click', function () {
+            if (password.type === "password") {
+                password.type = "text";
+                icon.classList.add("fa-eye-slash");
+                icon.classList.remove("fa-eye");
+            }
+            else {
+                password.type = "password";
+
+                icon.classList.add("fa-eye");
+                icon.classList.remove("fa-eye-slash");
+            }
+        });
+    </script>
+
+</body>
+
+</html>

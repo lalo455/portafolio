@@ -1,0 +1,582 @@
+@{
+    Layout = null;
+}
+@using System.Threading;
+@using System.Security.Claims;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Pedidos Web | PRUEBAS</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Librarys/Bootstrap/Css/bootstrap7.min.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/xeditable.css" rel="stylesheet" />
+    <link href="~/Librarys/Growl_v2/angular-growl.min.css" rel="stylesheet" />
+    <link href="~/Content/Estilos.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Librarys/Messi/messi.min.css" rel="stylesheet" />
+    <link href="../Content/Tablas.css" rel="stylesheet" />
+    <link href="~/Content/Footer.css" rel="stylesheet" />
+    <link href="../Content/tabs.css" rel="stylesheet" />
+    <script src="~/Librarys/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Librarys/Angular/angular.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.min.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.debug.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/bootstrap7.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery-ui.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-2.5.0.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Librarys/Angular/angular-ui-utils.min.js"></script>
+    <script src="~/Librarys/Messi/messi.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery.dataTables.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Librarys/dirPagination.js"></script>
+    <script src="~/Librarys/Growl_v2/angular-growl.min.js"></script>
+    <script src="~/Librarys/Jquery/xeditable.min.js"></script>
+    <script src="~/Librarys/Angular/dataGrid.js"></script>
+    <script src="~/Scripts/appTab.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#customerModal").hide();
+            // Add active class to the current button (highlight it)
+            var header = document.getElementById("myDIV");
+            var btns = header.getElementsByClassName("dropdown-toggle");
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].addEventListener("click", function () {
+                    var current = document.getElementsByClassName("active");
+                    current[0].className = current[0].className.replace(" active", "");
+                    this.className += " active";
+                });
+            }
+        });
+
+/**/</script>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div id="navbar" class="navbar-collapse collapse">
+                @*<ul class="nav navba-nav navbar-left">
+                    <li id="logo"><img src="~/Images/Pedidos.png" style="max-width:9%"/></li>
+                </ul>*@
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a style="color: #004A75; font-family: sans-serif; font-weight:bold; font-size: 14px;" href="#">Pedidos Web | PRUEBAS</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" ng-app="appTab" style="margin-top:5%;">
+        <div class="row" ng-controller="TabController">
+
+            <div class="col-lg-12 col-md-12 col-ms-12" style="margin-left:0px; margin-right:0px; padding-left:0px;padding-right:0px; background-color: green; height:50px;">
+                <nav class="navbar navbar-default" style="background-color:#004A75;" id="myDIV">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pedidos <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li ng-class="{ active: isSet(1) }">
+                                            <a ng-click="setTab(1)">Pedido</a>
+                                        </li>
+                                        <li role="separator" class="divider"></li>
+                                        <li ng-class="{ active: isSet(2) }">
+                                            <a href="" ng-click="setTab(2)">Consulta Pedidos</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reportes <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        @*<li ng-class="{ active: isSet(4) }">
+                                            <a href="" ng-click="setTab(4)">Inventario por Artículo</a>
+                                        </li>*@
+                                        @*<li role="separator" class="divider"></li>*@
+                                        <li ng-class="{ active: isSet(4) }">
+                                            <a href="" ng-click="setTab(4)">Reimpresión de Documentos</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <ul class="nav navbar-nav navbar-right">
+                                @{
+                                    <li><a id="UsuarioLogin">Usuario: @User.Identity.Name</a></li>
+                                }
+                                <li><a href="@Url.Action("Logout", "Login")">Salir</a></li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-xs-12 QuitarPadding" ng-controller="pedidoController">
+                <div class="jumbotron" style="padding-top:1px;">
+                    <div ng-show="isSet(1)" id="PedidoView">
+                        <div class="container-fluid">
+                            <h4 style="padding-top:5px; font-size:24px; background-color:#E6E6E6; text-align:left;">Genere su Orden de Venta</h4>
+                            <br />
+                            <div class="form-horizontal encabezado">
+                                <div class="form-group row-bottom-margin encabezado">
+                                    <label class="control-label col-sm-2 col-md-2 col-xs-1">Cliente</label>
+                                    <div class="col-md-2 col-sm-2 col-xs-2">
+                                            <input type="text"
+                                                   class="form-control inputstl encabezado-input"
+                                                   disabled=""
+                                                   placeholder="Código Cliente"
+                                                   ng-model="customerBP.CardCode">
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3">
+                                            <input type="text"
+                                                   class="form-control inputstl encabezado-input"
+                                                   disabled=""
+                                                   placeholder="Nombre del Cliente"
+                                                   ng-model="customerBP.CardName">
+                                    </div>
+
+                                    @*<div class="col-md-2 col-sm-2">
+                                        <button type="button"
+                                                class="btn btn-default encabezado-input"
+                                                ng-click="mostrarModalSN()">
+                                            <img src="~/Images/bp.png" /><span><strong>Buscar</strong></span>
+                                        </button>
+                                    </div>*@
+                                </div>
+                                <div class="form-group row-bottom-margin">
+                                    <label class="control-label col-sm-2 col-xs-2">Descuento</label>
+                                    <div class="col-md-1 col-sm-1 col-xs-1" style="">
+                                        <input class="form-control encabezado-input"
+                                               placeholder=""
+                                               ng-model="customerBP.Descuento"
+                                               type="text"
+                                               ng-disabled="true">
+
+                                    </div>
+                                    <label class="control-label col-sm-1 col-md-1 col-xs-1" style="text-align:left">%</label>
+
+                                    <label class="control-label col-sm-1 col-xs-1">Pedido</label>
+                                    <div class="col-md-2 col-sm-2 col-xs-2">
+                                        <input class="form-control encabezado-input"
+                                               placeholder="Ingrese Folio"
+                                               type="number" min="0"
+                                               ng-model="NumPedido">
+                                    </div>
+                                    <label class="control-label col-sm-1 col-md-1 col-xs-1">Comentarios</label>
+                                    <div class="col-md-4 col-sm-3 col-xs-3">
+                                        <input type="text"
+                                               class="form-control encabezado-input"
+                                               ng-model="ComentariosPedido">
+                                    </div>
+                                </div>
+                                <div class="form-group row-bottom-margin">
+                                    <label class="control-label col-sm-2 col-xs-2">Fecha Entrega</label>
+                                    <div class="col-md-2 col-sm-2 col-xs-2">
+                                        <a class="form-control encabezado-fecha"
+                                           name="fechaPedido" href="#"
+                                           editable-date="FechaSistema"
+                                           onbeforesave="ActualizarFechaDelPedido($data)">{{ FechaSistema | date: "yyyy-MM-dd"}}</a>
+                                    </div>
+
+                                    <label class="control-label col-sm-2 col-md-2 col-xs-2" ng-show="VisualizarMoneda">Moneda</label>
+                                    <div class="col-md-4 col-sm-4 col-xs-4" ng-show="VisualizarMoneda">
+                                        <a href="#"
+                                           editable-select="MonedaDelSN.Moneda"
+                                           buttons="yes"
+                                           e-ng-options="s.value as s.text for s in Monedas"
+                                           onaftersave="BorrarDetallePedido()"
+                                           class="ng-scope ng-binding editable editable-click">
+                                            {{LlenarComboMoneda()}}
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-1 col-sm-1 col-xs-1"></div>
+
+                                    @*<label class="control-label col-sm-1 col-md-1 col-xs-1">Artículo</label>
+                                    <div class="col-md-1 col-sm-1 col-xs-1">
+                                        <button type="button"
+                                                class="btn btn-default encabezado-input"
+                                                ng-click="MostrarModalITEM();">
+                                            <img src="~/Images/warehouse.png" />  <span><strong>Buscar</strong></span>
+                                        </button>
+                                    </div>*@
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <table id="tabPedidoP" class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th class="text-center">Artículo</th>
+                                                <th class="text-center">Descripción</th>
+                                                <th class="text-center">Cantidad</th>
+                                                <th class="text-center">Precio</th>
+                                                @*<th class="text-center">Descuento</th>*@
+                                                <th class="text-center">Importe Impuesto</th>
+                                                <th class="text-center">Total</th>
+                                                @*<th>Acciones</th>*@
+                                            </tr>
+                                        </thead>
+                                        <tbody id="pedido">
+                                            <tr id="eliminar" dir-paginate="articulo in ListaItemDetalle|orderBy:sortKey:reverse|filter:search|itemsPerPage:8">
+                                                <td>{{ListaItemDetalle.indexOf(articulo) + 1}}</td>
+                                                <td class="text-center">{{articulo.Codigo}}</td>
+                                                <td class="text-center">{{articulo.Nombre}}</td>
+                                                <td class="text-center">
+                                                    <div class="popover-wrapper">
+                                                        <a href="#" e-min="0.1" e-step="any" editable-number="articulo.Cantidad" onaftersave="ActualizarCantidadEnArticulo($data, ListaItemDetalle.indexOf(articulo))">{{articulo.Cantidad}}</a>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    $ {{articulo.PrecioUnitario}}
+
+                                                </td>
+                                                @*<td class="text-center">
+                                                    <div class="popover-wrapper">
+                                                        <a href="#" editable-number="articulo.Descuento" e-step="any" onaftersave="ActualizarDescuento($data, ListaItemDetalle.indexOf(articulo))">{{ articulo.Descuento }}</a><span>%</span>
+                                                    </div>
+                                                </td>*@
+                                                <td class="text-center">${{articulo.IVA}}</td>
+                                                <td class="text-center">${{articulo.Total}}</td>
+                                                @*<td><a href="#" editable-date="articulo.FechaEntrega" onbeforesave="ActFechaEntregaDetalle($data, $index)">{{ (articulo.FechaEntrega | date: "yyyy-MM-dd") || articulo.FechaEntrega }}</a></td>*@
+                                                @*<td style="text-align: center" ng-click="RemoverArticuloEnDetalle(ListaItemDetalle.indexOf(articulo));"><img src="~/Content/images/deleteRow.ico" /></td>*@
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="container-fluid">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                                    <dir-pagination-controls max-size="5"
+                                                                             direction-links="true"
+                                                                             boundary-links="true">
+                                                    </dir-pagination-controls>
+                                                </div>
+                                                <label class="control-label col-sm-2 col-md-2 col-xs-2">Total en Pesos</label>
+                                                <div class="col-md-2 col-sm-2 col-xs-2">
+                                                    <input type="text" class="form-control" disabled value="${{TotalAPagarDisplay}}">
+                                                </div>
+                                                <label class="control-label col-sm-2 col-md-2 col-xs-2">Total en Unidades</label>
+                                                <div class="col-md-2 col-sm-2 col-xs-2">
+                                                    <input type="text" class="form-control" disabled value="{{TotalUnidades}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                                    <button id="postOrderSAP" type="button" class="btn btn-default" ng-click="EnviarOrdenASAP();">
+                                                        <span class="glyphicon glyphicon-send"></span> Enviar
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-4 col-sm-offset-4">
+                                                    <button type="button" id="openBtnPreview" class="btn btn-default" ng-click="PrevisualizarPedido()">
+                                                        <img src="~/Images/view.png" /> <span><strong>Vista Previa</strong></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div growl></div>
+                                </div>
+                            </div>
+                            <!-- The Modal -->
+                            <div id="customerModal" class="modalCustomer">
+
+                                <!-- Modal content -->
+                                <div class="modalCustomer-content">
+                                    @*<span class="closeCustomer">&times;</span>*@
+                                    <iframe id="pdf_preview" type="application/pdf" src="" style="width:500px; height:500px;" frameborder="0"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="isSet(2)" ng-controller="consultaPedidoController">
+                        <div class="container-fluid">
+                            <h4 style="padding-top:5px; font-size:24px; background-color:#E6E6E6; text-align:left;">Consulta de Pedidos</h4>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <div class="row form-group-sm rowFormulario">
+                                        <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Tipo Consulta</label>
+                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                                                <a href="#"
+                                                   editable-select="TipoConsulta.Tipo"
+                                                   buttons="no"
+                                                   e-ng-options="s.value as s.text for s in ListaTipoConsulta"
+                                                   class="form-control inputstl">
+                                                    {{VisualizarTipoConsulta()}}
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4" ng-show="TipoConsulta.Tipo != 'Todos'">
+                                                <label>{{TipoConsulta.Tipo == 'Fecha' ? 'Desde' : TipoConsulta.Tipo == 'DocNum' ? 'No. Docto' : TipoConsulta.Tipo == 'Articulo' ? 'Código de Articulo' : '' }}</label>
+                                            </div>
+                                            <div id="tipoConsulta" class="col-lg-4 col-md-4 col-sm-4 col-xs-4" ng-show="TipoConsulta.Tipo != 'Todos'">
+                                                <a class="form-control inputstl"
+                                                   ng-show="TipoConsulta.Tipo == 'Fecha'"
+                                                   name="fechaConsulta" href="#"
+                                                   editable-date="ValorConsulta"
+                                                   buttons="yes"
+                                                   onaftersave="">{{ ValorConsulta | date: "yyyy-MM-dd"}}</a>
+                                                <a class="form-control inputstl"
+                                                   ng-show="TipoConsulta.Tipo == 'DocNum'"
+                                                   name="fechaConsulta" href="#"
+                                                   buttons="yes"
+                                                   editable-number="ValorConsulta"
+                                                   onaftersave="">{{ ValorConsulta}}</a>
+                                                <a class="form-control inputstl"
+                                                   ng-show="TipoConsulta.Tipo == 'Articulo'"
+                                                   name="fechaConsulta" href="#"
+                                                   buttons="yes"
+                                                   editable-text="ValorConsulta"
+                                                   onaftersave="">{{ ValorConsulta}}</a>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <button type="button" class="btn btn-default" ng-click="ConsultaPedidos();">
+                                                        <img src="~/Images/search1.png" /> <span><strong>Buscar</strong></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 rowFormulario">
+                                        <div class="row form-group-sm ">
+                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                                    <label>Buscar</label>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                                    <input ng-model="QryConsultaPedido" id="search" class="form-control" placeholder="Texto de Filtrado">
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-right">
+                                                    <label class="text-right">Lineas por Página</label>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                    <input type="number" min="1" max="100" class="form-control" ng-model="QtyConsultaPedido">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <table id="tabPedidoP" class="table table-hover table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th class="text-center">Cliente</th>
+                                                <th class="text-center">No Doc</th>
+                                                <th class="text-center">F. Pedido</th>
+                                                <th class="text-center">F. Entrega</th>
+                                                <th class="text-center">Artículo</th>
+                                                <th class="text-center">Descripción</th>
+                                                <th class="text-center">Pedido</th>
+                                                <th class="text-center">Pendiente</th>
+                                                <th class="text-center">Entregado</th>
+                                                <th class="text-center">Facturado</th>
+                                                <th class="text-center">Precio</th>
+                                                <th class="text-center">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="pedido" class="table-bordered">
+                                            <tr id="eliminar" dir-paginate="pedido in ListaPedidos|orderBy:sortKey:reverse|filter:QryConsultaPedido|itemsPerPage:QtyConsultaPedido" pagination-id="queryOrders">
+
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">{{ListaPedidos.indexOf(pedido) + 1}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">{{pedido.Cliente}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">{{pedido.NoPedido}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">{{pedido.DocDate}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">{{pedido.DocDueDate}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">{{pedido.ItemCode}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">{{pedido.ItemName}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">{{pedido.QtyPedida}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">{{pedido.QtyPendiente}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">{{pedido.QtyEntregada}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">{{pedido.QtyFacturada}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">${{pedido.Precio}}</td>
+                                                <td class="text-center" ng-click="AbrirModalEstadoPedido(pedido.NoPedido, 'Carlos')">${{pedido.Total}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls max-size="5"
+                                                             direction-links="true"
+                                                             boundary-links="true"
+                                                             pagination-id="queryOrders">
+                                    </dir-pagination-controls>
+                                    <div class="row">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div growl></div>
+                        </div>
+
+                    </div>
+                    <div ng-show="isSet(3)">
+                        <div class="container">
+                            <h4 style="padding-top:5px; font-size:24px; background-color:#E6E6E6; text-align:left;">Pedidos a Detalle</h4>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="row form-group-sm rowFormulario">
+                                        <label class="col-lg-1 col-md-1 col-sm-1">Consultar Desde</label>
+                                        <div class="col-lg-11 col-md-11 col-sm-11">
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <div class="popover-wrapper">
+                                                    <a class="form-control inputstl" name="fechaPedido" href="#" editable-date="ImprimirDesde" onbeforesave="ActualizarFechaInicioRpt($data)">{{ (ImprimirDesde | date: "yyyy-MM-dd") || ImprimirDesde }}</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <label>Hasta</label>
+                                            </div>
+                                            <div id="inputHasta" class="col-lg-2 col-md-2 col-sm-2">
+                                                <div class="popover-wrapper">
+                                                    <a class="form-control inputstl" name="fechaPedido" href="#" editable-date="ImprimirHasta" onbeforesave="ActualizarFechaFinRpt($data)">{{ (ImprimirHasta | date: "yyyy-MM-dd") || ImprimirHasta }}</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <label>Estatus</label>
+                                            </div>
+                                            <div id="inputHasta" class="col-lg-2 col-md-2 col-sm-2">
+                                                @*<a class="form-control inputstl" name="fechaPedido" href="#" editable-text="EstadoPedido" onbeforesave="ActualizarEstadoPedidoRpt($data)">{{EstadoPedido || 'O'}}</a>*@
+                                                <a href="#"
+                                                   editable-select="EstadoPedido.Tipo"
+                                                   buttons="yes"
+                                                   e-ng-options="tipo.value as tipo.text for tipo in EstadosPedido"
+                                                   class="ng-scope ng-binding editable editable-click form-control inputstl">
+                                                    {{LlenarComboEstadoPedido()}}
+                                                </a>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <button type="button" class="btn btn-default" ng-click="ImprimirVariosPedidos();">
+                                                    Imprimir
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="isSet(4)" ng-controller="reimpresionController">
+                        <div class="container">
+                            <h4 style="padding-top:5px; font-size:24px; background-color:#E6E6E6; text-align:left;">Reimpresión de Documentos</h4>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group-sm rowFormulario">
+                                    <div class="row form-group-sm rowFormulario">
+                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <div class="row form-group-sm rowFormulario">
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <label>Tipo Docto.</label>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <a href="#"
+                                                               editable-select="TipoDocumento.Tipo"
+                                                               buttons="yes"
+                                                               e-ng-options="s.value as s.text for s in ListaTipoDocumento"
+                                                               class="form-control inputstl">
+                                                                {{VisualizarTipoDocumento()}}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group-sm rowFormulario">
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <label>Buscar Por</label>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <a href="#"
+                                                               editable-select="TipoNumero.Tipo"
+                                                               buttons="yes"
+                                                               e-ng-options="s.value as s.text for s in ListaTipoNumero"
+                                                               class="form-control inputstl">
+                                                                {{VisualizarTipoNumero()}}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group-sm rowFormulario">
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <label>Valor a Buscar</label>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <a class="form-control inputstl"
+                                                               name="fechaConsulta" href="#"
+                                                               buttons="yes"
+                                                               editable-number="ValorDocumento"
+                                                               onaftersave="">{{ ValorDocumento}}</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 rowFormulario">
+                                                <button type="button" class="btn btn-default" ng-click="ReimpresionDocumentos();">
+                                                    <img src="~/Images/printer.png" /><span><strong>Imprimir</strong></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div growl></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div class="footer">
+        <div class="form-horizontal" style="height:13px;">
+            <div class="form-group">
+                <div class="col-md-8">
+
+                    <p><a target="_blank" href="https://api.example.com"><img src="~/Images/logoAcme.png" style="max-width:10%" /></a>  &copy 2017 Acme Technologies - Todos los Derechos Reservados</p>
+                </div>
+
+
+                <div class="col-md-4">
+                    <a target="_blank" href="https://api.example.com" style="color: rgba(255,255,255,1.00);">Acerca de Nosotros</a>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <script>
+        $(document).ready(function () {
+            $(".nav-tabs a").click(function () {
+                $(this).tab('show');
+            });
+        });
+    </script>
+
+</body>
+</html>

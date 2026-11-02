@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B0F14">
+    <meta name="description"
+        content="La Tiendita del Barrio — Asistente de compras y cocina mexicana inteligente con MCP y Gemini.">
+    <title>La Tiendita del Barrio — Don Lalo Asistente de Voz</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- ═══ HEADER ═══ -->
+    <header id="main-header">
+        <div class="header-content">
+            <div class="logo-group">
+                <div class="logo-icon">
+                    <i data-lucide="store" class="icon-store"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>La Tiendita del Barrio</h1>
+                    <p class="tagline">Asistente de compras y cocina de Don Lalo</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <!-- Filtros de categoría -->
+                <div class="category-pills" id="category-pills">
+                    <button class="pill active" data-category="all" onclick="filtrarCategoria('all')">Todos</button>
+                    <button class="pill" data-category="recetas" onclick="filtrarCategoria('recetas')">🍳 Para Cocinar</button>
+                    <button class="pill" data-category="Bebidas" onclick="filtrarCategoria('Bebidas')">🥤 Bebidas</button>
+                    <button class="pill" data-category="Lácteos" onclick="filtrarCategoria('Lácteos')">🥛 Lácteos</button>
+                    <button class="pill" data-category="Despensa" onclick="filtrarCategoria('Despensa')">🏪 Despensa</button>
+                    <button class="pill" data-category="Carnes y Embutidos" onclick="filtrarCategoria('Carnes y Embutidos')">🥩 Carnes y Jamón</button>
+                    <button class="pill" data-category="Frutas y Verduras" onclick="filtrarCategoria('Frutas y Verduras')">🥑 Frescos</button>
+                    <button class="pill" data-category="Panadería" onclick="filtrarCategoria('Panadería')">🍞 Pan</button>
+                    <button class="pill" data-category="Botanas" onclick="filtrarCategoria('Botanas')">🍿 Botanas</button>
+                    <button class="pill" data-category="Salsas" onclick="filtrarCategoria('Salsas')">🌶️ Salsas</button>
+                    <button class="pill" data-category="diabeticos" onclick="filtrarCategoria('diabeticos')">💚 Diabéticos</button>
+                </div>
+                <!-- Botón carrito -->
+                <button id="btn-toggle-cart" class="btn-cart" aria-label="Ver carrito" onclick="toggleCart()">
+                    <i data-lucide="shopping-cart"></i>
+                    <span id="cart-badge" class="cart-badge hidden">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ CATÁLOGO DE PRODUCTOS (Página Principal) ═══ -->
+    <main id="catalog-page">
+        <!-- Búsqueda rápida -->
+        <div class="search-bar-container">
+            <div class="search-bar">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-input" placeholder="Buscar productos, marcas o antojitos..."
+                    oninput="buscarProductos(this.value)">
+            </div>
+        </div>
+
+        <!-- Grid de productos -->
+        <div id="product-grid" class="product-grid">
+            <!-- Se llena dinámicamente con JS -->
+        </div>
+
+        <!-- Loading state -->
+        <div id="catalog-loading" class="catalog-loading">
+            <div class="spinner"></div>
+            <p>Cargando catálogo de la tiendita...</p>
+        </div>
+
+        <!-- Empty state -->
+        <div id="catalog-empty" class="catalog-empty hidden">
+            <i data-lucide="search-x" class="empty-icon-lg"></i>
+            <p>No se encontraron productos con ese término</p>
+            <p class="text-muted">Intenta buscar otro artículo o pídele ayuda a Don Lalo en el chat</p>
+        </div>
+    </main>
+
+    <!-- ═══ PANEL DE CARRITO (slide-in lateral) ═══ -->
+    <aside id="cart-panel" class="cart-panel" aria-label="Carrito de compras">
+        <div class="cart-header">
+            <h2><i data-lucide="shopping-cart"></i> Mi Mandado</h2>
+            <button id="btn-close-cart" class="btn-icon" aria-label="Cerrar carrito" onclick="toggleCart()">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <div class="cart-empty" id="cart-empty">
+                <i data-lucide="package-open" class="empty-icon"></i>
+                <p>Tu carrito está vacío</p>
+                <p class="cart-empty-hint">Pídele a Don Lalo que te arme un combo o agrega productos desde el catálogo</p>
+            </div>
+        </div>
+        <div id="cart-footer" class="cart-footer hidden">
+            <div class="cart-total">
+                <span>Total a pagar:</span>
+                <span id="cart-total-amount" class="total-amount">$0.00</span>
+            </div>
+            <button id="btn-checkout" class="btn-checkout" onclick="enviarSugerencia('Quiero finalizar mi compra y confirmar mi pedido')">
+                <i data-lucide="check-circle-2"></i>
+                Confirmar y Pedir Mandado
+            </button>
+            <p class="payment-note"><i data-lucide="info"></i> Pago contra entrega únicamente (efectivo al recibir)</p>
+        </div>
+    </aside>
+    <div id="cart-overlay" class="cart-overlay hidden" onclick="toggleCart()"></div>
+
+    <!-- ═══ CHAT FLOTANTE DE DON LALO ═══ -->
+    <!-- Botón flotante para abrir chat -->
+    <button id="btn-open-chat" class="fab-chat" aria-label="Hablar con Don Lalo" onclick="toggleChatPanel()">
+        <i data-lucide="message-circle" class="fab-icon-open"></i>
+        <i data-lucide="x" class="fab-icon-close hidden"></i>
+        <span class="fab-pulse"></span>
+    </button>
+
+    <!-- Panel de chat flotante -->
+    <div id="chat-panel" class="chat-floating-panel hidden" aria-label="Asistente de voz Don Lalo">
+        <div class="chat-panel-header">
+            <div class="chat-panel-title">
+                <div class="chat-avatar-sm">
+                    <i data-lucide="chef-hat"></i>
+                </div>
+                <div>
+                    <strong>Don Lalo — Tendero del Barrio</strong>
+                    <span class="chat-status">En línea · Experto en mandado</span>
+                </div>
+            </div>
+            <div class="chat-panel-actions">
+                <!-- Botón para detener voz -->
+                <button id="btn-stop-voice" class="btn-icon btn-stop-voice hidden" onclick="detenerVoz()"
+                    aria-label="Detener voz" title="Detener lectura">
+                    <i data-lucide="volume-x"></i>
+                </button>
+                <!-- Botón toggle audio -->
+                <button id="btn-audio-toggle" class="btn-icon" onclick="toggleAudio()"
+                    aria-label="Activar lectura en voz alta" title="Lectura en voz alta">
+                    <i data-lucide="volume-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mensajes del chat -->
+        <div id="chat-messages" class="chat-messages" role="log" aria-live="polite">
+            <!-- Se llena dinámicamente -->
+        </div>
+
+        <!-- Indicador de typing -->
+        <div id="typing-indicator" class="typing-indicator hidden">
+            <div class="chat-avatar-xs"><i data-lucide="chef-hat"></i></div>
+            <div class="typing-dots"><span></span><span></span><span></span></div>
+        </div>
+
+        <!-- Barra de entrada del chat -->
+        <div class="chat-input-bar">
+            <div class="input-wrapper">
+                <input type="text" id="chat-input" placeholder="Pregúntale a Don Lalo qué comer o qué pedir..." autocomplete="off"
+                    aria-label="Escribe tu mensaje para Don Lalo"
+                    onkeydown="if(event.key==='Enter'){event.preventDefault();enviarMensaje();}">
+                <button type="button" id="btn-voice" class="btn-icon btn-voice" onclick="toggleVoice()"
+                    aria-label="Hablar por micrófono" title="Hablar por voz">
+                    <i data-lucide="mic"></i>
+                </button>
+            </div>
+            <button id="btn-send" class="btn-send" onclick="enviarMensaje()" aria-label="Enviar mensaje">
+                <i data-lucide="send-horizontal"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

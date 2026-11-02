@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EVIRFID.Views.PersonDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:local="clr-namespace:EVIRFID.ViewModels"
+    Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding UpdatePersonCommand}" Text="Actualizar Info" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.BindingContext>
+        <local:PersonDetailViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="15" Spacing="20">
+        <StackLayout Orientation="Horizontal">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Small"
+                Style="{StaticResource MainLabel}"
+                Text="ID Persona:" />
+            <Label
+                FontSize="Small"
+                HorizontalOptions="Center"
+                Style="{StaticResource SecondaryLabel}"
+                Text="{Binding CurrentPerson.idPersona}" />
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Small"
+                Style="{StaticResource MainLabel}"
+                Text="Fecha Última Atención:" />
+            <Label
+                FontSize="Small"
+                HorizontalOptions="EndAndExpand"
+                Style="{StaticResource SecondaryLabel}"
+                Text="{Binding CurrentPerson.fechaUltimaAtencion}" />
+        </StackLayout>
+
+        <inputLayout:SfTextInputLayout
+            Padding="0,-20,0,-20"
+            ContainerType="Outlined"
+            FocusedColor="#00AFA0"
+            HelperText="Nombre"
+            InputViewPadding="10">
+            <Entry Style="{StaticResource SecondaryLabel}" Text="{Binding CurrentPerson.nombre, Mode=TwoWay}" />
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout
+            Padding="0,0,0,-20"
+            ContainerType="Outlined"
+            FocusedColor="#00AFA0"
+            HelperText="Adscripción"
+            InputViewPadding="10">
+            <Entry Style="{StaticResource SecondaryLabel}" Text="{Binding CurrentPerson.adscripcion, Mode=TwoWay}" />
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout
+            Padding="0,0,0,-20"
+            ContainerType="Outlined"
+            FocusedColor="#00AFA0"
+            HelperText="CUIP"
+            InputViewPadding="10">
+            <Entry Style="{StaticResource SecondaryLabel}" Text="{Binding CurrentPerson.cuip, Mode=TwoWay}" />
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout
+            Padding="0,0,0,-20"
+            ContainerType="Outlined"
+            FocusedColor="#00AFA0"
+            HelperText="Tipo de Sangre"
+            InputViewPadding="10">
+            <Entry Style="{StaticResource SecondaryLabel}" Text="{Binding CurrentPerson.tipoSangre, Mode=TwoWay}" />
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout
+            ContainerType="Outlined"
+            FocusedColor="#00AFA0"
+            HelperText="Observaciones"
+            InputViewPadding="10">
+            <Entry Style="{StaticResource SecondaryLabel}" Text="{Binding CurrentPerson.observaciones, Mode=TwoWay}" />
+        </inputLayout:SfTextInputLayout>
+
+    </StackLayout>
+
+</ContentPage>

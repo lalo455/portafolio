@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EVIRFID.Views.ItemsPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:EVIRFID.ViewModels"
+             xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:model="clr-namespace:EVIRFID.Models"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:dxe="http://schemas.devexpress.com/xamarin/2014/forms/editors"  
+             x:Name="BrowseItemsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Alta Masiva" Command="{Binding MassiveAddItemCommand}" />
+    </ContentPage.ToolbarItems>
+
+  
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal" Margin="0,0,0,0">
+                <dxe:TextEdit LabelText="epc, prenda o agencia" HorizontalOptions="FillAndExpand" Text="{Binding Filtro, Mode=TwoWay}" HeightRequest="15" TextFontSize="14"></dxe:TextEdit>
+                <dxe:SimpleButton Text="Filtrar"
+                              BorderThickness="2"
+                              BorderColor="Black"
+                              PressedBorderColor="DarkOrange"
+                              DisabledBorderColor="DarkGray"
+                              TextColor="Black"
+                              PressedTextColor="White"
+                              DisabledTextColor="DarkGray"
+                              IconColor="Black"
+                              PressedIconColor="White"
+                              DisabledIconColor="DarkGray"
+                              BackgroundColor="Beige"
+                              DisabledBackgroundColor="Brown"
+                              PressedBackgroundColor="Gray"
+                              CornerMode = "Round"        
+                              CornerRadius="10"
+                              Command="{Binding LoadFilteredItemsCommand}"
+                              Margin="0,0,6,0"/>
+                <dxe:SimpleButton Text="Nuevo Ítem"
+                              BorderThickness="2"
+                              BorderColor="Black"
+                              PressedBorderColor="DarkOrange"
+                              DisabledBorderColor="DarkGray"
+                              TextColor="Black"
+                              PressedTextColor="White"
+                              DisabledTextColor="DarkGray"
+                              IconColor="Black"
+                              PressedIconColor="White"
+                              DisabledIconColor="DarkGray"
+                              BackgroundColor="DarkGoldenrod"
+                              DisabledBackgroundColor="Brown"
+                              PressedBackgroundColor="Gray"
+                              CornerMode = "Round"        
+                              CornerRadius="10"
+                              Command="{Binding AddItemCommand}"
+                              Margin="0,0,6,0"/>
+            </StackLayout>
+
+            <Label Text="Presione el gatillo para leer una (1) etiqueta RFID." TextColor="DarkMagenta" HorizontalOptions="Center" FontSize="Micro"></Label>
+
+            <StackLayout Orientation="Horizontal" Margin="0,5,0,0">
+                <buttons:SfButton x:Name="PwrBtn" Text="Deasignar" ImageSource="broken_link.png" Command="{Binding UnlinkItemCommand}" FontSize="16" BackgroundColor="IndianRed" CornerRadius="3" ShowIcon="True" HorizontalOptions="FillAndExpand" ImageAlignment="Top"/>
+                <buttons:SfButton x:Name="ClearBtn" Text="Ver detalle" ImageSource="search.png" Command="{Binding ShowItemDetailsCommand}" FontSize="16" BackgroundColor="SeaGreen" CornerRadius="3" ShowIcon="True" HorizontalOptions="FillAndExpand" ImageAlignment="Top"/>
+            </StackLayout>
+
+            <syncfusion:SfListView x:Name="listViewItems"
+                               BackgroundColor="Azure"
+                               ItemsSource="{Binding Items}"
+                               AutoFitMode="None"
+                               SelectionMode="Single"
+                               SelectedItem="{Binding SelectedItem}"
+                               ItemSize="50"
+                               AllowSwiping="False">
+                <syncfusion:SfListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Item">
+                        <StackLayout BackgroundColor="LightGray" Margin="2">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding epc}" FontAttributes="Bold" FontSize="16" Margin="5,0,0,0"/>
+                             
+                            </StackLayout>
+                      
+                        </StackLayout>
+                    </DataTemplate>
+                </syncfusion:SfListView.ItemTemplate>
+            </syncfusion:SfListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

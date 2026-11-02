@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Remision</title>
+    <link href="~/Library/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Library/Growl/angular-growl.min.css" rel="stylesheet" />
+    <link href="~/Library/XEditable/xeditable.css" rel="stylesheet" />
+    <link href="~/Library/Estilos/Styles.css" rel="stylesheet" />
+    <link href="~/Library/FontAwesome/css/all.min.css" rel="stylesheet" />
+</head>
+<body ng-app="remisionApp" ng-controller="remisionController" class="animated fadeIn fast">
+    <div growl></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="~/Assets/Remision.png" width="30" height="30" class="d-inline-block align-top" alt=""> Remisión
+        </a>
+        <button onclick="location.href='@Url.Action("Menu", "Menu")'" class="navbar-toggler" type="button">
+            <img src="~/Assets/back.png" />
+        </button>
+    </nav>
+
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Plataforma" class="form-label">Plataforma</label>
+                    <input type="text"
+                           class="form-control"
+                           ng-model="Remision.Plataforma"
+                           placeholder="Ingrese plataforma" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Placas" class="form-label">Placas</label>
+                    <input type="text"
+                           class="form-control"
+                           ng-model="Remision.Placas"
+                           placeholder="Ingrese placas" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-group row">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 mr-0">
+                <input id="Entradas"
+                       class="form-control"
+                       placeholder="Etiqueta"
+                       type="text"
+                       ng-model="Lectura.Etiqueta"
+                       ng-change="LecturaQR()" />
+            </div>
+            <h3 style="color:red">{{Remision.Lineas.length}}</h3>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-lg-offset-0" style="padding:0em;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding:0em; padding-left:1em; margin-top:7px;">
+                    <div class="megaTras">
+                        <table class='headerTras'>
+                            <tr>
+                                <td class="colTH6">No. De huacal</td>
+                                <td class="colTH3">Artículo</td>
+                                <td class="colTH5">Piezas</td>
+                                <td class="colTH5">#Piezas</td>
+                                <td class="colTH5">#Cliente</td>
+                                <td class="colTH5">Detalle</td>
+                                <td class="colTH5">Accion</td>
+                            </tr>
+                        </table>
+                        <table style="width:100%; margin-top:40px;">
+                            <tbody>
+                                <tr ng-repeat="Ln in Remision.Lineas">
+                                    <td class="colTT6">{{$index + 1}}</td>
+                                    <td class="colTT3">{{Ln.ItemCode}} - {{Ln.ItemName}}</td>
+                                    <td class="colTT5">{{Ln.OnHandQty}}</td>
+                                    <td class="colTT5">{{Ln.QtyEtq}}</td>
+                                    <td class="colTT5">{{Ln.Cliente}}</td>
+                                    <td class="colTT5">
+                                        <button class="btn btn-sm btn-info" ng-click="VerDetalle(Ln)">
+                                            <i class="fas fa-eye"></i> Ver
+                                        </button>
+                                    </td>
+                                    <td class="colTT5">
+                                        <button class="btn btn-sm btn-danger" ng-click="Eliminar($index)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row pb-4 mt-4">
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12 text-center">
+                <button ng-hide="Memoria.Procesando" type="button" class="btn btn-lg btn-warning"
+                        ng-click="Documento()"
+                        ng-disabled="Remision.Lineas.length == 0 || Memoria.Procesando">
+                    Generar Movimiento
+                </button>
+                <img class="col-12 col-lg-3 col-md-4 col-sm-12" style="width: 22%;"
+                     ng-show="Memoria.Procesando" src="~/Assets/loading_.gif" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Los scripts se mantienen igual -->
+    <script src="~/Library/JQuery/jquery-3.3.1.js" asp-append-version="true"></script>
+    <script src="~/Library/Angular/angular.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Growl/angular-growl.min.js" asp-append-version="true"></script>
+    <script src="~/Library/XEditable/xeditable.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/ui-bootstrap-tpls.min.js" asp-append-version="true"></script>
+    <script src="~/Library/FontAwesome/js/all.min.js" asp-append-version="true"></script>
+    <script src="~/Scripts/decimal.js" asp-append-version="true"></script>
+    <script src="~/Scripts/Remision/Remision.js" asp-append-version="true"></script>
+
+</body>
+</html>

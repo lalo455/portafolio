@@ -1,0 +1,38 @@
+﻿<div class="modal-header">
+    <h4 class="modal-title">Etiquetas Pendientes</h4>
+</div>
+<div class="modal-body" name="modalData">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="megaTras">
+                <table class='headerTras'>
+                    <tr style="margin:0; padding:0;">
+                        <td style="color: white;" class="colTH6">N° Orden</td>
+                        <td style="color: white;" class="colTH7">TE</td>
+                        <td style="color: white;" class="colTH7">1</td>
+                        <td style="color: white;" class="colTH7">2</td>
+                        <td style="color: white;" class="colTH7">3</td>
+                    </tr>
+                </table>
+                <table style="width:100%; margin-top:40px;">
+                    <tbody>
+                        <tr ng-repeat="br in Borradores" style="display: table; table-layout:fixed; width: 100%;">
+                            <td class="colTT6" ng-click="BorradorSeleccionado(br);">{{br.OF}}</td>
+                            <td class="colTT7" ng-click="BorradorSeleccionado(br);">{{br.TE}}</td>
+                            <td class="colTT7" ng-click="BorradorSeleccionado(br);" ng-class="{'bg-success2 text-white2' : Turno == 1}">{{br.P}}</td> <!-- Primero-->
+                            <td class="colTT7" ng-click="BorradorSeleccionado(br);" ng-class="{'bg-success2 text-white2' : Turno == 2}">{{br.S}}</td>   <!--Segundo-->
+                            <td class="colTT7" ng-click="BorradorSeleccionado(br);" ng-class="{'bg-success2 text-white2' : Turno == 3}">{{br.T}}</td>   <!--Tercero-->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-lg-5 col-lg-offset-6">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ok()">Cancelar</button>
+        </div>
+    </div>
+</div>

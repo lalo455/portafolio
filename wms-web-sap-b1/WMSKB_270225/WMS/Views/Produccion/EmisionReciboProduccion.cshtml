@@ -1,0 +1,175 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Library/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Library/Estilos/Styles.css" rel="stylesheet" />
+    <link href="~/Library/Growl/angular-growl.min.css" rel="stylesheet" />
+    <link href="~/Library/XEditable/xeditable.css" rel="stylesheet" />
+    <link href="~/Library/FontAwesome/fontawesome/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/Library/FontAwesome/fontawesome/css/solid.css" rel="stylesheet" />
+    <link href="~/Library/Messi/messi.min.css" rel="stylesheet" />
+    <link href="~/Library/Datapicker/angular-datepicker.min.css" rel="stylesheet" />
+    <style>
+        .full button span {
+            background-color: limegreen;
+            border-radius: 32px;
+            color: black;
+        }
+
+        .partially button span {
+            background-color: orange;
+            border-radius: 32px;
+            color: black;
+        }
+    </style>
+    <title>Emision y Recibo de Produccion</title>
+</head>
+
+<body ng-app="emisionReciboApp" ng-controller="emisionReciboController" class="animated fadeIn fast">
+    <div growl></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="~/Assets/Recibo_Prod.png" width="30" height="30" class="d-inline-block align-top" alt=""> Recibo de Producción
+        </a>
+        <button onclick="location.href='@Url.Action("Menu", "Menu")'" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="~/Assets/back.png" />
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto"></ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button onclick="location.href='@Url.Action("Menu", "Menu")'" class="btn btn-light my-2 my-sm-0" type="submit">
+                    <img src="~/Assets/back.png" />
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container pt-3">
+
+        <div class="row float-right">
+            <button class="btn btn-outline-info" type="button" ng-show="!Mostrar.turno" ng-click="Mostrar.turno = true" style="padding:0.3em; height:40px;">
+                <span style="font-size: 18px; color: Dodgerblue;"><i class="fas fa-chevron-down"></i></span>
+            </button>
+            <button class="btn btn-outline-danger" type="button" ng-show="Mostrar.turno" ng-click="Mostrar.turno = false" style="padding:0.3em; height:40px;">
+                <span style="font-size: 18px; color: red"><i class="fas fa-chevron-up"></i></span>
+            </button>
+        </div>
+
+        <div class="form-group row" ng-show="Mostrar.turno">
+            <label for="Almacen" class="col-3 col-sm-3 col-md-3 col-lg-1 col-xl-1 form-label py-2 pr-0">Turno</label>
+            <div class="col-7 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+                <select ng-model="ReciboEmision.Turno" class="form-control custom-select"
+                        ng-model-options="{getterSetter:true}"
+                        ng-options="Alm.Code as Alm.Name for Alm in ReciboEmision.Turnos">
+                    <option style="display:none" value="">Seleccione Turno</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="form-group row">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 mr-0">
+                <input id="Entradas"
+                       class="form-control"
+                       placeholder="Etiqueta"
+                       type="text"
+                       ng-model="Lectura.Etiqueta"
+                       ng-change="LecturaQR()" />
+            </div>
+            <h3 style="color:red">{{ReciboEmision.Lineas.length}}</h3>
+
+            <div class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-3 mr-0" style="text-align: center;">
+                <button class="btn btn-success"
+                        ng-click="SalvarBorrador()"
+                        ng-disabled="!ReciboEmision.Lineas.length">
+                    <span style="font-size: 1em;"><i class="fas fa-save"></i></span>
+                </button>
+
+                <button class="btn btn-info" ng-click="ListarBorradores()">
+                    <span><i class="fas fa-cloud-download-alt"></i></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-lg-offset-0" style="padding:0em;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="padding:0em; padding-left:1em; margin-top:7px;">
+                    <div class="megaTras">
+                        <table class='headerTras'>
+                            <tr>
+                                <td class="colTH6">#</td>
+                                <td class="colTH2">Lote</td>
+                                <td class="colTH3">Artículo</td>
+                                <td class="colTH5">Cantidad</td>
+                                <td class="colTH5">OF</td>
+                                <td class="colTH4">Almacén</td>
+                                <td class="colTH6">Turno</td>
+                                <td class="colTH3">Fecha</td>
+                                <td class="colTH5">Accion</td>
+                            </tr>
+                        </table>
+                        <table style="width:100%; margin-top:40px;">
+                            <tbody>
+                                <tr id="Reg{{$index}}" ng-repeat="Ln in ReciboEmision.Lineas">
+                                    <!--Ordenacion de Datos por Lote | orderBy:'DistNumber'-->
+                                    <td class="colTT6">{{$index + 1}}</td>
+                                    <td class="colTT2">{{Ln.DistNumber || 'Sin Lote'}}</td>
+                                    <td class="colTT3">{{Ln.ItemCode}}</td>
+                                    <td class="colTT5">{{Ln.OnHandQty | number}}</td>
+                                    <td class="colTT5">{{Ln.OF}}</td>
+                                    <td class="colTT4">{{Ln.Warehouse || 'Sin Ubicación'}}</td>
+                                    <td class="colTT6">{{Ln.U_TurnoRecibo}}</td>
+                                    <td class="colTT3">{{Ln.U_FechaRecibo}}</td>
+                                    <td class="colTT5"><img src="~/Assets/delete.png" ng-click="EliminarBorrador($index)" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row pb-4 mt-4">
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12 text-center">
+                <button ng-hide="Lectura.Movimiento"
+                        type="button"
+                        class="btn btn-lg btn-warning"
+                        style="background-color:#DAA520"
+                        ng-click="Crear()"
+                        ng-disabled="ReciboEmision.Lineas.length == 0 || Lectura.Movimiento">
+                    Generar Movimiento
+                </button>
+
+                <img class="col-12 col-lg-3 col-md-4 col-sm-12" style="width: 22%;" ng-show="Lectura.Movimiento" src="~/Assets/loading_.gif" />
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Library/JQuery/jquery-3.3.1.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/bootstrap.js" asp-append-version="true"></script>
+    <script src="~/Library/Angular/angular.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Growl/angular-growl.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/ui-bootstrap-tpls.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/ui-bootstrap-tpls-3.0.6.min.js" asp-append-version="true"></script>
+    <script src="~/Library/XEditable/xeditable.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Messi/messi.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Datapicker/angular-datapicker.min.js" asp-append-version="true"></script>
+    <script src="~/Scripts/decimal.js" asp-append-version="true"></script>
+    <script src="~/Scripts/Produccion/EmisionReciboProduccion.js" asp-append-version="true"></script>
+    <script src="~/Library/Angular/angular-locale_es-mx.js" asp-append-version="true"></script>
+
+</body>
+</html>

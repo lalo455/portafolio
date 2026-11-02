@@ -1,0 +1,92 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Traspaleo</title>
+    <link href="~/Library/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Library/Growl/angular-growl.min.css" rel="stylesheet" />
+    <link href="~/Library/XEditable/xeditable.css" rel="stylesheet" />
+    <link href="~/Library/Estilos/Styles.css" rel="stylesheet" />
+    <link href="~/Library/JQuery/jquery-ui.css" rel="stylesheet" />
+
+    <script src="~/Library/JQuery/jquery-3.3.1.js" asp-append-version="true"></script>
+    <script src="~/Library/Angular/angular.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Growl/angular-growl.min.js" asp-append-version="true"></script>
+    <script src="~/Library/XEditable/xeditable.min.js" asp-append-version="true"></script>
+    <script src="~/Library/Bootstrap/js/ui-bootstrap-tpls.min.js" asp-append-version="true"></script>
+    <script src="~/Scripts/Traspaleo/Traspaleo.js" asp-append-version="true"></script>
+</head>
+<body ng-app="traspaleoApp" ng-controller="traspaleoController" class="animated fadeIn fast">
+    <div growl></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="~/Assets/Traspaleo.png" width="30" height="30" class="d-inline-block align-top" alt=""> Traspaleo
+        </a>
+        <button onclick="location.href='@Url.Action("Menu", "Menu")'" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="~/Assets/back.png" />
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto"></ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button onclick="location.href='@Url.Action("Menu", "Menu")'" class="btn btn-light my-2 my-sm-0" type="submit">
+                    <img src="~/Assets/back.png" />
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container pt-3">
+        <div class="form-group row">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 mr-0">
+                <input id="Entradas" class="form-control" placeholder="Etiqueta" type="text" ng-model="Lectura.Etiqueta" ng-change="LecturaQR()" />
+            </div>
+            <h3 style="color:red">{{Traspaleo.Lineas.length}}</h3>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-lg-offset-0" style="padding:0em;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:0em; padding-left:1em; margin-top:7px;">
+                    <div class="megaTras">
+                        <table class='headerTras'>
+                            <tr>
+                                <td class="colTH6">#</td>
+                                <td class="colTH2">Lote</td>
+                                <td class="colTH3">Artículo</td>
+                                <td class="colTH3">Cantidad</td>
+                                <td class="colTH2">Dispositivo</td>
+                                <td class="colTH5">Accion</td>
+                            </tr>
+                        </table>
+                        <table style="width:100%; margin-top:40px;">
+                            <tbody>
+                                <tr ng-repeat="Ln in Traspaleo.Lineas">
+                                    <td class="colTT6">{{$index + 1}}</td>
+                                    <td class="colTT2">{{Ln.Name}}</td>
+                                    <td class="colTT3">{{Ln.U_ItemCode}}</td>
+                                    <td class="colTT3">{{Ln.U_QtyEti}}</td>
+                                    <td class="colTT2">{{Ln.U_Dispositivo}}</td>
+                                    <td class="colTT5"><img src="~/Assets/delete.png" ng-click="Eliminar($index)" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        
+        <div class="row pb-4 mt-4">
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12 text-center">
+                <button ng-hide="Lectura.Movimiento" type="button" class="btn btn-lg btn-warning" style="background-color:#DAA520" ng-click="Crear()" ng-disabled="Traspaleo.Lineas.length == 0 || Lectura.Movimiento">Generar</button>
+                <img class="col-12 col-lg-3 col-md-4 col-sm-12" style="width: 22%;" ng-show="Lectura.Movimiento" src="~/Assets/loading_.gif" />
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

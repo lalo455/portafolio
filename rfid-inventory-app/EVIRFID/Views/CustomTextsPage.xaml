@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EVIRFID.Views.CustomTextsPage"
+    Title="{Binding Title}"
+    xmlns:local="clr-namespace:EVIRFID.ViewModels"
+    xmlns:model="clr-namespace:EVIRFID.Models"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:viewmodels="clr-namespace:EVIRFID.ViewModels"
+    xmlns:lists="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:sfPopup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms"
+    xmlns:range="clr-namespace:Syncfusion.SfRangeSlider.XForms;assembly=Syncfusion.SfRangeSlider.XForms"
+    xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    x:DataType="local:CustomTextsViewModel">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Guardar cambios" Command="{Binding SaveParamsCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.BindingContext>
+        <local:CustomTextsViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout Padding="5,0,5,0">
+            <Frame>
+                <Label Text="Estas etiquetas se utilizarán al generar el reporte estándar." HorizontalTextAlignment="Center"></Label>
+            </Frame>
+            <inputLayout:SfTextInputLayout
+                    Margin="0,0,0,10"
+                    Hint="Tipo"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    FocusedColor="#00AFA0"
+                    HelperText="Indique el tipo (Estatal)">
+                <Entry Text="{Binding Tipo}" />
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout
+                    Margin="0,0,0,10"
+                    Hint="Origen"
+                    FocusedColor="#00AFA0"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    HelperText="Indique el Origen (Nacional)">
+                <Entry Text="{Binding Origen}" />
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout
+                    Margin="0,0,0,10"
+                    Hint="Proveedor"
+                    FocusedColor="#00AFA0"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    HelperText="Indique el nombre del Proveedor">
+                <Entry Text="{Binding Proveedor}"></Entry>
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout
+                    Margin="0,0,0,10"
+                    Hint="Propietario"
+                    FocusedColor="#00AFA0"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    HelperText="Indique el nombre de la dependencia">
+                <Entry Text="{Binding Propietario}" />
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout
+                    Margin="0,0,0,10"
+                    Hint="Observación por defecto"
+                    FocusedColor="#00AFA0"
+                    InputViewPadding="10" 
+                    ContainerType="Outlined"
+                    HelperText="Indique el texto por defecto para las Observaciones">
+                <Entry Text="{Binding Observacion}" />
+            </inputLayout:SfTextInputLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

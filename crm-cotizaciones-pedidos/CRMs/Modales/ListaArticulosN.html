@@ -1,0 +1,50 @@
+﻿<div class="modal-header text-center">
+    <h4 class="modal-title">Lista de artículos</h4>
+</div>
+<div class="modal-body" name="modalData">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 row form-group-sm rowFormulario2">
+            <label class="col-lg-2 col-md-2 col-sm-2">Buscar</label>
+            <div class="col-lg-9 col-md-9 col-sm-9" style="margin-bottom: 20px;">
+                <input ng-model="QueryBusquedaItem" ng-change="buscarArticulos()" id="search" class="form-control" placeholder="Escribe al menos 2 caracteres">
+                <div ng-show="loading" class="text-center">
+                    <i class="fa fa-spinner fa-spin"></i> Buscando...
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12">
+            <table id="modTabITEM" class="table table-bordered bordered table-striped table-hover table-condensed datatable tablaModal">
+                <thead style="background-color: lightgray;">
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color:#FAFAFA;">
+                    <tr dir-paginate="item in ListaITEM | itemsPerPage:QtyPageViewItem"
+                        class="pointerCursor"
+                        pagination-id="ListItemToOrder"
+                        ng-click="ItemSeleccionado(item);">
+                        <td style="text-align:center">{{item.ItemCode}}</td>
+                        <td style="text-align:center">{{item.ItemName}}</td>
+                    </tr>
+                    <tr ng-if="ListaITEM.length === 0 && QueryBusquedaItem.length >= 2">
+                        <td colspan="2" class="text-center">No se encontraron resultados</td>
+                    </tr>
+                    <tr ng-if="QueryBusquedaItem.length < 2">
+                        <td colspan="2" class="text-center">Escribe al menos 2 caracteres para buscar</td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls max-size="7"
+                                     direction-links="true"
+                                     boundary-links="true"
+                                     pagination-id="ListItemToOrder">
+            </dir-pagination-controls>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="ok()">Cerrar</button>
+</div>

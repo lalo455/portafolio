@@ -1,0 +1,37 @@
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:models="clr-namespace:WmsMovil.Models"
+               x:Class="WmsMovil.Views.ListaSolicitudesPopup">
+
+    <Border WidthRequest="320" HeightRequest="450" BackgroundColor="White" StrokeShape="RoundRectangle 15" StrokeThickness="0" Padding="15">
+        <Grid RowDefinitions="Auto, Auto, *, Auto" RowSpacing="10">
+
+            <!-- Título -->
+            <Label Grid.Row="0" Text="Pedidos Abiertos" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#2C3E50"/>
+
+            <!-- Encabezados de la tabla -->
+            <Grid Grid.Row="1" ColumnDefinitions="*, *, *" BackgroundColor="#DAA520" Padding="10,5">
+                <Label Grid.Column="0" Text="Cliente" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
+                <Label Grid.Column="1" Text="Documento" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
+                <Label Grid.Column="2" Text="Líneas" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
+            </Grid>
+
+            <!-- Lista de Solicitudes -->
+            <CollectionView x:Name="ListaST" Grid.Row="2" SelectionMode="Single" SelectionChanged="OnSolicitudSeleccionada">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SolicitudAbierta">
+                        <Grid ColumnDefinitions="*, *, *" Padding="10,15" BackgroundColor="#FAFAFA">
+                            <Label Grid.Column="0" Text="{Binding CardCode}" TextColor="#333333" HorizontalOptions="Center"/>
+                            <Label Grid.Column="1" Text="{Binding DocNum}" TextColor="#333333" FontAttributes="Bold" HorizontalOptions="Center"/>
+                            <Label Grid.Column="2" Text="{Binding TotalItem}" TextColor="#333333" HorizontalOptions="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Botón Cerrar -->
+            <Button Grid.Row="3" Text="Cancelar" BackgroundColor="#E74C3C" TextColor="White" CornerRadius="8" Clicked="OnCerrarClicked"/>
+        </Grid>
+    </Border>
+</toolkit:Popup>

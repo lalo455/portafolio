@@ -1,0 +1,135 @@
+﻿/*Estilos Acceso*/
+#ImagenAcceso {
+    text-align: center;
+}
+.container {
+    width: 1170px;
+    margin-top: 0em;
+}
+#Heading {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#Ingresar {
+    text-align: center;
+}
+.ImagenCRM {
+    width:70%;
+}
+
+
+/* Fin de Estilos Acceso*/
+
+div.rowFormulario2
+{
+    margin-top:0.3em;
+}
+
+div.rowFormulario
+{
+    margin-top:1em;
+}
+#lblFecha {
+    margin-left:3%;
+}
+#InpFecha {
+    margin-left:8.5%
+}
+#SecBtn {
+    margin-bottom: 1em;
+}
+.lblBuscarArt {
+    margin-left: 1.2%;
+}
+.Enviar {
+    margin-top:3em;
+}
+.mrgUsr {
+    margin-top:4%;
+}
+
+.QuitarPadding {
+    padding:0em;
+    margin: 0px;
+}
+.iptTotales {
+    float:right;
+}
+.InpBuscar {
+    margin-bottom:0.5%;
+    width:20%;
+}
+
+#Acciones {
+    padding:0em;
+    text-align:center;
+}
+/**Scroll para tabla*/
+/*thead {
+    display: table;
+    table-layout:fixed;
+    width: 100%;
+}
+tbody {
+    display: block;
+    height: 15em;
+    overflow-y: scroll;
+}
+tbody tr {
+    display: table;
+    table-layout:fixed;
+    width: 100%;
+}
+th, td {
+    width: auto;
+    border: 0px solid;
+}*/
+/*Fin scroll para table*/
+
+.sortable.sort-ascent span:before {
+  display: none; }
+
+.sortable.sort-ascent span:after {
+  top: -5px; }
+
+.sortable.sort-descent span:before {
+  top: -5px; }
+
+.sortable.sort-descent span:after {
+  display: none; }
+#AlertaError {
+    text-align:center;
+}
+/*Tamaños modales*/
+.app-modal-window-sm .modal-dialog {
+    width: 600px;
+}
+
+.app-modal-window-md .modal-dialog {
+    width: 800px;
+}
+
+.app-modal-window-lg .modal-dialog {
+    width: 1000px;
+}
+
+/*Estilos Mensaje General*/
+#MensajeGeneralError {
+    text-align:center;
+    color: #a94442;
+}
+.center1 {
+   
+    margin-top: 0px;
+    margin-left: -150px
+}
+
+/*vista previa*/
+.btn-vista-previa {
+    color: #333; /* color inicial del ícono */
+    transition: color 0.3s;
+}
+
+    .btn-vista-previa:hover {
+        color: #F76600; /* cambia el color del SVG */
+    }

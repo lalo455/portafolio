@@ -1,0 +1,710 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Inicio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Librarys/Bootstrap/Css/bootstrap7.min.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/xeditable.css" rel="stylesheet" />
+    <link href="~/Librarys/Growl_v2/angular-growl.min.css" rel="stylesheet" />
+    <link href="~/Content/MP.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Librarys/Messi/messi.min.css" rel="stylesheet" />
+    <link href="~/Content/Footer.css" rel="stylesheet" />
+    <script src="~/Librarys/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Librarys/Angular/angular.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.min.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.debug.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/bootstrap7.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery-ui.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-2.5.0.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Librarys/Angular/angular-ui-utils.min.js"></script>
+    <script src="~/Librarys/Messi/messi.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery.dataTables.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Librarys/dirPagination.js"></script>
+    <script src="~/Librarys/Growl_v2/angular-growl.min.js"></script>
+    <script src="~/Librarys/Jquery/xeditable.min.js"></script>
+    <script src="~/Librarys/Angular/dataGrid.js"></script>
+    <script src="~/Scripts/appTab.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    @using Microsoft.AspNet.Identity
+    @using Microsoft.AspNet.Identity.Owin;
+    @using System.Security.Claims;
+</head>
+
+<body ng-app="appTab" ng-controller="pedidoController">
+    <nav class="navbar navbar-default" id="myDIV">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <!-- Botón responsive -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-romihn">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!-- Logo -->
+                <a class="navbar-brand" style="padding: 5px 15px;">
+                    <img src="~/Images/ROMIHN.png" alt="ROMIHN" style="padding: 5px 15px;">
+                </a>
+            </div>
+
+            <!-- Menú colapsable -->
+            <div class="collapse navbar-collapse" id="navbar-romihn">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Menú DOCUMENTOS -->
+                    <li class="">
+                        <a href="#" class="dropdown-toggle menu-romihn2" data-toggle="dropdown">DOCUMENTOS <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li id="menuOp1" class="active">
+                                <a class="opcion-nav" href="@Url.Action("PaginaInicio", "MasterPage")">Cotización<span ng-show="rol == 'V' || rol == 'C'"> / Pedido</span></a>
+                            </li>
+                            <li id="menuOp2" style="display:none;" class="active">
+                                <a class="opcion-nav" href="@Url.Action("PaginaInicio", "MasterPage")">Cotización<span ng-show="rol == 'V' || rol == 'C'"> / Pedido</span></a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("Pedidos", "Pedido")" ng-show="rol == 'V' || rol == 'C'">Consulta pedidos</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("Cotizacion", "Cotizacion")">
+                                    Consulta cotizaciones
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("Facturas", "Pedido")" ng-show="rol == 'V' || rol == 'C'">Consulta facturas</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Menú REPORTES -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle menu-romihn2" data-toggle="dropdown">REPORTES <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("Inventario", "Reportes")">Inventario ROMIHN</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("InventarioRC", "Reportes")">Inventario RC</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("Reimpresion", "Reportes")">Reimpresión de documentos</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("Ventas", "Reportes")" ng-show="rol == 'V'">Reporte de ventas</a>
+                                <a class="opcion-nav" href="@Url.Action("Compras", "Reportes")" ng-show="rol == 'C'">Reporte de compras</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Otro ítem -->
+                    <li><a class="menu-romihn" id="UsuarioLogin">@User.Identity.Name</a></li>
+
+                    <!-- Botón salir -->
+                    <li class="divider-left">
+                        <a class="opcion-nav" href="@Url.Action("Logout","Login")">
+                            <img src="~/Content/images/ICONOS/ICONO SALIDA.svg" alt="Salir" style="height:16px;" />
+                            <span class="btn-salir">Salir</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" id="paginaInicio">
+        <div class="container" style="font-family: Calibri;">
+            <div class="col-lg-12 col-md-12 QuitarPadding" id="contenedorPrincipal">
+                <div class="jumbotron" style="padding-top: 15px;">
+                    <div id="encabezado">
+                        <h2 id="encabezado-text" class="encT" ng-show="rol != 'A' && rol != 'O'">Nueva orden de venta</h2>
+                        <h2 id="encabezado-text1" class="encT" ng-show="rol === 'A' || rol === 'O'">Nueva cotización</h2>
+                        <img src="~/Content/images/ICONOS/ICONO ORDEN VENTA.svg" alt="Ícono SVG" class="icono">
+                    </div>
+
+                    <!--Inicio Seccion 1-->
+                    <div id="PedidoView">
+                        <div class="form-horizontal">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4" ng-show="rol != 'A' && rol != 'O'">
+                                    <label class="control-label">Tipo pedido</label>
+                                    <select ng-model="Base"
+                                            class="form-control inputstl custom-select"
+                                            id="selectCurveado"
+                                            ng-disabled="DocEntryPedido != 0"
+                                            ng-model-options="{getterSetter:true}"
+                                            ng-options="D.Tipo as D.Documento for D in DocBase">
+                                        <option style="display:none" value="">Seleccione opción...</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 col-sm-4" ng-show="rol === 'A' || rol === 'O'">
+                                    <label class="control-label">Tipo pedido</label>
+                                    <select ng-model="Base"
+                                            class="form-control inputstl custom-select"
+                                            ng-disabled="DocEntryPedido != 0 || rol === 'A' || rol === 'O'"
+                                            ng-model-options="{getterSetter:true}"
+                                            ng-change="CargarInputFPP()"
+                                            ng-options="D.Tipo as D.Documento for D in DocBase">
+                                        <option style="display:none" value="">Seleccione opción...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="rol == 'V'">
+                                <div class="col-md-4 col-sm-4 mt-sm">
+                                    <label class="control-label">Cliente</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           disabled=""
+                                           placeholder="Código cliente"
+                                           ng-model="customerBP.CardCode">
+                                </div>
+                                <div class="col-md-4 col-sm-4 mt-sm">
+                                    <label class="control-label text-white">Razón social</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           disabled=""
+                                           placeholder="Nombre de cliente"
+                                           ng-model="customerBP.CardName">
+                                </div>
+                                <div class="col-md-4 col-sm-4 mt-sm" ng-show="Base.length != 0 && DocEntryPedido == 0">
+                                    <button type="button"
+                                            class="btn btn-default d-block"
+                                            ng-click="mostrarModalSN()">
+                                        <img src="~/Images/bp.png" />
+                                        <span><strong>Buscar</strong></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="rol =='V'">
+                                <div class="col-md-4 col-sm-4 mt-sm">
+                                    <label class="control-label">Forma de envío</label>
+                                    <select ng-model="EnvioTipo.Forma" class="form-control inputstl"
+                                            ng-model-options="{getterSetter:true}"
+                                            ng-change="ArmarListaFormaEnvio(EnvioTipo.Forma)"
+                                            ng-options="D.Tipo as D.Documento for D in EnvioTipo.ListaFormaEnvio">
+                                        <option style="display:none" value="">Seleccione opción...</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 col-sm-4 mt-sm">
+                                    <label class="control-label">Tipo de envío</label>
+                                    <select ng-model="TipoEnvio.Forma" class="form-control inputstl"
+                                            ng-model-options="{getterSetter:true}"
+                                            ng-change="ArmarListaTipoEnvio(TipoEnvio.Forma)"
+                                            ng-options="D.Tipo as D.Documento for D in TipoEnvio.ListaTipoEnvio">
+                                        <option style="display:none" value="">Seleccione opción...</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 col-sm-4 mt-sm" ng-show="Base=='Pedido' || DocEntryPedido != 0">
+                                    <label class="control-label">Método de pago</label>
+                                    <select ng-model="MetodoPago.Forma" class="form-control inputstl"
+                                            ng-show="Base=='Pedido' || DocEntryPedido!=0" 
+                                            ng-change="ArmarListaMetodoPago(MetodoPago.Forma)"
+                                            ng-options="D.Tipo as D.Tipo+'-'+D.Documento for D in  MetodoPago.ListaMetodoPago">
+                                        <option style="display:none" value="">Seleccione opción...</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 col-sm-4 mt-sm" ng-show="Base =='Pedido' || DocEntryPedido != 0">
+                                    <label class="control-label">Forma de pago</label>
+                                    <select ng-model="DatosFP.Forma" class="form-control inputstl"
+                                            ng-show="Base =='Pedido'|| DocEntryPedido!=0" 
+                                            ng-disabled="rol !='V'"
+                                            ng-model-options="{getterSetter:true}"
+                                            ng-change="ArmarFormaDepago(DatosFP.Forma)"
+                                            ng-options="D.PymCode as D.PymCode+'-'+D.Descrip for D in DatosFP.ListaFormaPago">
+                                        <option style="display:none" value="">Seleccione opción...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show=" rol == 'V'">
+                                <div class="col-md-4 col-sm-4 mt-sm">
+                                    <label class="control-label">Saldo actual</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           disabled=""
+                                           placeholder="$0"
+                                           ng-value="'$'+customerBP.SaldoSt">
+                                </div>
+                                <div class="col-md-4 col-sm-4 mt-sm">
+                                    <label class="control-label">Crédito disponible</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           disabled=""
+                                           placeholder="$0"
+                                           ng-value="'$'+customerBP.CreditoSt">
+                                </div>
+                                <div class="col-md-4 col-sm-4 mt-sm" ng-show=" rol == 'V'">
+                                    <label ng-show="Base == 'Pedido' || DocEntryPedido != 0" class="control-label">
+                                        Uso de CFDI
+                                    </label>
+                                    <select ng-model="DatosCDFI.Forma"
+                                            class="form-control inputstl"
+                                            ng-show="Base =='Pedido' || DocEntryPedido != 0"
+                                            ng-model-options="{getterSetter:true}"
+                                            ng-change="ArmarListaCDFI(DatosCDFI.Forma)"
+                                            ng-options="A.Code as A.Code+'-'+A.Descrip for A in DatosCDFI.ListaCDFI">
+                                        <option style="display:none" value="">Seleccione opción...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div ng-show="rol == 'C' || rol == 'A'|| rol =='O'">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 mt-sm">
+                                        <label class="control-label">Cliente</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               disabled=""
+                                               placeholder="Código cliente"
+                                               ng-model="customerBP.CardCode" />
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 mt-sm">
+                                        <label class="control-label text-white">Razón social</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               disabled=""
+                                               placeholder="Nombre de cliente"
+                                               ng-model="customerBP.CardName">
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 mt-sm">
+                                        <label class="control-label text-white">
+                                            Editar
+                                            <input type="checkbox" ng-model="checked">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 mt-sm">
+                                        <label class="control-label">Forma de envío</label>
+                                        <select ng-model="EnvioTipo.Forma" class="form-control inputstl"
+                                                ng-model-options="{getterSetter:true}"
+                                                ng-change="ArmarListaFormaEnvio(EnvioTipo.Forma)"
+                                                ng-options="D.Tipo as D.Documento for D in EnvioTipo.ListaFormaEnvio">
+                                            <option style="display:none" value="">Seleccione opción...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 mt-sm">
+                                        <label class="control-label">Tipo de envío</label>
+                                        <select ng-model="TipoEnvio.Forma" class="form-control inputstl"
+                                                ng-model-options="{getterSetter:true}"
+                                                ng-change="ArmarListaTipoEnvio(TipoEnvio.Forma)"
+                                                ng-options="D.Tipo as D.Documento for D in TipoEnvio.ListaTipoEnvio  ">
+                                            <option style="display:none" value="">Seleccione opción...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 mt-sm">
+                                        <label ng-show="Base =='Pedido'" class="control-label">Método de pago</label>
+                                        <select ng-model="MetodoPago.Forma" class="form-control inputstl"
+                                                ng-show="Base =='Pedido'"
+                                                ng-disabled="!checked" 
+                                                ng-model-options="{getterSetter:true}"
+                                                ng-change="ArmarListaMetodoPago(MetodoPago.Forma)"
+                                                ng-options="D.Tipo as D.Tipo+'-'+D.Documento for D in  MetodoPago.ListaMetodoPago">
+                                            <option style="display:none" value="">Seleccione opción...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 mt-sm">
+                                        <label ng-show="Base =='Pedido'" class="control-label">Forma de pago</label>
+                                        <select ng-model="DatosFP.Forma" class="form-control inputstl"
+                                                ng-show="Base =='Pedido'"
+                                                ng-disabled="!checked" ng-model-options="{getterSetter:true}"
+                                                ng-change="ArmarFormaDepago(DatosFP.Forma)"
+                                                ng-options="D.PymCode as D.PymCode+'-'+D.Descrip for D in DatosFP.ListaFormaPago">
+                                            <option style="display:none" value="">Seleccione opción...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 mt-sm">
+                                        <label class="control-label">Saldo actual</label>
+                                        <input type="text" class="form-control" disabled="" placeholder="$0"
+                                               ng-value="'$'+customerBP.SaldoSt">
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 mt-sm">
+                                        <label class="control-label">Crédito disponible</label>
+                                        <input type="text" class="form-control" disabled="" placeholder="$0"
+                                               ng-value="'$'+customerBP.CreditoSt">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 mt-sm">
+                                        <label ng-show="Base =='Pedido'" class="control-label">Uso de CFDI</label>
+                                        <select ng-model="DatosCDFI.Forma" class="form-control inputstl"
+                                                ng-show="Base =='Pedido'"
+                                                ng-model-options="{getterSetter:true}" ng-init=" DatosCDFI.Tipo = 'G01'"
+                                                ng-change="ArmarListaCDFI(DatosCDFI.Forma)"
+                                                ng-options="A.Code as A.Code+'-'+A.Descrip for A in DatosCDFI.ListaCDFI">
+                                            <option style="display:none" value="">Seleccione opción...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mt-sm">
+                                    <label class="control-label">Dirección de entrega</label>
+                                    <select ng-model="DatosBP.direccion" class="form-control inputstl"
+                                            ng-model-options="{getterSetter:true}"
+                                            ng-change="ArmarDireccion(DatosBP.direccion)"
+                                            ng-options="x.Address as x.Address for x in DatosBP.ListaDireccion">
+                                        <option style="display:none" value="">Seleccione dirección</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-8 mt-sm">
+                                    <label class="control-label text-white">Dirección completa</label>
+                                    <input type="text" class="form-control" ng-model="DatosBP.DirCompleta" disabled>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mt-sm">
+                                    <label class="control-label">Num. orden de compra</label>
+                                    <input id="numerodePedido" ng-disabled="DocEntryPedido != 0" class="form-control"
+                                           placeholder="Ingrese Folio" type="text" min="0" ng-model="NumPedido">
+                                </div>
+
+                                <div class="col-md-8 mt-sm">
+                                    <label class="control-label">Comentarios</label>
+                                    <input type="text" ng-disabled="DocEntryPedido != 0" class="form-control"
+                                           ng-model="ComentariosPedido" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!--Fecha de entrega para pedido-->
+                                <div class="col-md-4 mt-sm">
+                                    <label class="control-label"
+                                           ng-show="Base == 'Pedido' || DocEntryPedido!=0 || Base == 'Cotizacion'">
+                                        Fecha entrega
+                                    </label>
+
+                                    <div class="overwrite-bootstrap" ng-show=" rol != 'C'">
+                                        <div class="form-control"
+                                             name="fechaPedido"
+                                             href="#"
+                                             editable-date="FechaSistema"
+                                             onaftersave="ActualizarFechaDelPedido($data)">
+                                            {{ FechaSistema | date: "dd-MM-yyyy"}}
+                                        </div>
+                                    </div>
+
+                                    <div class="overwrite-bootstrap" ng-show=" rol == 'C'">
+                                        <div class="form-control"
+                                             disabled=""
+                                             placeholder="Fecha">
+                                            {{ FechaSistema | date: "dd-MM-yyyy"}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Fecha de vencimiento para cotizacion-->
+                                <div class="col-md-4 mt-sm" ng-show="Base == 'Cotizacion' || DocEntryPedido != 0">
+                                    <label class="control-label">Valido hasta</label>
+                                    <div class="overwrite-bootstrap">
+                                        <a class="form-control" name="fechaCotiza" href="#"
+                                           editable-date="FechaSistemaCot"
+                                           onaftersave="ActualizarFechaDeCotiza($data)">
+                                            {{ FechaSistemaCot | date: "dd-MM-yyyy"}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="DocEntryPedido != 0 || DocStatus!='Cerrada'">
+                                <div class="col-md-12 mt-sm">
+                                    <label class="control-label">Modelo</label><br />
+                                    <button type="button"
+                                            class="d-block btn-buscar btn btn-default"
+                                            ng-click="MostrarModalITEM();"
+                                            id="btnBuscar">
+                                        <strong style="vertical-align: middle;">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                            Buscar
+                                        </strong>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="row mt-md">
+                                <div class="col-12 col-sm-12 col-md-12" ng-show="Base == 'Pedido'">
+                                    <strong id="indicacionesTabla">
+                                        Los pedidos registrados después de las 2 de la tarde se agregará un día más de entrega
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="tabPedidoP" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th class="text-center">Modelo</th>
+                                            <th class="text-center">Descripción</th>
+                                            <th class="text-center"></th>
+                                            <th class="text-center">Almacén</th>
+                                            <th class="text-center">Stock</th>
+                                            <th class="text-center">Comprometido</th>
+                                            <th class="text-center">Cantidad</th>
+                                            <th class="text-center">Unidades medida</th>
+                                            <th ng-show="rol == 'C'|| rol=='O'" class="text-center">Precio de referencia</th>
+                                            <th class="text-center">Precio</th>
+                                            <th class="text-center">IVA</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">Fecha entrega</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="pedido">
+                                        <tr id="eliminar"
+                                            dir-paginate="articulo in ListaItemDetalle|orderBy:sortKey:reverse|filter:search|itemsPerPage:8"
+                                            ng-show="!articulo.Delete">
+                                            <td>{{ListaItemDetalle.indexOf(articulo) + 1}}</td>
+                                            <td class="text-center">{{articulo.Codigo}}</td>
+
+                                            @*nuevo*@
+                                            <td class="text-center">
+                                                <div style="position: relative;">
+                                                    <!-- Recuadro de advertencia si hay U_Leyenda -->
+                                                    <div ng-if="articulo.U_Leyenda && articulo.U_Leyenda !== ''"
+                                                         style="background-color: orange; color: white; font-weight: bold; border-radius: 5px; padding: 2px 5px; margin-bottom: 5px; cursor: pointer;"
+                                                         title="{{articulo.U_Leyenda}}">
+                                                        Atención
+                                                    </div>
+
+                                                    <!-- Descripción del artículo con title solo si hay leyenda -->
+                                                    <span ng-attr-title="{{articulo.U_Leyenda && articulo.U_Leyenda !== '' ? articulo.U_Leyenda : undefined}}">
+                                                        {{articulo.Nombre}}
+                                                    </span>
+                                                </div>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <div class="popover-wrapper">
+                                                    <button type="button"
+                                                            ng-show="DocEntryPedido != 0 || DocStatus!='Cerrada'"
+                                                            class="btn btn-default"
+                                                            ng-click="MostrarModalAlmacen(ListaItemDetalle.indexOf(articulo));">
+                                                        <img src="~/Images/warehouse.png" />
+                                                        <span><strong>Buscar almacén</strong></span>
+
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">{{articulo.Almacen}}</td>
+                                            <td class="text-center">{{articulo.stock| number:0}}</td>
+                                            <td class="text-center">{{articulo.comprometido| number:0}}</td>
+                                            <td class="text-center">
+                                                <div class="popover-wrapper">
+
+                                                    <a href="#" ng-show="articulo.Almacen !=''"
+                                                       editable-number="articulo.Cantidad"
+                                                       onaftersave="ActualizarCantidadEnArticulo($data, ListaItemDetalle.indexOf(articulo))">
+                                                        {{articulo.Cantidad
+												| number:0}}
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                {{articulo.UM}}
+                                            </td>
+                                            <td class="text-center" ng-show="rol == 'C'||rol =='O'">
+                                                ${{articulo.PrecioMostrador | number:2 }} MXN
+                                            </td>
+                                            <td class="text-center">
+                                                ${{articulo.PrecioUnitario | number:2}} MXN
+                                            </td>
+                                            <td class="text-center">${{articulo.IVA | number:2}} MXN</td>
+                                            <td class="text-center">${{articulo.Total | number:2}} MXN</td>
+                                            <td class="text-center" ng-show="rol != 'V'">
+                                                {{articulo.FechaEntrega | date:'dd/MM/yyyy'}}
+                                            </td>
+                                            <td class="text-center" ng-show="rol == 'V'">
+                                                {{ articulo.FechaEntrega | date:'dd/MM/yyyy'}}
+                                            </td>
+                                            <td style="text-align: center"
+                                                ng-click="RemoverArticuloEnDetalle(ListaItemDetalle.indexOf(articulo));"
+                                                ng-show="articulo.LineNum ==-1">
+                                                <i class="bi bi-trash"></i>
+                                            </td>
+                                            <td style="text-align: center"
+                                                ng-click="RemoverArticuloExistenteEnDetalle(ListaItemDetalle.indexOf(articulo));"
+                                                ng-show="articulo.LineNum != -1 && DocStatus!='Cerrada'">
+                                                <i class="bi bi-trash"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 mt-sm">
+                                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mt-sm pull-right">
+                                        <label class="control-label">Total en unidades</label>
+                                        <input type="text" class="form-control" disabled
+                                               value="{{TotalUnidades |number:0}}">
+                                    </div>
+                                    <div class="col-md-4 mt-sm pull-right">
+                                        <label class="control-label">Total en pesos</label>
+                                        <input type="text" class="form-control" disabled
+                                               value="${{TotalAPagarDisplay}} MXN">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row mt-md">
+                                    <div class="col-md-2 col-sm-4 col-xs-12 mt-sm pull-right" ng-show="DocEntryPedido == 0">
+                                        <button id="postOrderSAP"
+                                                type="button"
+                                                class="d-block btn-enviar btn btn-default"
+                                                ng-disabled="DatosBP.DirCompleta ==''   "
+                                                ng-click="EnviarOrdenASAP();">
+                                            Enviar
+                                            <i class="fa-solid fa-location-arrow" style="transform: rotate(45deg);"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-2 col-sm-4 col-xs-12 mt-sm pull-right" ng-show="DocEntryPedido != 0 && DocStatus!='Cerrada'">
+                                        <button id="postOrderSAP"
+                                                type="button"
+                                                class="d-block btn-enviar btn btn-default"
+                                                ng-click="actualizarOrdenASAP();">
+                                            <span class="glyphicon glyphicon-send"></span> Enviar
+                                        </button>
+                                    </div>
+                                    <div class="col-md-2 col-sm-4 col-xs-12 mt-sm pull-right"
+                                         ng-show="DocEntryPedido != 0 && DocStatus != 'Cerrada' && (rol != 'A' && rol != 'O')">
+                                        <button id="postOrderSAP"
+                                                type="button"
+                                                class="btn btn-default w-100"
+                                                ng-click="convertirAPedido();">
+                                            <span class="glyphicon glyphicon-send"></span> Convertir cotización a pedido
+                                        </button>
+                                    </div>
+                                    <div class="col-md-2 col-sm-4 col-xs-12 mt-sm pull-right"
+                                         ng-show="DocEntryPedido != 0 && DocStatus!='Cerrada'">
+                                        <button id="openBtnPreview"
+                                                type="button"
+                                                class="btn btn-default w-100"
+                                                ng-click="AbrirModalEstadoCotizacion();">
+                                            <span class="glyphicon glyphicon-send"></span> Descargar PDF
+                                        </button>
+                                    </div>
+                                    <div class="col-md-2 col-sm-4 col-xs-12 mt-sm pull-right" ng-show="DocEntryPedido == 0">
+                                        <button type="button"
+                                                id="openBtnPreview"
+                                                class="d-block btn-vista-previa btn btn-default"
+                                                ng-disabled="DatosBP.DirCompleta ==''"
+                                                ng-click="PrevisualizarPedido()">
+                                            <svg class="icon-vista-previa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style="width: 17px; height: 17px;" fill="currentColor">
+                                                <path d="M9.998 4.5c-4.375 0-8.125 3.75-9.125 5.5 1 1.75 4.75 5.5 9.125 5.5s8.125-3.75 9.125-5.5c-1-1.75-4.75-5.5-9.125-5.5zm0 9.167a3.667 3.667 0 1 1 0-7.334 3.667 3.667 0 0 1 0 7.334zm0-6a2.334 2.334 0 1 0 0 4.667 2.334 2.334 0 0 0 0-4.667z" />
+                                            </svg>
+                                            Vista previa
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row mt-md">
+                                    <div class="col-md-2 col-sm-4 col-xs-12"
+                                         ng-show="DocEntryPedido != 0 && DocStatus!='Cerrada'">
+                                        <select ng-model="MotivoCierreCotizacion" class="form-control inputstl"
+                                                ng-model-options="{getterSetter:true}"
+                                                ng-options="D.Tipo as D.Motivo for D in MotivoCierre">
+                                            <option style="display:none" value="">
+                                                Seleccione opción...
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 col-sm-4 col-xs-12"
+                                         ng-show="DocEntryPedido != 0 && DocStatus!='Cerrada'">
+                                        <button type="button" id="openBtnPreview" class="btn btn-default"
+                                                ng-click="cerrarCotizacion()">
+                                            <img src="~/Content/images/deleteRow.ico" />
+                                            <span><strong>Cerrar cotización</strong></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div growl></div>
+                        </div>
+
+                        <!-- The Modal -->
+                        <div id="customerModal" class="modalCustomer">
+                            <!-- Modal content -->
+                            <div class="modalCustomer-content">
+                                <iframe id="pdf_preview" type="application/pdf" src="" style="width:100%; height:100%;" frameborder="0"></iframe>
+                            </div>
+                        </div>
+                        <!-- End - The Modal -->
+                    </div>
+                    <!--Fin Seccion 1-->
+
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="form-horizontal" style="height:13px;">
+                    <div class="form-group">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <p>
+                                <a target="_blank" href="https://api.example.com" style="color: black !important">
+                                    &copy <span id="year"></span> Acme Technologies - Todos los Derechos Reservados
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End - Footer -->
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            document.getElementById("year").textContent = new Date().getFullYear();
+
+            (function ($) {
+                $.fn.inputFilter = function (inputFilter) {
+                    return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
+                        if (inputFilter(this.value)) {
+                            this.oldValue = this.value;
+                            this.oldSelectionStart = this.selectionStart;
+                            this.oldSelectionEnd = this.selectionEnd;
+                        }
+                        else if (this.hasOwnProperty("oldValue")) {
+                            this.value = this.oldValue;
+                            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                        }
+                        else {
+                            this.value = "";
+                        }
+                    });
+                };
+            }(jQuery));
+
+            $("#numerodePedido").inputFilter(function (value) {
+                return /^[A-Za-z0-9\s]*$/i.test(value);
+            });
+        })
+    </script>
+</body>
+</html>

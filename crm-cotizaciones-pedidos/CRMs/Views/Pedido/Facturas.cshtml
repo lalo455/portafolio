@@ -1,0 +1,373 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Facturas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Librarys/Bootstrap/Css/bootstrap7.min.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/xeditable.css" rel="stylesheet" />
+    <link href="~/Librarys/Growl_v2/angular-growl.min.css" rel="stylesheet" />
+    <link href="~/Content/MP.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Librarys/Messi/messi.min.css" rel="stylesheet" />
+    <link href="~/Content/Footer.css" rel="stylesheet" />
+    <script src="~/Librarys/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Librarys/Angular/angular.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.min.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.debug.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/bootstrap7.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery-ui.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-2.5.0.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Librarys/Angular/angular-ui-utils.min.js"></script>
+    <script src="~/Librarys/Messi/messi.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery.dataTables.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Librarys/dirPagination.js"></script>
+    <script src="~/Librarys/Growl_v2/angular-growl.min.js"></script>
+    <script src="~/Librarys/Jquery/xeditable.min.js"></script>
+    <script src="~/Librarys/Angular/dataGrid.js"></script>
+    <script src="~/Scripts/appFacturas.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    @using Microsoft.AspNet.Identity
+    @using Microsoft.AspNet.Identity.Owin;
+    @using System.Security.Claims;
+</head>
+
+<body ng-app="appFacturas" ng-controller="consultaFacturaController">
+    <nav class="navbar navbar-default" id="myDIV">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <!-- Botón responsive -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-romihn">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!-- Logo -->
+                <a class="navbar-brand" style="padding: 5px 15px;">
+                    <img src="~/Images/ROMIHN.png" alt="ROMIHN" style="padding: 5px 15px;">
+                </a>
+            </div>
+
+            <!-- Menú colapsable -->
+            <div class="collapse navbar-collapse" id="navbar-romihn">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Menú DOCUMENTOS -->
+                    <li class="">
+                        <a href="#" class="dropdown-toggle menu-romihn2" data-toggle="dropdown">DOCUMENTOS <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li id="menuOp1">
+                                <a class="opcion-nav" href="@Url.Action("PaginaInicio", "MasterPage")">Cotización<span ng-show="rol == 'V' || rol == 'C'"> / Pedido</span></a>
+                            </li>
+                            <li id="menuOp2" style="display:none;">
+                                <a class="opcion-nav" href="@Url.Action("PaginaInicio", "MasterPage")">Cotización<span ng-show="rol == 'V' || rol == 'C'"> / Pedido</span></a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("Pedidos", "Pedido")" ng-show="rol == 'V' || rol == 'C'">Consulta pedidos</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("Cotizacion", "Cotizacion")">
+                                    Consulta cotizaciones
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="active">
+                                <a class="opcion-nav" href="@Url.Action("Facturas", "Pedido")" ng-show="rol == 'V' || rol == 'C'">Consulta facturas</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Menú REPORTES -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle menu-romihn2" data-toggle="dropdown">REPORTES <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("Inventario", "Reportes")">Inventario ROMIHN</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("InventarioRC", "Reportes")">Inventario RC</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("Reimpresion", "Reportes")">Reimpresión de documentos</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a class="opcion-nav" href="@Url.Action("Ventas", "Reportes")" ng-show="rol == 'V'">Reporte de ventas</a>
+                                <a class="opcion-nav" href="@Url.Action("Compras", "Reportes")" ng-show="rol == 'C'">Reporte de compras</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Otro ítem -->
+                    <li><a class="menu-romihn" id="UsuarioLogin">@User.Identity.Name</a></li>
+
+                    <!-- Botón salir -->
+                    <li class="divider-left">
+                        <a class="opcion-nav" href="@Url.Action("Logout","Login")">
+                            <img src="~/Content/images/ICONOS/ICONO SALIDA.svg" alt="Salir" style="height:16px;" />
+                            <span class="btn-salir">Salir</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" id="paginaInicio">
+        <div class="container" style="font-family: Calibri;">
+            <div class="col-lg-12 col-md-12 QuitarPadding" id="contenedorPrincipal">
+                <div class="jumbotron" style="padding-top: 15px;">
+                    <div id="encabezado">
+                        <h2 id="encabezado-text8" class="encT">Consulta de factura</h2>
+                        <img src="~/Content/images/ICONOS/ICONO ORDEN VENTA.svg" alt="Ícono SVG" class="icono">
+                    </div>
+
+                    <!--Inicio Seccion 8-->
+                    <div style="margin-top: 6em;">
+                        <div class="form-horizontal">
+                            <div class="form-horizontal" ng-show="rol == 'V'">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label class="control-label">Cliente</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               disabled=""
+                                               placeholder="Código cliente"
+                                               ng-model="customerBP.CardCode">
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-4">
+                                        <label class="control-label" style="color: transparent;">Botón</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               disabled=""
+                                               placeholder="Nombre de cliente"
+                                               ng-model="customerBP.CardName">
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-4" ng-show="rol == 'V'">
+                                        <label class="control-label" style="color: transparent;">Botón</label>
+                                        <div>
+                                            <button type="button" class="btn btn-default" ng-click="mostrarModalSN()">
+                                                <img src="~/Images/bp.png" /><span><strong>Buscar</strong></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label class="control-label">Tipo consulta</label>
+                                        <select ng-model="TipoConsulta.Tipo" class="form-control inputstl"
+                                                ng-model-options="{getterSetter:true}"
+                                                ng-change="VisualizarTipoConsulta()"
+                                                ng-options="s.value as s.text for s in ListaTipoConsulta">
+                                            <option style="display:none" value="">Seleccione opción...</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-4" ng-show="TipoConsulta.Tipo != 'Todos'">
+                                        <label class="control-label">
+                                            {{TipoConsulta.Tipo == 'Fecha' ? 'Desde' : TipoConsulta.Tipo == 'NumFactura' ? 'No. factura' : TipoConsulta.Tipo == 'Articulo' ? 'Código de artículo' : '' }}
+                                        </label>
+                                        <div id="tipoConsulta" class="overwrite-bootstrap" ng-show="TipoConsulta.Tipo != 'Todos'">
+                                            <a class="form-control inputstl"
+                                               ng-show="TipoConsulta.Tipo == 'NumFactura'"
+                                               name="fechaConsulta"
+                                               href="#"
+                                               buttons="yes"
+                                               editable-number="ValorConsulta"
+                                               onaftersave="">
+                                                {{ ValorConsulta}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label class="control-label">Mes</label>
+                                        <div id="FechaConsulta" class="overwrite-bootstrap">
+                                            <select ng-model="month"
+                                                    class="form-control inputstl"
+                                                    ng-options="m.value as m.text for m in months">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-4">
+                                        <label class="control-label">Año</label>
+                                        <div id="FechaConsulta" class="overwrite-bootstrap">
+                                            <select ng-model="year"
+                                                    class="form-control inputstl"
+                                                    ng-options="y for y in years">
+                                                <option value="">Seleccione un año...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-4">
+                                        <label class="control-label" style="color: transparent;">Botón</label>
+                                        <div>
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="ConsultaFacturas();">
+                                                <img src="~/Images/search1.png" />
+                                                <span><strong>Buscar</strong></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label class="control-label">Buscar</label>
+                                        <input ng-model="QryConsultaFacturas" id="search" class="form-control"
+                                               placeholder="Texto de filtrado">
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-4">
+                                        <label class="control-label">Lineas por página</label>
+                                        <input type="number" min="1" max="100" class="form-control"
+                                               ng-model="QtyConsultaFacturas">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-md">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="table-responsive">
+                                        <table id="tabPedidoP" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+
+                                                    <th class="text-center">
+                                                        <a ng-click="sortBy('FechaCont')" style="color:white !important">
+                                                            Fecha factura
+                                                            <span ng-show="!reverse">^</span><span ng-show="reverse">v</span>
+                                                        </a>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <a ng-click="sortBy('DocFactura')" style="color:white !important">
+                                                            Número de factura
+                                                            <span ng-show="!reverse">^</span><span ng-show="reverse">v</span>
+                                                        </a>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <a ng-click="sortBy('NoPedidoSAP')" style="color:white !important">
+                                                            Número de pedido
+                                                            <span ng-show="!reverse">^</span><span ng-show="reverse">v</span>
+                                                        </a>
+                                                    </th>
+                                                    <th class="text-center">Sub Total</th>
+                                                    <th class="text-center">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="factura" class="table-bordered">
+                                                <tr id="eliminar"
+                                                    dir-paginate="factura in ListaFctura|orderBy:FechaCont:reverse|filter:QryConsultaFacturas|itemsPerPage:QtyConsultaFacturas"
+                                                    pagination-id="queryOrders">
+
+                                                    <td class="text-center"
+                                                        ng-click="AbrirModalEstadoFactura(factura.DocEntry, 'Carlos',factura.rutaQr)">
+                                                        {{ListaFctura.indexOf(factura) + 1}}
+                                                    </td>
+                                                    <td class="text-center"
+                                                        ng-click="AbrirModalEstadoFactura(factura.DocEntry, 'Carlos',factura.rutaQr)">
+                                                        {{factura.FechaCont}}
+                                                    </td>
+                                                    <td class="text-center"
+                                                        ng-click="AbrirModalEstadoFactura(factura.DocEntry, 'Carlos',factura.rutaQr)">
+                                                        {{factura.DocFactura}}
+                                                    </td>
+                                                    <td class="text-center"
+                                                        ng-click="AbrirModalEstadoFactura(factura.DocEntry, 'Carlos',factura.rutaQr)">
+                                                        {{factura.NoPedidoSAP}}
+                                                    </td>
+                                                    <td class="text-center"
+                                                        ng-click="AbrirModalEstadoFactura(factura.DocEntry, 'Carlos',factura.rutaQr)">
+                                                        ${{factura.TotalsinIva| number:2}} MXN
+                                                    </td>
+                                                    <td class="text-center"
+                                                        ng-click="AbrirModalEstadoFactura(factura.DocEntry, 'Carlos',factura.rutaQr)">
+                                                        ${{factura.Total| number:2}} MXN
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <dir-pagination-controls max-size="5" direction-links="true"
+                                                                 boundary-links="true" pagination-id="queryOrders">
+                                        </dir-pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div growl></div>
+                        </div>
+                    </div>
+                    <!--Fin Seccion 8-->
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="form-horizontal" style="height:13px;">
+                    <div class="form-group">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <p>
+                                <a target="_blank" href="https://api.example.com" style="color: black !important">
+                                    &copy <span id="year"></span> Acme Technologies - Todos los Derechos Reservados
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End - Footer -->
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            document.getElementById("year").textContent = new Date().getFullYear();
+
+            (function ($) {
+                $.fn.inputFilter = function (inputFilter) {
+                    return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
+                        if (inputFilter(this.value)) {
+                            this.oldValue = this.value;
+                            this.oldSelectionStart = this.selectionStart;
+                            this.oldSelectionEnd = this.selectionEnd;
+                        }
+                        else if (this.hasOwnProperty("oldValue")) {
+                            this.value = this.oldValue;
+                            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                        }
+                        else {
+                            this.value = "";
+                        }
+                    });
+                };
+            }(jQuery));
+        });
+    </script>
+</body>
+</html>

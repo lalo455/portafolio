@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EVIRFID.Views.UsersPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:EVIRFID.ViewModels"  
+             xmlns:model="clr-namespace:EVIRFID.Models"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:viewmodels="clr-namespace:EVIRFID.ViewModels"
+             x:Name="BrowseUsersPage"
+             x:DataType="viewmodels:UsersViewModel">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddUserCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+            <xct:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <StackLayout>
+        <Label Text="Incluir inactivos" HorizontalOptions="End"></Label>
+        <Switch x:Name="soloActivos" IsToggled="{Binding IncludeInactive}" Toggled="soloActivos_Toggled">
+            <Switch.Behaviors>
+                <xct:EventToCommandBehavior
+                    EventName="Toggled"
+                    Command="{Binding Path=BindingContext.LoadUsersCommand, Source={x:Reference Name=BrowseUsersPage}}"
+                    CommandParameter="{Binding .}"
+                    />
+            </Switch.Behaviors>
+        </Switch>
+        <RefreshView x:DataType="local:UsersViewModel" Command="{Binding LoadUsersCommand}" IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+        <CollectionView x:Name="UsersListView"
+                ItemsSource="{Binding Users}"
+                SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:User">
+                    <Frame BorderColor="#4DC0C6" CornerRadius="20" Margin="10" HasShadow="True">
+                        <StackLayout Orientation="Horizontal">
+                            <xct:AvatarView
+                            HorizontalOptions="Center"
+                            Size="60"
+                            Source="{Binding imagen, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                            VerticalOptions="Center" />
+                            <StackLayout>
+                                <Label Text="{Binding idUsuario}" 
+                                    LineBreakMode="NoWrap" 
+                                    Style="{DynamicResource ListItemTextStyle}" 
+                                    FontSize="16" />
+                                <Label Text="{Binding nombre}" 
+                                    LineBreakMode="NoWrap"
+                                    Style="{DynamicResource ListItemDetailTextStyle}"
+                                    FontSize="13" />
+                                <Label Text="{Binding activo}" 
+                                    LineBreakMode="NoWrap"
+                                    Style="{DynamicResource ListItemDetailTextStyle}"
+                                    FontSize="16" />
+                            </StackLayout>
+                        </StackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:UsersViewModel}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+    </StackLayout>
+</ContentPage>
+

@@ -1,0 +1,44 @@
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:models="clr-namespace:WmsMovil.Models"
+               x:Class="WmsMovil.Views.AlertasPopup">
+
+    <Border WidthRequest="340" HeightRequest="500" BackgroundColor="White" StrokeShape="RoundRectangle 15" StrokeThickness="0">
+        <Grid RowDefinitions="Auto, *, Auto">
+
+            <!-- Header Dorado -->
+            <Border Grid.Row="0" BackgroundColor="#DAA520" StrokeThickness="0" Padding="15">
+                <Label Text="Mensajes del Sistema" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
+            </Border>
+
+            <!-- Lista de Alertas -->
+            <CollectionView x:Name="ListaAlertas" Grid.Row="1" Margin="10">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:AlertaValidacion">
+                        <Border Margin="0,5" Padding="10" BackgroundColor="#FAFAFA" Stroke="#DDDDDD" StrokeThickness="1" StrokeShape="RoundRectangle 8">
+                            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
+                                <!-- Etiqueta de Color -->
+                                <Border Grid.RowSpan="2" Grid.Column="0" BackgroundColor="{Binding ColorAlerta}" WidthRequest="25" HeightRequest="25" StrokeShape="RoundRectangle 5" VerticalOptions="Center" Margin="0,0,10,0">
+                                    <Label Text="{Binding Tipo}" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" TextTransform="Uppercase"/>
+                                </Border>
+
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Titulo}" FontAttributes="Bold" TextColor="#333333"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Texto}" FontSize="12" TextColor="Gray"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="(Sin mensajes)" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Gray"/>
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+            <!-- Botones Footer -->
+            <Grid Grid.Row="2" ColumnDefinitions="*, *" Padding="15" ColumnSpacing="10" BackgroundColor="#F5F5F5">
+                <Button Grid.Column="0" Text="🗑 Limpiar" BackgroundColor="#E74C3C" TextColor="White" CornerRadius="8" Clicked="OnLimpiarClicked"/>
+                <Button Grid.Column="1" Text="Cerrar" BackgroundColor="#7F8C8D" TextColor="White" CornerRadius="8" Clicked="OnCerrarClicked"/>
+            </Grid>
+        </Grid>
+    </Border>
+</toolkit:Popup>

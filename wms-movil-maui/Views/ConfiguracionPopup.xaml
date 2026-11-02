@@ -1,0 +1,32 @@
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="WmsMovil.Views.ConfiguracionPopup">
+
+    <!-- Quitamos la sombra y dejamos el borde redondeado limpio -->
+    <Border WidthRequest="300" BackgroundColor="White" StrokeShape="RoundRectangle 15" StrokeThickness="0" Padding="20">
+        <VerticalStackLayout Spacing="15">
+
+            <!-- AQUÍ VA TU ÍCONO NUEVO -->
+            <Image Source="icon_rfid.png" HeightRequest="60" HorizontalOptions="Center" Margin="0,0,0,10"/>
+
+            <Label Text="Configuración" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#2C3E50"/>
+            <BoxView HeightRequest="1" Color="#EEEEEE"/>
+
+            <!-- Switch RFID / QR -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="15" Margin="0,10">
+                <Label Text="QR" VerticalOptions="Center" FontSize="16" FontAttributes="Bold" TextColor="Gray"/>
+                <Switch IsToggled="{Binding IsRfidMode}" OnColor="#48C9B0" ThumbColor="White"/>
+                <Label Text="RFID" VerticalOptions="Center" FontSize="16" FontAttributes="Bold" TextColor="#2C3E50"/>
+            </HorizontalStackLayout>
+
+            <!-- Control de Potencia -->
+            <StackLayout IsVisible="{Binding IsRfidMode}" Spacing="5">
+                <Label Text="{Binding RfPower, StringFormat='Potencia Antena: {0}'}" HorizontalOptions="Center" FontSize="14" TextColor="Gray"/>
+                <Slider Minimum="1" Maximum="30" Value="{Binding RfPower}" MinimumTrackColor="#48C9B0" ThumbColor="#48C9B0"/>
+            </StackLayout>
+
+            <Button Text="Cerrar" BackgroundColor="#E74C3C" TextColor="White" CornerRadius="8" Margin="0,10,0,0" Clicked="OnCerrarClicked"/>
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>

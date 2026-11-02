@@ -1,0 +1,72 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:WmsMovil"
+             x:Class="WmsMovil.MenuPage"
+             BackgroundColor="#F4F6F9"
+             NavigationPage.HasNavigationBar="False">
+    <!-- ADIÓS BARRA DOBLE -->
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- HEADER MODERNO -->
+        <Border Grid.Row="0" BackgroundColor="White" StrokeThickness="0" Padding="15,10">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,5" Radius="10" Opacity="0.05" />
+            </Border.Shadow>
+            <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center">
+                <Image Grid.Column="0" Source="wms_logo.png" HeightRequest="30" />
+                <Label Grid.Column="1" Text="{local:Translate vw_menu_wms}" FontSize="18" TextColor="#2C3E50" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0"/>
+
+               
+                <ImageButton Grid.Column="2" Source="logout.png" HeightRequest="25" WidthRequest="25" BackgroundColor="Transparent" Clicked="OnLogoutClicked"/>
+            </Grid>
+        </Border>
+
+
+        <!-- TARJETAS DEL MENÚ -->
+        <ScrollView Grid.Row="1">
+            <FlexLayout Wrap="Wrap" JustifyContent="Center" AlignItems="Center" AlignContent="Start" Padding="10,20">
+
+                <!-- Botón Traspasos -->
+                <Border WidthRequest="150" HeightRequest="130" Margin="10" BackgroundColor="#5BC0DE" StrokeThickness="0" StrokeShape="RoundRectangle 15">
+                    <Border.Shadow>
+                        <Shadow Brush="#5BC0DE" Offset="0,8" Radius="15" Opacity="0.3" />
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTraspasosTapped" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+                        <Image Source="forklift.png" HeightRequest="55" />
+                        <Label Text="{local:Translate vw_menu_transfer}" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Botón Remisión -->
+                <Border WidthRequest="150" HeightRequest="130" Margin="10" BackgroundColor="#D4E157" StrokeThickness="0" StrokeShape="RoundRectangle 15">
+                    <Border.Shadow>
+                        <Shadow Brush="#D4E157" Offset="0,8" Radius="15" Opacity="0.3" />
+                    </Border.Shadow>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+                        <Image Source="delivery_truck.png" HeightRequest="55" />
+                        <Label Text="{local:Translate vw_menu_remission}" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                <!-- Botón Configuración -->
+                <Border WidthRequest="150" HeightRequest="130" Margin="10" BackgroundColor="#34495E" StrokeThickness="0" StrokeShape="RoundRectangle 15">
+                    <Border.Shadow>
+                        <Shadow Brush="#34495E" Offset="0,8" Radius="15" Opacity="0.3" />
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <!-- Llama al comando para abrir el popup -->
+                        <TapGestureRecognizer Command="{Binding AbrirConfiguracionCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+                        <Image Source="icon_rfid.png" HeightRequest="55" />
+                        <Label Text="Configuración" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </FlexLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

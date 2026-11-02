@@ -1,0 +1,19 @@
+﻿<!-- Button trigger modal -->
+<div class="modal-content modal-lg center1">
+    <div class="modal-header text-center">
+        <span class="text-center"><strong class="text-center">Vista detallada estado factura</strong></span>
+    </div>
+    <div class="modal-body" name="modalDataPreviewer" id="previewOrder">
+        <iframe id="pdf_preview_iframe" type="application/pdf" ng-src="{{UrlString}}" style="width:850px; height:600px;  border: none;" frameborder="0"></iframe>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-lg-5 col-lg-offset-6">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="ok()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->

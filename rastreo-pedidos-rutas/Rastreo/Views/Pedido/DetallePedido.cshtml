@@ -1,0 +1,152 @@
+@{
+    Layout = null;
+}
+@using System.Security.Claims;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entregas WEB | Pedidos</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Librarys/Bootstrap/Css/bootstrap7.min.css" rel="stylesheet" />
+    <link href="~/Content/Styles/menu.css" rel="stylesheet" />
+    <link href="~/Librarys/Bootstrap/Css/xeditable.css" rel="stylesheet" />
+    <link href="~/Librarys/Growl_v2/angular-growl.min.css" rel="stylesheet" />
+
+    <link href="~/Librarys/Bootstrap/Css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Librarys/Messi/messi.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="~/Librarys/Jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Librarys/Angular/angular.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.min.js"></script>
+    <script src="~/jspdf/jspdf/dist/jspdf.debug.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/bootstrap7.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery-ui.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-2.5.0.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Librarys/Angular/angular-ui-utils.min.js"></script>
+    <script src="~/Librarys/Messi/messi.min.js"></script>
+    <script src="~/Librarys/Jquery/jquery.dataTables.min.js"></script>
+    <script src="~/Librarys/Bootstrap/Js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Librarys/dirPagination.js"></script>
+    <script src="~/Librarys/Growl_v2/angular-growl.min.js"></script>
+    <script src="~/Librarys/Jquery/xeditable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--libreria para prueba de pdf-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="~/Scripts/appTab.js"></script>
+    <script src="~/Scripts/Pedidos/DetallePedido.js"></script> <!-- Referencia al archivo JS separado -->
+
+    <style>
+        /* Estilos para la tabla responsive */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table th, .table td {
+            white-space: nowrap;
+        }
+
+        .checkbox-cell {
+            text-align: center;
+        }
+
+            .checkbox-cell input[type="checkbox"] {
+                width: 20px;
+                height: 20px;
+            }
+    </style>
+</head>
+<body ng-app="PedidosApp" ng-controller="PedidosController">
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+
+            <i class="fas fa-box" onclick="location.href='@Url.Action("Menu", "Menu")'"> </i> <!-- Logo -->
+            Pedido: @ViewBag.DocNum
+        </div>
+        <form class="form-inline my-2 my-lg-0">
+            <button type="button" onclick="window.location.href='/Pedido/RutasPedidos';" class="btn btn-primary">
+                <i class="fa-solid fa-arrow-left" style="color: #ffffff;"></i>
+            </button>
+        </form>
+        <div class="user-info">
+            @{
+                <spam style="color: #FFFFFF;" id="UsuarioLogin">  @User.Identity.Name  </spam>
+            }
+            <br />
+            <a></a>&nbsp;
+            <a href="@Url.Action("Logout", "Login")" class="fas fa-sign-out" style="color: #FFD43B" title="Salir">  Salir  </a>
+        </div>
+    </div>
+
+    <!-- Contenido de la Vista -->
+    <div class="container my-4">
+        <h3 class="mb-3 text-center">Detalle del Pedido</h3>
+
+        <!-- Tabla Responsive -->
+        <!-- Tabla Responsive -->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Entregado</th>
+                        <th>Código del Artículo</th>
+                        <th>Descripción</th>
+                        <th>Cantidad Pendiente</th>
+                        <th>Precio</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in pedidos">
+                        <td class="checkbox-cell">
+                            <input type="checkbox" ng-model="item.Entregado" ng-change="actualizarEstado(item)">
+                        </td>
+                        <td>{{ item.ItemCode }}</td>
+                        <td>{{ item.Dscription }}</td>
+                        <td>
+                            <input type="number" ng-model="item.CantidadEditada"
+                                   min="0"
+                                   max="{{ item.CantidadPendiente }}"
+                                   ng-change="validarCantidad(item)"
+                                   ng-disabled="!item.Entregado">
+                        </td>
+                        <td>{{ item.Precio | currency }}</td>
+                        <td>{{ item.TotalLinea | currency }}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-end"><strong>Subtotal:</strong></td>
+                        <td>{{ calcularSubtotal() | currency }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="text-end"><strong>IVA:</strong></td>
+                        <td>{{ calcularIVA() | currency }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                        <td>{{ calcularTotal() | currency }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="text-center mt-3">
+            <button class="btn btn-success btn-lg" ng-click="mostrarConfirmacion()" ng-disabled="deshabilitarBoton || procesando">
+                <span ng-if="!procesando">
+                    <i class="fas fa-check"></i> Entregado
+                </span>
+                <span ng-if="procesando">
+                    <i class="fas fa-spinner fa-spin"></i> Procesando...
+                </span>
+            </button>
+        </div>
+    </div>
+</body>
+</html>

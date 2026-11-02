@@ -1,0 +1,122 @@
+﻿/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #87CEEB; /* Sky blue color */
+    color: #fff;
+}
+
+    .navbar .logo {
+        font-size: 20px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+    }
+
+        .navbar .logo i {
+            margin-right: 10px;
+        }
+
+    .navbar .user-info {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+    }
+
+        .navbar .user-info i {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+/* Profile select styles */
+.profile-select {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.profile-option {
+    width: 150px;
+    height: 150px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+    .profile-option:hover {
+        transform: scale(1.1);
+        border-color: #87CEEB;
+    }
+
+    .profile-option i {
+        font-size: 40px;
+        margin-bottom: 10px;
+        color: #87CEEB;
+    }
+
+    .profile-option span {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+    }
+/* Estilos base para la lista de pedidos */
+.pedido-list {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Estilos para cada ítem de pedido */
+.pedido-item {
+    background-color: #fff; /* Fondo blanco para simular una celda */
+    border: 1px solid #ddd; /* Borde para encerrar cada ítem */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-bottom: 15px; /* Espacio entre cada ítem */
+    padding: 12px; /* Espaciado interno */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px; /* Tamaño de letra un poco más grande */
+}
+
+    .pedido-item:hover {
+        background-color: #f9f9f9; /* Cambio de color al pasar el mouse */
+    }
+
+    /* Estilos para los spans dentro de cada ítem */
+    .pedido-item span {
+        display: block; /* Hace que cada span ocupe una línea */
+        margin-bottom: 5px; /* Espacio entre los spans */
+    }
+
+        .pedido-item span:last-child {
+            margin-bottom: 0; /* Elimina el margen inferior del último span */
+        }
+
+/* Estilos responsive para dispositivos móviles */
+@media (max-width: 600px) {
+    .pedido-item {
+        font-size: 14px; /* Tamaño de letra un poco más pequeño en móviles */
+        padding: 10px; /* Reducir el espaciado interno en móviles */
+    }
+}
