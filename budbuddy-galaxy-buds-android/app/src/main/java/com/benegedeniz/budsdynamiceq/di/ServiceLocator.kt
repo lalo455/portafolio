@@ -130,6 +130,12 @@ object ServiceLocator {
         }
     }
 
+    // Bumped whenever an Auto EQ setting changes (toggle, mode, mapping, personal profile)
+    // so RulesCoordinator re-applies the EQ immediately instead of waiting for the next song.
+    private val _autoEqSettingsVersion = MutableStateFlow(0)
+    val autoEqSettingsVersion: StateFlow<Int> = _autoEqSettingsVersion.asStateFlow()
+    fun notifyAutoEqSettingsChanged() { _autoEqSettingsVersion.value++ }
+
     @Volatile
     private var networkNcMonitor: com.benegedeniz.budsdynamiceq.service.NetworkNcMonitor? = null
 

@@ -342,6 +342,8 @@ fun EqualizerCard(
     isConnected: Boolean,
     currentPreset: EqPreset?,
     isRuleActive: Boolean = false,
+    /** Set while Auto EQ is in control, e.g. "Auto EQ: Rock · 128 BPM". */
+    autoEqLabel: String? = null,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -381,9 +383,9 @@ fun EqualizerCard(
                 if (isRuleActive) {
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = stringResource(R.string.equalizer_disabled_by_rule),
+                        text = autoEqLabel ?: stringResource(R.string.equalizer_disabled_by_rule),
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.error
+                        color = if (autoEqLabel != null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
                     )
                 }
             }

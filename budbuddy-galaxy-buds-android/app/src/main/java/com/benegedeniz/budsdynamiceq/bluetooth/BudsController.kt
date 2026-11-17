@@ -126,6 +126,11 @@ class BudsController(
     // NC and EQ state
     private var lastEqSendTimestamp: Long = 0
     private var lastSentEq: EqPreset? = null
+    /** Bands last pushed by Auto EQ "curves" mode (null while a preset is in use). */
+    @Volatile private var lastSentAutoBands: List<Int>? = null
+    /** True while the "My sound" A/B test is driving the EQ; automatic changes must wait. */
+    @Volatile var isEqPreviewActive: Boolean = false
+        private set
     private var lastSentNcMode: NoiseControlMode? = null
     private var lastNcSendTimestamp: Long = 0
     @Volatile private var lastConfirmedNcMode: NoiseControlMode? = null
@@ -452,6 +457,7 @@ class BudsController(
         ncRetryJob?.cancel()
         ncRetryJob = null
         lastSentEq = null
+        lastSentAutoBands = null
         lastSentNcMode = null
         lastConfirmedNcMode = null
         while (_packetQueue.tryReceive().isSuccess) { /* drain stale packets */ }
@@ -504,6 +510,7 @@ class BudsController(
         if (!isCustom && preset == lastSentEq && preset != null) return
 
         lastSentEq = preset
+        lastSentAutoBands = null
 
         if (isCustom) {
             sendCustomEqualizerBands(preset!!)
@@ -571,10 +578,50 @@ class BudsController(
     }
 
     private fun writeCustomEqFollowup() {
-        if (lastSentEq?.isCustom != true) return
         if (!effectiveModel.value.supportsCustomEqualizer) return
-        Log.i(TAG, "Re-pushing custom EQ after noise-control update")
-        sendCustomEqualizerBands(lastSentEq!!)
+        val autoBands = lastSentAutoBands
+        if (lastSentEq?.isCustom == true) {
+            Log.i(TAG, "Re-pushing custom EQ after noise-control update")
+            sendCustomEqualizerBands(lastSentEq!!)
+        } else if (autoBands != null) {
+            Log.i(TAG, "Re-pushing Auto EQ curve after noise-control update")
+            pushCustomBands(autoBands)
+        }
+    }
+
+    /**
+     * Applies an arbitrary 9-band curve through the buds' single "Custom" EQ slot, without
+     * touching the user's three saved custom presets. Used by Auto EQ "curves" mode.
+     */
+    fun sendAutoCustomBands(bands: List<Int>) {
+        if (!effectiveModel.value.supportsCustomEqualizer || isEqPreviewActive) return
+        val clamped = CustomEqualizer.clamp(bands)
+        if (clamped == lastSentAutoBands) return
+        lastSentAutoBands = clamped
+        lastSentEq = null
+        pushCustomBands(clamped)
+    }
+
+    /** Live preview for the "My sound" A/B test. Call [endEqPreview] when done. */
+    fun previewCustomBands(bands: List<Int>) {
+        if (!effectiveModel.value.supportsCustomEqualizer) return
+        isEqPreviewActive = true
+        pushCustomBands(CustomEqualizer.clamp(bands))
+    }
+
+    /** Ends the preview and forgets what was sent, so the next automatic EQ is re-applied. */
+    fun endEqPreview() {
+        isEqPreviewActive = false
+        lastSentAutoBands = null
+        lastSentEq = null
+    }
+
+    private fun pushCustomBands(bands: List<Int>) {
+        val payload = SppPacketEncoder.buildCustomEqualizerPayload(bands)
+        packetQueue.trySend(SppPacketEncoder.buildPacket(SppPacketEncoder.MSG_ID_CUSTOM_EQUALIZE_SEND, payload))
+        // Commit packet selects the Custom slot so the DSP applies the new table.
+        packetQueue.trySend(SppPacketEncoder.buildPacket(SppPacketEncoder.MSG_ID_EQUALIZER, byteArrayOf(EqPreset.CUSTOM_1.payloadByte)))
+        Log.i(TAG, "Queued custom EQ curve: $bands")
     }
 
     fun sendNoiseControl(mode: NoiseControlMode?) {

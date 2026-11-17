@@ -42,6 +42,7 @@ import com.benegedeniz.budsdynamiceq.companion.CompanionHelper
 import com.benegedeniz.budsdynamiceq.data.model.EqPreset
 import com.benegedeniz.budsdynamiceq.di.ServiceLocator
 import com.benegedeniz.budsdynamiceq.rules.GenreEqMapper
+import com.benegedeniz.budsdynamiceq.rules.PersonalSoundProfile
 import com.benegedeniz.budsdynamiceq.service.ExternalControlReceiver
 import com.benegedeniz.budsdynamiceq.service.NetworkNcMonitor
 import com.benegedeniz.budsdynamiceq.data.model.NoiseControlMode
@@ -80,6 +81,10 @@ fun SmartFeaturesCard() {
     var autoEq by remember { mutableStateOf(prefs.getBoolean(GenreEqMapper.PREF_ENABLED, false)) }
     var autoEqBpm by remember { mutableStateOf(prefs.getBoolean(GenreEqMapper.PREF_USE_BPM, true)) }
     var showGenreDialog by remember { mutableStateOf(false) }
+    var showWizard by remember { mutableStateOf(false) }
+    var autoEqMode by remember {
+        mutableStateOf(prefs.getString(PersonalSoundProfile.PREF_MODE, PersonalSoundProfile.MODE_CURVES) ?: PersonalSoundProfile.MODE_CURVES)
+    }
     var networkNc by remember { mutableStateOf(prefs.getBoolean(NetworkNcMonitor.PREF_ENABLED, false)) }
     var wifiMode by remember {
         mutableStateOf(NetworkNcMonitor.modeFor(prefs, NetworkNcMonitor.PREF_WIFI_MODE, NetworkNcMonitor.DEFAULT_WIFI_MODE))
@@ -192,8 +197,62 @@ fun SmartFeaturesCard() {
                         haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                         autoEq = it
                         prefs.edit().putBoolean(GenreEqMapper.PREF_ENABLED, it).apply()
+                        ServiceLocator.notifyAutoEqSettingsChanged()
                     }
                     if (autoEq) {
+                        val model by budsController.effectiveModel.collectAsState()
+                        val curvesAvailable = model.supportsCustomEqualizer
+                        // Mode: personal 9-band curves (recommended) or Samsung's fixed presets.
+                        if (curvesAvailable) {
+                            Text(
+                                stringResource(R.string.auto_eq_mode_title),
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                FilterChip(
+                                    selected = autoEqMode == PersonalSoundProfile.MODE_CURVES,
+                                    onClick = {
+                                        autoEqMode = PersonalSoundProfile.MODE_CURVES
+                                        prefs.edit().putString(PersonalSoundProfile.PREF_MODE, autoEqMode).apply()
+                                        ServiceLocator.notifyAutoEqSettingsChanged()
+                                    },
+                                    label = { Text(stringResource(R.string.auto_eq_mode_curves)) }
+                                )
+                                FilterChip(
+                                    selected = autoEqMode == PersonalSoundProfile.MODE_PRESETS,
+                                    onClick = {
+                                        autoEqMode = PersonalSoundProfile.MODE_PRESETS
+                                        prefs.edit().putString(PersonalSoundProfile.PREF_MODE, autoEqMode).apply()
+                                        ServiceLocator.notifyAutoEqSettingsChanged()
+                                    },
+                                    label = { Text(stringResource(R.string.auto_eq_mode_presets)) }
+                                )
+                            }
+                            HintTextNeutral(
+                                stringResource(
+                                    if (autoEqMode == PersonalSoundProfile.MODE_CURVES) R.string.auto_eq_mode_curves_desc
+                                    else R.string.auto_eq_mode_presets_desc
+                                )
+                            )
+                        }
+
+                        if (curvesAvailable && autoEqMode == PersonalSoundProfile.MODE_CURVES) {
+                            val profileDone = remember(resumeTick, showWizard) { prefs.getBoolean(PersonalSoundProfile.PREF_DONE, false) }
+                            val profile = remember(resumeTick, showWizard) { PersonalSoundProfile.load(prefs) }
+                            Button(
+                                onClick = { showWizard = true },
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(14.dp)
+                            ) {
+                                Text(stringResource(R.string.sound_profile_button), fontWeight = FontWeight.Bold)
+                            }
+                            HintTextNeutral(
+                                if (profileDone) profileSummary(profile)
+                                else stringResource(R.string.sound_profile_not_done)
+                            )
+                        }
+
                         SwitchRow(
                             title = stringResource(R.string.auto_eq_bpm_title),
                             description = stringResource(R.string.auto_eq_bpm_desc),
@@ -202,13 +261,16 @@ fun SmartFeaturesCard() {
                             haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                             autoEqBpm = it
                             prefs.edit().putBoolean(GenreEqMapper.PREF_USE_BPM, it).apply()
+                            ServiceLocator.notifyAutoEqSettingsChanged()
                         }
-                        OutlinedButton(
-                            onClick = { showGenreDialog = true },
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(14.dp)
-                        ) {
-                            Text(stringResource(R.string.auto_eq_configure), fontWeight = FontWeight.Bold)
+                        if (!curvesAvailable || autoEqMode == PersonalSoundProfile.MODE_PRESETS) {
+                            OutlinedButton(
+                                onClick = { showGenreDialog = true },
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(14.dp)
+                            ) {
+                                Text(stringResource(R.string.auto_eq_configure), fontWeight = FontWeight.Bold)
+                            }
                         }
                     }
 
@@ -321,6 +383,12 @@ fun SmartFeaturesCard() {
         }
     }
 
+    if (showWizard) {
+        SoundProfileWizard(onDismiss = {
+            showWizard = false
+            autoEqMode = prefs.getString(PersonalSoundProfile.PREF_MODE, PersonalSoundProfile.MODE_CURVES) ?: PersonalSoundProfile.MODE_CURVES
+        })
+    }
     if (showGenreDialog) {
         GenreMappingDialog(
             supportsCustom = budsController.effectiveModel.collectAsState().value.supportsCustomEqualizer,
@@ -426,6 +494,7 @@ private fun GenreMappingDialog(supportsCustom: Boolean, onDismiss: () -> Unit) {
                                         onClick = {
                                             mapping[category] = preset
                                             GenreEqMapper.setPresetFor(prefs, category, preset)
+                                            ServiceLocator.notifyAutoEqSettingsChanged()
                                             menuOpen = false
                                         }
                                     )
@@ -477,6 +546,11 @@ private fun SectionLabel(text: String) {
         color = MaterialTheme.colorScheme.primary,
         modifier = Modifier.padding(top = 4.dp)
     )
+}
+
+@Composable
+private fun HintTextNeutral(text: String) {
+    Text(text, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 }
 
 @Composable

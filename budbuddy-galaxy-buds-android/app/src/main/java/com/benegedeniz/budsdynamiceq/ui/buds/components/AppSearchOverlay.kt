@@ -371,6 +371,7 @@ fun AppSearchOverlay(
                                     budsState.lastMatchedRule?.preset
                                 },
                                 isRuleActive = budsState.lastMatchedRule != null && budsState.lastMatchedRule?.preset != com.benegedeniz.budsdynamiceq.data.model.EqPreset.IGNORE,
+                                autoEqLabel = budsState.lastMatchedRule?.takeIf { it.id == com.benegedeniz.budsdynamiceq.service.RulesCoordinator.AUTO_GENRE_RULE_ID }?.keyword,
                                 onClick = {
                                     onClose()
                                     onEqualizerClick()

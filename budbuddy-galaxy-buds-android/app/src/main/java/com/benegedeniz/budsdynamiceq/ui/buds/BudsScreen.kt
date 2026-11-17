@@ -798,12 +798,15 @@ fun BudsScreen(
                 )
                 EqualizerCard(
                     isConnected = isConnected,
-                    currentPreset = if (lastMatchedRule == null || lastMatchedRule.preset == EqPreset.DEFAULT) {
-                        manualPreset
-                    } else {
-                        lastMatchedRule.preset
+                    currentPreset = when {
+                        // Auto EQ "curves" mode: a personal 9-band curve, not a named preset.
+                        lastMatchedRule?.id == com.benegedeniz.budsdynamiceq.service.RulesCoordinator.AUTO_GENRE_RULE_ID &&
+                            lastMatchedRule.preset == EqPreset.DEFAULT -> null
+                        lastMatchedRule == null || lastMatchedRule.preset == EqPreset.DEFAULT -> manualPreset
+                        else -> lastMatchedRule.preset
                     },
                     isRuleActive = lastMatchedRule != null && lastMatchedRule.preset != EqPreset.IGNORE,
+                    autoEqLabel = lastMatchedRule?.takeIf { it.id == com.benegedeniz.budsdynamiceq.service.RulesCoordinator.AUTO_GENRE_RULE_ID }?.keyword,
                     onClick = onEqualizerClick
                 )
                 Spacer(modifier = Modifier.height(16.dp))

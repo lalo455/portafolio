@@ -8,6 +8,7 @@ import com.benegedeniz.budsdynamiceq.data.model.NoiseControlMode
 import com.benegedeniz.budsdynamiceq.media.MediaObserver
 import com.benegedeniz.budsdynamiceq.rules.RulesEngine
 import com.benegedeniz.budsdynamiceq.rules.GenreEqMapper
+import com.benegedeniz.budsdynamiceq.rules.PersonalSoundProfile
 import com.benegedeniz.budsdynamiceq.data.model.EqRule
 import com.benegedeniz.budsdynamiceq.media.GenreFetchState
 import kotlinx.coroutines.CoroutineScope
@@ -36,6 +37,8 @@ class RulesCoordinator(
         scope.launch {
             var lastPushedEq: EqPreset? = null
             var lastPushedNc: NoiseControlMode? = null
+            var lastPushedBands: List<Int>? = null
+            var lastAutoVersion = -1
             var wasConnected = false
             var wasBothInEar = false
 
@@ -61,13 +64,15 @@ class RulesCoordinator(
                 budsController.isConnected,
                 budsController.placementL,
                 budsController.placementR,
-                ruleStateFlow
-            ) { connected, pL, pR, ruleState ->
+                ruleStateFlow,
+                com.benegedeniz.budsdynamiceq.di.ServiceLocator.autoEqSettingsVersion
+            ) { connected, pL, pR, ruleState, autoVersion ->
                 object {
                     val connected = connected
                     val pL = pL
                     val pR = pR
                     val ruleState = ruleState
+                    val autoVersion = autoVersion
                 }
             }
 
@@ -101,39 +106,75 @@ class RulesCoordinator(
                     // Wait for the genre lookup instead of flipping to the manual preset and back.
                     return@collect
                 }
-                val autoRule = if (autoEqEnabled && explicitRule == null && metadata != null) {
-                    GenreEqMapper.decide(prefs, metadata.genre, metadata.bpm)?.let { decision ->
-                        val localized = com.benegedeniz.budsdynamiceq.util.LanguageUtils.setLocale(context)
-                        val label = localized.getString(decision.category.labelRes)
-                        EqRule(
-                            id = AUTO_GENRE_RULE_ID,
-                            keyword = if (decision.bpm != null) {
-                                localized.getString(com.benegedeniz.budsdynamiceq.R.string.auto_eq_rule_label_bpm, label, decision.bpm)
-                            } else {
-                                localized.getString(com.benegedeniz.budsdynamiceq.R.string.auto_eq_rule_label, label)
-                            },
-                            preset = decision.preset,
-                            priority = -1
-                        )
-                    }
+                val localized = com.benegedeniz.budsdynamiceq.util.LanguageUtils.setLocale(context)
+                fun autoLabel(name: String, bpm: Int?) = if (bpm != null) {
+                    localized.getString(com.benegedeniz.budsdynamiceq.R.string.auto_eq_rule_label_bpm, name, bpm)
+                } else {
+                    localized.getString(com.benegedeniz.budsdynamiceq.R.string.auto_eq_rule_label, name)
+                }
+
+                // "Curves" mode: personal profile + gentle genre tilt as a 9-band custom EQ.
+                // It also applies with no song/genre (just the personal curve).
+                val useCurves = autoEqEnabled && explicitRule == null &&
+                    PersonalSoundProfile.usesCurves(prefs, budsController.effectiveModel.value.supportsCustomEqualizer)
+                val decision = if (autoEqEnabled && explicitRule == null && metadata != null) {
+                    GenreEqMapper.decide(prefs, metadata.genre, metadata.bpm)
                 } else null
+
+                var autoBands: List<Int>? = null
+                val autoRule = if (useCurves) {
+                    val profile = PersonalSoundProfile.load(prefs)
+                    autoBands = if (decision != null) {
+                        PersonalSoundProfile.bandsFor(profile, decision.category, decision.bpm)
+                    } else {
+                        PersonalSoundProfile.baseBands(profile)
+                    }
+                    EqRule(
+                        id = AUTO_GENRE_RULE_ID,
+                        keyword = if (decision != null) {
+                            autoLabel(localized.getString(decision.category.labelRes), decision.bpm)
+                        } else {
+                            autoLabel(localized.getString(com.benegedeniz.budsdynamiceq.R.string.sound_profile_name), null)
+                        },
+                        preset = EqPreset.DEFAULT,
+                        priority = -1
+                    )
+                } else decision?.let {
+                    EqRule(
+                        id = AUTO_GENRE_RULE_ID,
+                        keyword = autoLabel(localized.getString(it.category.labelRes), it.bpm),
+                        preset = it.preset,
+                        priority = -1
+                    )
+                }
                 val matchingRule = explicitRule ?: autoRule
 
-                val eqToSend = if (matchingRule != null && matchingRule.preset != EqPreset.DEFAULT) matchingRule.preset else manualEq
+                val eqToSend = when {
+                    autoBands != null -> null
+                    matchingRule != null && matchingRule.preset != EqPreset.DEFAULT -> matchingRule.preset
+                    else -> manualEq
+                }
                 val ncToSend = if (matchingRule != null && matchingRule.noiseControl != NoiseControlMode.DEFAULT) matchingRule.noiseControl else manualNc
-                
-                val settingsChanged = eqToSend != lastPushedEq || ncToSend != lastPushedNc
-                
+
+                val versionChanged = state.autoVersion != lastAutoVersion
+                lastAutoVersion = state.autoVersion
+                val settingsChanged = eqToSend != lastPushedEq || ncToSend != lastPushedNc ||
+                    autoBands != lastPushedBands || versionChanged
+
                 if (settingsChanged || justConnected || justPutBothInEar) {
                     budsController.setLastMatchedRule(matchingRule)
-                    if (eqToSend != null) budsController.sendEqualizer(eqToSend)
+                    if (autoBands != null) {
+                        budsController.sendAutoCustomBands(autoBands)
+                    } else if (eqToSend != null) {
+                        budsController.sendEqualizer(eqToSend)
+                    }
                     if (ncToSend != null) budsController.sendNoiseControl(ncToSend)
                     
                     if (settingsChanged && !justConnected && !justPutBothInEar) {
                         if (prefs.getBoolean("rule_toast_enabled", true)) {
                             android.os.Handler(android.os.Looper.getMainLooper()).post {
                                 val localizedContext = com.benegedeniz.budsdynamiceq.util.LanguageUtils.setLocale(context)
-                                val eqName = eqToSend?.let { localizedContext.getString(it.displayNameRes) } ?: ""
+                                val eqName = if (autoBands != null) matchingRule?.keyword ?: "" else eqToSend?.let { localizedContext.getString(it.displayNameRes) } ?: ""
                                 val ncName = ncToSend?.let { localizedContext.getString(it.displayNameRes) } ?: ""
                                 val toastMessage = listOf(eqName, ncName).filter { it.isNotEmpty() }.joinToString(" & ")
                                 
@@ -149,6 +190,7 @@ class RulesCoordinator(
                     
                     lastPushedEq = eqToSend
                     lastPushedNc = ncToSend
+                    lastPushedBands = autoBands
                 } else if (budsController.lastMatchedRule.value != matchingRule) {
                     // Update UI state even if settings didn't change, so Equalizer card disables correctly
                     budsController.setLastMatchedRule(matchingRule)
