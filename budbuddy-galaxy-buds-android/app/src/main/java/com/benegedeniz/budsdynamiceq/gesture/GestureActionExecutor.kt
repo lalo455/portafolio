@@ -1,0 +1,321 @@
+package com.benegedeniz.budsdynamiceq.gesture
+import com.benegedeniz.budsdynamiceq.R
+
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.media.AudioManager
+import android.os.Build
+import android.telecom.TelecomManager
+import android.view.KeyEvent
+import androidx.core.content.ContextCompat
+import com.benegedeniz.budsdynamiceq.bluetooth.BudsController
+import com.benegedeniz.budsdynamiceq.data.model.FlowAction
+import com.benegedeniz.budsdynamiceq.data.model.GestureAction
+import com.benegedeniz.budsdynamiceq.data.model.NoiseControlMode
+import kotlinx.coroutines.delay
+
+class GestureActionExecutor(
+    private val context: Context,
+    private val budsController: BudsController
+) {
+    private val ttsManager = TtsManager(context)
+
+    suspend fun execute(actions: List<FlowAction>, playChime: Boolean = true) {
+        if (playChime) {
+            try {
+                android.media.ToneGenerator(AudioManager.STREAM_MUSIC, 50).startTone(android.media.ToneGenerator.TONE_PROP_BEEP)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        
+        var lastWasSystemAction = false
+        
+        for (flowAction in actions) {
+            when (flowAction) {
+                is FlowAction.DelayAction -> {
+                    delay(maxOf(100L, flowAction.ms))
+                    lastWasSystemAction = false
+                }
+                is FlowAction.SystemAction -> {
+                    if (lastWasSystemAction) {
+                        delay(100L)
+                    }
+                    
+                    when (flowAction.action) {
+                        GestureAction.PLAY_PAUSE -> triggerToggle(flowAction.respectManualIntent)
+                        GestureAction.PLAY -> triggerPlay(flowAction.respectManualIntent)
+                        GestureAction.PAUSE -> triggerPause(flowAction.respectManualIntent)
+                        GestureAction.NEXT_TRACK -> sendMediaKey(KeyEvent.KEYCODE_MEDIA_NEXT)
+                        GestureAction.PREVIOUS_TRACK -> sendMediaKey(KeyEvent.KEYCODE_MEDIA_PREVIOUS)
+                        GestureAction.ANNOUNCE_TRACK -> announceTrack()
+                        GestureAction.NC_TOGGLE -> budsController.toggleNoiseControl()
+                        GestureAction.NC_ACTIVE -> budsController.sendNoiseControl(NoiseControlMode.NOISE_CANCELLATION)
+                        GestureAction.NC_OFF -> budsController.sendNoiseControl(NoiseControlMode.OFF)
+                        GestureAction.NC_TRANSPARENT -> {
+                            if (budsController.effectiveModel.value.supportsTransparencyNC) {
+                                budsController.sendNoiseControl(NoiseControlMode.TRANSPARENT)
+                            }
+                        }
+                        GestureAction.NC_ADAPTIVE -> {
+                            if (budsController.effectiveModel.value.supportsAdaptiveNC) {
+                                budsController.sendNoiseControl(NoiseControlMode.ADAPTIVE)
+                            }
+                        }
+                        GestureAction.VOICE_ASSISTANT -> triggerVoiceAssistant()
+                        GestureAction.ACCEPT_CALL -> acceptCall()
+                        GestureAction.REJECT_CALL -> rejectCall()
+                        GestureAction.READ_NOTIFICATIONS -> readNotifications()
+                        GestureAction.FIT_TEST -> performFitTest()
+                        GestureAction.LAUNCH_APP -> {} // Handled by AppAction usually, but in case it's a SystemAction, do nothing
+                        GestureAction.SET_VOLUME -> {} // Handled by VolumeAction usually
+                        GestureAction.MODIFY_VOLUME_INCREASE -> {} // Handled by ModifyVolumeAction
+                        GestureAction.MODIFY_VOLUME_DECREASE -> {} // Handled by ModifyVolumeAction
+                        GestureAction.SPEAK_TEXT -> {} // Handled by TtsAction
+                        GestureAction.NO_ACTION -> {} // Literally do nothing
+                    }
+                    
+                    lastWasSystemAction = true
+                }
+                is FlowAction.AppAction -> {
+                    lastWasSystemAction = false
+                    if (flowAction.packageName.isNotEmpty()) {
+                        try {
+                            val intent = context.packageManager.getLaunchIntentForPackage(flowAction.packageName)
+                            if (intent != null) {
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                context.startActivity(intent)
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                is FlowAction.VolumeAction -> {
+                    lastWasSystemAction = false
+                    try {
+                        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                        val maxVol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                        val targetVol = (flowAction.percentage * maxVol) / 100
+                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, targetVol, 0)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                is FlowAction.ModifyVolumeAction -> {
+                    lastWasSystemAction = false
+                    try {
+                        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                        val maxVol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                        val currentVol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+                        val delta = ((flowAction.percentage / 100f) * maxVol).toInt().coerceAtLeast(1)
+                        
+                        val targetVol = if (flowAction.increase) {
+                            (currentVol + delta).coerceAtMost(maxVol)
+                        } else {
+                            (currentVol - delta).coerceAtLeast(0)
+                        }
+                        
+                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, targetVol, 0)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                is FlowAction.TtsAction -> {
+                    lastWasSystemAction = false
+                    if (flowAction.text.isNotBlank()) {
+                        ttsManager.speakAndWait(flowAction.text, resumeMedia = true, asAnnouncement = flowAction.asAnnouncement)
+                    }
+                }
+            }
+        }
+    }
+
+    /** Speaks [text] through the buds (used by wellbeing alerts). */
+    fun speak(text: String) = ttsManager.speak(text, resumeMedia = true)
+
+    /** Frees the TextToSpeech engine; call when the owning service is destroyed. */
+    fun release() = ttsManager.shutdown()
+
+    /**
+     * Opens the default voice assistant, which is Gemini on Pixel phones, listening hands-free.
+     *
+     * Starting an activity from the background service is blocked by Android 10+ unless the
+     * app is an associated companion app (see CompanionHelper). Without the association this
+     * fails silently, so we fall back through several entry points.
+     */
+    private fun triggerVoiceAssistant() {
+        val candidates = listOf(
+            Intent(Intent.ACTION_VOICE_COMMAND),
+            Intent(Intent.ACTION_ASSIST),
+            context.packageManager.getLaunchIntentForPackage(GEMINI_PACKAGE)
+        )
+        for (intent in candidates.filterNotNull()) {
+            try {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+                return
+            } catch (e: Exception) {
+                android.util.Log.w("GestureActionExecutor", "Assistant launch failed for ${intent.action}: ${e.message}")
+            }
+        }
+    }
+
+    companion object {
+        private const val GEMINI_PACKAGE = "com.google.android.apps.bard"
+    }
+
+    @Suppress("DEPRECATION")
+    private fun acceptCall() {
+        val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as? TelecomManager ?: return
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ANSWER_PHONE_CALLS) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                telecomManager.acceptRingingCall()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun rejectCall() {
+        val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as? TelecomManager ?: return
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ANSWER_PHONE_CALLS) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                telecomManager.endCall()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun readNotifications() {
+        val service = com.benegedeniz.budsdynamiceq.media.MediaListenerService.instance
+        if (service == null) {
+            ttsManager.speak(context.getString(R.string.notif_access_disabled))
+            return
+        }
+
+        try {
+            val activeNotifs = service.activeNotifications
+                ?.filter { !it.isOngoing && (it.notification.flags and android.app.Notification.FLAG_GROUP_SUMMARY) == 0 }
+                ?.filter { !it.notification.extras.getString(android.app.Notification.EXTRA_TEXT).isNullOrBlank() }
+                ?.take(3)
+
+            if (activeNotifs.isNullOrEmpty()) {
+                ttsManager.speak(context.getString(R.string.no_new_notifications))
+                return
+            }
+
+            val pm = context.packageManager
+            val sb = java.lang.StringBuilder()
+            sb.append(context.getString(if (activeNotifs.size > 1) R.string.you_have_x_notifications else R.string.you_have_one_notification, activeNotifs.size))
+            for (sbn in activeNotifs) {
+                val appName = try {
+                    pm.getApplicationLabel(pm.getApplicationInfo(sbn.packageName, 0)).toString()
+                } catch (e: Exception) {
+                    sbn.packageName.split(".").last().replaceFirstChar { it.uppercase() }
+                }
+                
+                val title = sbn.notification.extras.getString(android.app.Notification.EXTRA_TITLE) ?: appName
+                val text = sbn.notification.extras.getString(android.app.Notification.EXTRA_TEXT) ?: ""
+                sb.append(context.getString(R.string.from_title_text, title, text))
+            }
+            ttsManager.speak(sb.toString())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ttsManager.speak(context.getString(R.string.could_not_read_notifs))
+        }
+    }
+
+    fun triggerPlay(respectManualIntent: Boolean = false) {
+        val mediaObserver = com.benegedeniz.budsdynamiceq.di.ServiceLocator.provideMediaObserver(context)
+        if (respectManualIntent && mediaObserver.isManualPause()) {
+            return
+        }
+        mediaObserver.notifyAutomationTriggeredPlay()
+        sendMediaKey(KeyEvent.KEYCODE_MEDIA_PLAY)
+    }
+
+    fun triggerPause(respectManualIntent: Boolean = false) {
+        val mediaObserver = com.benegedeniz.budsdynamiceq.di.ServiceLocator.provideMediaObserver(context)
+        mediaObserver.notifyAutomationTriggeredPause()
+        sendMediaKey(KeyEvent.KEYCODE_MEDIA_PAUSE)
+    }
+    
+    fun triggerToggle(respectManualIntent: Boolean = false) {
+        val mediaObserver = com.benegedeniz.budsdynamiceq.di.ServiceLocator.provideMediaObserver(context)
+        if (respectManualIntent && mediaObserver.isManualPause()) {
+            return
+        }
+        if (mediaObserver.isCurrentlyPlaying()) {
+            mediaObserver.notifyAutomationTriggeredPause()
+        } else {
+            mediaObserver.notifyAutomationTriggeredPlay()
+        }
+        sendMediaKey(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE)
+    }
+
+    private fun sendMediaKey(keyCode: Int) {
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager.dispatchMediaKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))
+        audioManager.dispatchMediaKeyEvent(KeyEvent(KeyEvent.ACTION_UP, keyCode))
+    }
+    
+    private suspend fun performFitTest() {
+        val placementL = budsController.placementL.value
+        val placementR = budsController.placementR.value
+        if (placementL != com.benegedeniz.budsdynamiceq.data.model.PlacementState.WEARING || 
+            placementR != com.benegedeniz.budsdynamiceq.data.model.PlacementState.WEARING) {
+            ttsManager.speak(context.getString(R.string.please_wear_both_fit))
+            return
+        }
+
+        budsController.startFitTest()
+        
+        delay(3500) // Wait for the sound to finish and final results to be ready, ignoring early echo messages
+        
+        var timeout = 25 // 2.5 seconds maximum (100ms * 25)
+        while (timeout > 0) {
+            val resL = budsController.fitTestResultL.value
+            val resR = budsController.fitTestResultR.value
+            if (resL != com.benegedeniz.budsdynamiceq.data.model.FitTestResult.UNKNOWN && 
+                resR != com.benegedeniz.budsdynamiceq.data.model.FitTestResult.UNKNOWN) {
+                break
+            }
+            delay(100)
+            timeout--
+        }
+        
+        val finalL = budsController.fitTestResultL.value
+        val finalR = budsController.fitTestResultR.value
+        
+        val goodL = finalL == com.benegedeniz.budsdynamiceq.data.model.FitTestResult.GOOD
+        val goodR = finalR == com.benegedeniz.budsdynamiceq.data.model.FitTestResult.GOOD
+        
+        if (goodL && goodR) {
+            ttsManager.speakAndWait(context.getString(R.string.good_fit))
+        } else if (!goodL && !goodR) {
+            ttsManager.speakAndWait(context.getString(R.string.adjust_both_earbuds))
+        } else if (!goodL) {
+            ttsManager.speakAndWait(context.getString(R.string.adjust_left_earbud))
+        } else {
+            ttsManager.speakAndWait(context.getString(R.string.adjust_right_earbud))
+        }
+        
+        budsController.stopFitTest()
+    }
+    
+    private suspend fun announceTrack() {
+        val metadata = com.benegedeniz.budsdynamiceq.di.ServiceLocator.provideMediaObserver(context).currentMetadata.value
+        if (metadata != null && (!metadata.title.isNullOrBlank() || !metadata.artist.isNullOrBlank())) {
+            val title = metadata.title ?: context.getString(R.string.unknown_song)
+            val artist = metadata.artist ?: context.getString(R.string.unknown_artist)
+            ttsManager.speakAndWait(context.getString(R.string.playing_title_by_artist, title, artist), resumeMedia = true, asAnnouncement = false)
+        } else {
+            ttsManager.speakAndWait(context.getString(R.string.nothing_playing), resumeMedia = true, asAnnouncement = false)
+        }
+    }
+}

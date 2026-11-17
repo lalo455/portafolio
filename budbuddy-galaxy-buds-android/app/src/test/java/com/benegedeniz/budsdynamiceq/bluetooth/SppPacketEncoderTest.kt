@@ -1,0 +1,44 @@
+package com.benegedeniz.budsdynamiceq.bluetooth
+
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
+class SppPacketEncoderTest {
+
+    @Test
+    fun buildPacket_correctFraming() {
+        val msgId = SppPacketEncoder.MSG_ID_EQUALIZER
+        val payload = byteArrayOf(0x03) // Dynamic preset
+
+        val packet = SppPacketEncoder.buildPacket(msgId, payload)
+
+        // Packet structure: SOM (1) + Header (2) + MsgId (1) + Payload (1) + CRC (2) + EOM (1) = 8 bytes
+        assertEquals(8, packet.size)
+        
+        // SOM
+        assertEquals(0xFD.toByte(), packet[0])
+        
+        // EOM
+        assertEquals(0xDD.toByte(), packet[packet.size - 1])
+        
+        // MsgId is at index 3 (SOM + 2 bytes header)
+        assertEquals(0x86.toByte(), packet[3])
+        
+        // Payload is at index 4
+        assertEquals(0x03.toByte(), packet[4])
+
+    }
+
+    @Test
+    fun buildCustomEqualizerPayload_bandCountThenSignedGains() {
+        val payload = SppPacketEncoder.buildCustomEqualizerPayload(listOf(6, 3, 0, 0, 1, 1, 3, 5, -4))
+        assertEquals(10, payload.size)
+        assertEquals(9.toByte(), payload[0])
+        assertEquals(6.toByte(), payload[1])
+        assertEquals((-4).toByte(), payload[9])
+
+        val packet = SppPacketEncoder.buildPacket(SppPacketEncoder.MSG_ID_CUSTOM_EQUALIZE_SEND, payload)
+        assertEquals(0x89.toByte(), packet[3])
+        assertEquals(9.toByte(), packet[4])
+    }
+}

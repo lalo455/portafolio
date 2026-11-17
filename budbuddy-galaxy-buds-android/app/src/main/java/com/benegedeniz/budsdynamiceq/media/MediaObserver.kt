@@ -1,0 +1,464 @@
+package com.benegedeniz.budsdynamiceq.media
+
+import android.content.ComponentName
+import android.content.Context
+import android.media.MediaMetadata
+import android.media.session.MediaController
+import android.media.session.MediaSessionManager
+import android.util.Log
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.cancel
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
+import org.json.JSONObject
+
+enum class GenreFetchState {
+    NONE, LOADING, SUCCESS, ERROR
+}
+
+data class SongMetadata(
+    val title: String? = null,
+    val artist: String? = null,
+    val genre: String? = null,
+    val genreFetchState: GenreFetchState = GenreFetchState.NONE,
+    /** Tempo from Deezer (only fetched when auto-EQ with BPM is enabled), null if unknown. */
+    val bpm: Int? = null
+) {
+    val displayString: String get() = listOfNotNull(artist, title).filter { it.isNotBlank() }.joinToString(" - ")
+}
+
+class MediaObserver(private val context: Context) {
+
+    companion object {
+        private const val TAG = "MediaObserver"
+    }
+
+    private val mediaSessionManager = context.getSystemService(Context.MEDIA_SESSION_SERVICE) as MediaSessionManager
+
+    enum class PlaybackIntent {
+        MANUAL_PLAY, MANUAL_PAUSE, AUTOMATION_PLAY, AUTOMATION_PAUSE, UNKNOWN
+    }
+
+    private var currentIntent = PlaybackIntent.UNKNOWN
+    private var pendingAutomationPlay = false
+    private var pendingAutomationPause = false
+
+    fun notifyAutomationTriggeredPlay() {
+        pendingAutomationPlay = true
+        pendingAutomationPause = false
+    }
+
+    fun notifyAutomationTriggeredPause() {
+        pendingAutomationPause = true
+        pendingAutomationPlay = false
+    }
+
+    fun isManualPause(): Boolean {
+        return currentIntent == PlaybackIntent.MANUAL_PAUSE
+    }
+
+    fun isCurrentlyPlaying(): Boolean {
+        val controllers = mediaSessionManager.getActiveSessions(ComponentName(context, MediaListenerService::class.java))
+        return controllers.any { it.playbackState?.state == android.media.session.PlaybackState.STATE_PLAYING }
+    }
+
+    private val _currentMetadata = MutableStateFlow<SongMetadata?>(null)
+    val currentMetadata: StateFlow<SongMetadata?> = _currentMetadata.asStateFlow()
+
+    private val _recentHistory = MutableStateFlow<List<SongMetadata>>(emptyList())
+    val recentHistory: StateFlow<List<SongMetadata>> = _recentHistory.asStateFlow()
+
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private var currentFetchJob: Job? = null
+    
+    private val genreCache = context.getSharedPreferences("genre_cache", Context.MODE_PRIVATE)
+    private val failedGenreFetches = mutableSetOf<String>()
+    private val bpmCache = context.getSharedPreferences("bpm_cache", Context.MODE_PRIVATE)
+    private var currentBpmJob: Job? = null
+
+    private val prefs = context.getSharedPreferences("BudsPrefs", Context.MODE_PRIVATE)
+
+    private val activeSessionsListener = MediaSessionManager.OnActiveSessionsChangedListener { controllers ->
+        updateActiveControllers(controllers)
+    }
+
+    private val prefsListener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == "ignored_media_players") {
+            try {
+                val componentName = ComponentName(context, MediaListenerService::class.java)
+                val controllers = mediaSessionManager.getActiveSessions(componentName)
+                updateActiveControllers(controllers)
+            } catch (e: SecurityException) {
+                Log.e(TAG, "Missing permission to fetch sessions on pref change", e)
+            }
+        }
+    }
+
+    private val controllerCallbacks = mutableMapOf<MediaController, MediaController.Callback>()
+
+    /**
+     * Starts observing media sessions.
+     * Note: Requires NotificationListenerService permission to be granted.
+     */
+    fun startObserving() {
+        try {
+            val componentName = ComponentName(context, MediaListenerService::class.java)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                android.service.notification.NotificationListenerService.requestRebind(componentName)
+            }
+            mediaSessionManager.addOnActiveSessionsChangedListener(activeSessionsListener, componentName)
+            prefs.registerOnSharedPreferenceChangeListener(prefsListener)
+            val controllers = mediaSessionManager.getActiveSessions(componentName)
+            updateActiveControllers(controllers)
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Missing permission to observe media sessions. Did user grant notification access?", e)
+        }
+    }
+
+    fun stopObserving() {
+        try {
+            mediaSessionManager.removeOnActiveSessionsChangedListener(activeSessionsListener)
+            prefs.unregisterOnSharedPreferenceChangeListener(prefsListener)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error stopping observation", e)
+        }
+        for ((controller, callback) in controllerCallbacks) {
+            controller.unregisterCallback(callback)
+        }
+        controllerCallbacks.clear()
+        // Do NOT cancel the scope — MediaObserver is a singleton shared across service
+        // lifecycles. Cancelling the scope permanently kills it, causing genre fetches
+        // launched after a service restart to silently no-op and get stuck on LOADING.
+        currentFetchJob?.cancel()
+        currentFetchJob = null
+    }
+
+    private fun updateActiveControllers(controllers: List<MediaController>?) {
+        val currentControllers = controllers ?: emptyList()
+
+        // Remove callbacks for controllers that are no longer active
+        val removed = controllerCallbacks.keys - currentControllers.toSet()
+        for (controller in removed) {
+            val callback = controllerCallbacks.remove(controller)
+            if (callback != null) {
+                controller.unregisterCallback(callback)
+            }
+        }
+
+        // Add callbacks for new controllers
+        for (controller in currentControllers) {
+            if (!controllerCallbacks.containsKey(controller)) {
+                val callback = object : MediaController.Callback() {
+                    private fun isControllerActive(): Boolean {
+                        val prefs = context.getSharedPreferences("BudsPrefs", Context.MODE_PRIVATE)
+                        val ignoredPlayers = prefs.getStringSet("ignored_media_players", emptySet()) ?: emptySet()
+                        
+                        var activeControllers = mediaSessionManager.getActiveSessions(ComponentName(context, MediaListenerService::class.java))
+                            .filter { it.playbackInfo?.playbackType == android.media.session.MediaController.PlaybackInfo.PLAYBACK_TYPE_LOCAL }
+                            .filter { !ignoredPlayers.contains(it.packageName) }
+                            
+                        val primary = activeControllers.firstOrNull { it.playbackState?.state == android.media.session.PlaybackState.STATE_PLAYING } ?: activeControllers.firstOrNull()
+                        return primary?.sessionToken == controller.sessionToken
+                    }
+
+                    override fun onMetadataChanged(metadata: MediaMetadata?) {
+                        super.onMetadataChanged(metadata)
+                        if (isControllerActive()) {
+                            updateTitleFromMetadata(metadata)
+                        }
+                    }
+
+                    private var lastKnownState: Int? = null
+
+                    override fun onPlaybackStateChanged(state: android.media.session.PlaybackState?) {
+                        super.onPlaybackStateChanged(state)
+                        val currentState = state?.state
+                        if (currentState == lastKnownState) return
+                        lastKnownState = currentState
+                        
+                        if (currentState == android.media.session.PlaybackState.STATE_PLAYING) {
+                            if (pendingAutomationPlay) {
+                                currentIntent = PlaybackIntent.AUTOMATION_PLAY
+                                pendingAutomationPlay = false
+                            } else {
+                                currentIntent = PlaybackIntent.MANUAL_PLAY
+                            }
+                            if (isControllerActive()) {
+                                updateTitleFromMetadata(controller.metadata)
+                            }
+                        } else if (currentState == android.media.session.PlaybackState.STATE_PAUSED || currentState == android.media.session.PlaybackState.STATE_STOPPED) {
+                            if (pendingAutomationPause) {
+                                currentIntent = PlaybackIntent.AUTOMATION_PAUSE
+                                pendingAutomationPause = false
+                            } else {
+                                currentIntent = PlaybackIntent.MANUAL_PAUSE
+                            }
+                        }
+                    }
+                }
+                controller.registerCallback(callback)
+                controllerCallbacks[controller] = callback
+            }
+        }
+
+        val prefs = context.getSharedPreferences("BudsPrefs", Context.MODE_PRIVATE)
+        val ignoredPlayers = prefs.getStringSet("ignored_media_players", emptySet()) ?: emptySet()
+
+        // Initially find the playing controller, or fallback to first
+        var localControllers = currentControllers
+            .filter { it.playbackInfo?.playbackType == android.media.session.MediaController.PlaybackInfo.PLAYBACK_TYPE_LOCAL }
+            .filter { !ignoredPlayers.contains(it.packageName) }
+            
+        val playingController = localControllers.firstOrNull { 
+            it.playbackState?.state == android.media.session.PlaybackState.STATE_PLAYING 
+        } ?: localControllers.firstOrNull()
+        
+        updateTitleFromMetadata(playingController?.metadata)
+    }
+
+    private fun updateTitleFromMetadata(metadata: MediaMetadata?) {
+        var title = metadata?.getString(MediaMetadata.METADATA_KEY_TITLE)
+        if (title.isNullOrBlank()) {
+            title = metadata?.getString(MediaMetadata.METADATA_KEY_DISPLAY_TITLE)
+        }
+        
+        var artist = metadata?.getString(MediaMetadata.METADATA_KEY_ARTIST)
+        if (artist.isNullOrBlank()) {
+            artist = metadata?.getString(MediaMetadata.METADATA_KEY_ALBUM_ARTIST)
+        }
+        if (artist.isNullOrBlank()) {
+            artist = metadata?.getString(MediaMetadata.METADATA_KEY_DISPLAY_SUBTITLE)
+        }
+        
+        val genre = metadata?.getString(MediaMetadata.METADATA_KEY_GENRE)
+        
+        handleNewMetadata(title, artist, genre)
+    }
+
+    fun updateTitleFromNotification(title: String?, artist: String?, packageName: String?) {
+        if (packageName != null) {
+            val prefs = context.getSharedPreferences("BudsPrefs", Context.MODE_PRIVATE)
+            val ignoredPlayers = prefs.getStringSet("ignored_media_players", emptySet()) ?: emptySet()
+            if (ignoredPlayers.contains(packageName)) {
+                return
+            }
+        }
+        handleNewMetadata(title, artist, null)
+    }
+
+    fun clearCache() {
+        genreCache.edit().clear().apply()
+        bpmCache.edit().clear().apply()
+        failedGenreFetches.clear()
+        Log.d(TAG, "Genre cache cleared")
+    }
+
+    private fun handleNewMetadata(title: String?, artist: String?, genre: String?) {
+        // If we have a native genre, it's a success right away.
+        var initialState = if (!genre.isNullOrBlank()) GenreFetchState.SUCCESS else GenreFetchState.NONE
+        var initialGenre = genre
+
+        // If no native genre, try cache
+        if (initialGenre.isNullOrBlank() && !title.isNullOrBlank() && !artist.isNullOrBlank()) {
+            val cacheKey = "${artist}_${title}"
+            val cachedGenre = genreCache.getString(cacheKey, null)
+            if (!cachedGenre.isNullOrBlank()) {
+                initialGenre = cachedGenre
+                initialState = GenreFetchState.SUCCESS
+            } else if (failedGenreFetches.contains(cacheKey)) {
+                initialState = GenreFetchState.ERROR
+            } else {
+                val prefs = context.getSharedPreferences("BudsPrefs", Context.MODE_PRIVATE)
+                if (prefs.getBoolean("enable_itunes_genre_fetching", true)) {
+                    initialState = GenreFetchState.LOADING
+                } else {
+                    // Do not attempt to fetch, keep as NONE
+                    initialState = GenreFetchState.NONE
+                }
+            }
+        }
+
+        val bpmKey = if (!title.isNullOrBlank() && !artist.isNullOrBlank()) "${artist}_${title}" else null
+        // Stored as -1 when Deezer had no tempo, so we don't ask again for that song.
+        val cachedBpm = bpmKey?.let { bpmCache.getInt(it, 0) } ?: 0
+        val newMetadata = SongMetadata(title, artist, initialGenre, initialState, cachedBpm.takeIf { it > 0 })
+        
+        if (_currentMetadata.value == newMetadata) return
+
+        Log.d(TAG, "Song metadata changed: ${newMetadata.displayString} (State: $initialState)")
+        _currentMetadata.value = newMetadata
+
+        // Add to recent history if it's a new unique song (ignoring state updates for the same song)
+        if (newMetadata.title != null && newMetadata.artist != null) {
+            val currentHistory = _recentHistory.value
+            val isSameSongAsLast = currentHistory.firstOrNull()?.let { 
+                it.title == newMetadata.title && it.artist == newMetadata.artist 
+            } == true
+            
+            if (!isSameSongAsLast) {
+                _recentHistory.value = listOf(newMetadata) + currentHistory.take(4)
+            } else if (newMetadata.genreFetchState == GenreFetchState.SUCCESS) {
+                // Update the state of the top item if we just fetched the genre
+                _recentHistory.value = listOf(newMetadata) + currentHistory.drop(1)
+            }
+        }
+
+        currentFetchJob?.cancel()
+        currentBpmJob?.cancel()
+
+        if (bpmKey != null && cachedBpm == 0 && shouldFetchBpm()) {
+            currentBpmJob = scope.launch {
+                val bpm = fetchBpmFromDeezer(title!!, artist!!)
+                bpmCache.edit().putInt(bpmKey, bpm ?: -1).apply()
+                if (bpm != null) {
+                    val current = _currentMetadata.value
+                    if (current != null && current.title == title && current.artist == artist) {
+                        Log.d(TAG, "Fetched BPM from Deezer: $bpm")
+                        _currentMetadata.value = current.copy(bpm = bpm)
+                    }
+                }
+            }
+        }
+
+        if (initialState == GenreFetchState.LOADING && !title.isNullOrBlank() && !artist.isNullOrBlank()) {
+            currentFetchJob = scope.launch {
+                val fetchedGenre = fetchGenreWithFallbacks(title, artist)
+                if (_currentMetadata.value?.title == title && _currentMetadata.value?.artist == artist) {
+                    if (fetchedGenre != null) {
+                        val cacheKey = "${artist}_${title}"
+                        genreCache.edit().putString(cacheKey, fetchedGenre).apply()
+                        
+                        val updatedMetadata = SongMetadata(title, artist, fetchedGenre, GenreFetchState.SUCCESS, _currentMetadata.value?.bpm)
+                        Log.d(TAG, "Fetched genre from iTunes: $fetchedGenre")
+                        _currentMetadata.value = updatedMetadata
+                        
+                        // Update the history entry with the newly fetched genre
+                        val currentHistory = _recentHistory.value
+                        if (currentHistory.isNotEmpty() && currentHistory.first().title == title && currentHistory.first().artist == artist) {
+                            _recentHistory.value = listOf(updatedMetadata) + currentHistory.drop(1)
+                        }
+                    } else {
+                        val cacheKey = "${artist}_${title}"
+                        failedGenreFetches.add(cacheKey)
+                        
+                        val updatedMetadata = SongMetadata(title, artist, null, GenreFetchState.ERROR, _currentMetadata.value?.bpm)
+                        Log.d(TAG, "Failed to fetch genre from iTunes")
+                        _currentMetadata.value = updatedMetadata
+                        
+                        // Update the history entry with the error state
+                        val currentHistory = _recentHistory.value
+                        if (currentHistory.isNotEmpty() && currentHistory.first().title == title && currentHistory.first().artist == artist) {
+                            _recentHistory.value = listOf(updatedMetadata) + currentHistory.drop(1)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun cleanStringForSearch(input: String): String {
+        var cleaned = input.replace(Regex("(?i)\\s*[\\[\\(].*?(official|video|audio|lyric|remaster|live).*?[\\]\\)]"), "")
+        cleaned = cleaned.replace(Regex("(?i)\\s*(\\(|ft\\.|feat\\.|prod\\.).*$"), "")
+        cleaned = cleaned.replace(Regex("(?i)\\s*-.*(official|video|audio|lyric|remaster|live).*$"), "")
+        return cleaned.trim()
+    }
+
+    private fun fetchGenreWithFallbacks(title: String, artist: String): String? {
+        var genre = fetchGenreFromITunes(title, artist)
+        if (genre != null) return genre
+
+        val cleanTitle = cleanStringForSearch(title)
+        val cleanArtist = cleanStringForSearch(artist)
+        
+        if (cleanTitle != title || cleanArtist != artist) {
+            genre = fetchGenreFromITunes(cleanTitle, cleanArtist)
+            if (genre != null) return genre
+        }
+        
+        if (cleanTitle.isNotBlank()) {
+            genre = fetchGenreFromITunes(cleanTitle, "")
+            if (genre != null) return genre
+        }
+        
+        return null
+    }
+
+    private fun fetchGenreFromITunes(title: String, artist: String): String? {
+        try {
+            val query = URLEncoder.encode("$artist $title", "UTF-8")
+            val url = URL("https://itunes.apple.com/search?term=$query&entity=song&limit=1")
+            val connection = url.openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.connectTimeout = 5000
+            connection.readTimeout = 5000
+            connection.connect()
+
+            if (connection.responseCode == 200) {
+                val response = connection.inputStream.bufferedReader().use { it.readText() }
+                val json = JSONObject(response)
+                val results = json.optJSONArray("results")
+                if (results != null && results.length() > 0) {
+                    val firstResult = results.getJSONObject(0)
+                    val genre = firstResult.optString("primaryGenreName")
+                    if (genre.isNotBlank()) {
+                        return genre
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to fetch genre from iTunes", e)
+        }
+        return null
+    }
+
+    private fun shouldFetchBpm(): Boolean =
+        prefs.getBoolean(com.benegedeniz.budsdynamiceq.rules.GenreEqMapper.PREF_ENABLED, false) &&
+            prefs.getBoolean(com.benegedeniz.budsdynamiceq.rules.GenreEqMapper.PREF_USE_BPM, true)
+
+    /**
+     * Deezer's public API (no key needed) exposes a track's tempo on /track/{id}.
+     * Search results don't include it, hence the two requests. Returns null when unknown.
+     */
+    private fun fetchBpmFromDeezer(title: String, artist: String): Int? {
+        val cleanTitle = cleanStringForSearch(title)
+        val cleanArtist = cleanStringForSearch(artist)
+        val queries = listOf(
+            "artist:\"$cleanArtist\" track:\"$cleanTitle\"",
+            "$cleanArtist $cleanTitle"
+        )
+        for (q in queries) {
+            try {
+                val search = httpGetJson("https://api.deezer.com/search?limit=1&q=" + URLEncoder.encode(q, "UTF-8")) ?: continue
+                val first = search.optJSONArray("data")?.optJSONObject(0) ?: continue
+                val id = first.optLong("id", 0L).takeIf { it > 0 } ?: continue
+                val track = httpGetJson("https://api.deezer.com/track/$id") ?: continue
+                val bpm = track.optDouble("bpm", 0.0)
+                return if (bpm >= 40.0) bpm.toInt() else null
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to fetch BPM from Deezer", e)
+            }
+        }
+        return null
+    }
+
+    private fun httpGetJson(url: String): JSONObject? {
+        val connection = URL(url).openConnection() as HttpURLConnection
+        return try {
+            connection.requestMethod = "GET"
+            connection.connectTimeout = 5000
+            connection.readTimeout = 5000
+            if (connection.responseCode != 200) return null
+            JSONObject(connection.inputStream.bufferedReader().use { it.readText() })
+        } finally {
+            connection.disconnect()
+        }
+    }
+}

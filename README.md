@@ -16,3 +16,4 @@ Proyectos de desarrollo .NET: integraciones con SAP Business One, WMS, apps móv
 | [tienda-mcp-asistente-voz](tienda-mcp-asistente-voz/) | Comercio conversacional por voz: servidor MCP + cliente con Google Gemini | .NET, MCP, SQLite, Web Speech API |
 | [encuesta-webapp-clean-architecture](encuesta-webapp-clean-architecture/) | App de encuestas con Clean Architecture, SOLID y DRY | ASP.NET MVC, Dapper, SQL Server |
 | [ping-webapp-netcore](ping-webapp-netcore/) | Monitor de conectividad (ping) con API y vista en tiempo real | ASP.NET Core MVC |
+| [budbuddy-galaxy-buds-android](budbuddy-galaxy-buds-android/) | Fork de BudBuddy (GPL-3.0): control de Galaxy Buds en Pixel/no Samsung — traducción al español, reconexión robusta, Companion Device, Gemini por gestos de cabeza, EQ automático por género/BPM, ANC según red ([aportaciones](budbuddy-galaxy-buds-android/CONTRIBUCIONES.md)) | Kotlin, Jetpack Compose, Coroutines, Bluetooth SPP, Glance |

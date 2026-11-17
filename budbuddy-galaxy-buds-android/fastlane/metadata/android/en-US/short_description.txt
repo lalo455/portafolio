@@ -1,0 +1,1 @@
+Open-source manager for Samsung Galaxy Buds with dynamic EQ and gestures.

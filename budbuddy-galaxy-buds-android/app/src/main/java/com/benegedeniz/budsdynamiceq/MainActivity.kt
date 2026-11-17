@@ -1,0 +1,139 @@
+package com.benegedeniz.budsdynamiceq
+
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import com.benegedeniz.budsdynamiceq.ui.main.MainScreen
+import com.benegedeniz.budsdynamiceq.ui.setup.AppIntroScreen
+import com.benegedeniz.budsdynamiceq.ui.setup.SetupScreen
+import com.benegedeniz.budsdynamiceq.ui.theme.BudsDynamicEQTheme
+import com.benegedeniz.budsdynamiceq.util.PermissionManager
+import com.benegedeniz.budsdynamiceq.util.UpdateChecker
+import kotlinx.coroutines.launch
+
+val LocalGlobalNavBarBottom = compositionLocalOf { 0.dp }
+
+class MainActivity : ComponentActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(com.benegedeniz.budsdynamiceq.util.LanguageUtils.setLocale(newBase))
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        
+        // Start Foreground Service only if we have a saved device
+        val prefs = getSharedPreferences("BudsPrefs", Context.MODE_PRIVATE)
+        val hasSavedDevice = prefs.getString("saved_mac_address", null) != null
+        
+        if (hasSavedDevice && PermissionManager.hasRequiredPermissions(this)) {
+            val serviceIntent = Intent(this, com.benegedeniz.budsdynamiceq.service.BudsService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(serviceIntent)
+            } else {
+                startService(serviceIntent)
+            }
+        }
+
+        setContent {
+            val prefs = getSharedPreferences("BudsPrefs", Context.MODE_PRIVATE)
+            var themePreference by remember { mutableStateOf(prefs.getInt("theme_preference", 0)) }
+            var enableHaptics by remember { mutableStateOf(prefs.getBoolean("enable_haptics", true)) }
+            
+            DisposableEffect(Unit) {
+                val listener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+                    when (key) {
+                        "theme_preference" -> themePreference = sharedPreferences.getInt(key, 0)
+                        "enable_haptics" -> enableHaptics = sharedPreferences.getBoolean(key, true)
+                    }
+                }
+                prefs.registerOnSharedPreferenceChangeListener(listener)
+                onDispose { prefs.unregisterOnSharedPreferenceChangeListener(listener) }
+            }
+
+            val systemDarkTheme = androidx.compose.foundation.isSystemInDarkTheme()
+            val isDarkTheme = when (themePreference) {
+                1 -> false
+                2 -> true
+                else -> systemDarkTheme
+            }
+
+            BudsDynamicEQTheme(darkTheme = isDarkTheme) {
+                var permissionsGranted by remember { mutableStateOf(PermissionManager.hasRequiredPermissions(this@MainActivity)) }
+                var hasSeenAppIntro by remember { 
+                    mutableStateOf(prefs.getBoolean("has_seen_app_intro", false)) 
+                }
+                val appCoroutineScope = rememberCoroutineScope()
+                val appContext = LocalContext.current
+                
+                LaunchedEffect(Unit) {
+                    val versionName = try {
+                        appContext.packageManager.getPackageInfo(appContext.packageName, 0).versionName ?: "N/A"
+                    } catch (e: Exception) {
+                        "N/A"
+                    }
+                    UpdateChecker.checkForUpdates(versionName, appCoroutineScope)
+                }
+                
+                val navBarBottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+                val originalHaptic = androidx.compose.ui.platform.LocalHapticFeedback.current
+                val customHaptic = remember(enableHaptics, originalHaptic) {
+                    if (enableHaptics) {
+                        originalHaptic
+                    } else {
+                        object : androidx.compose.ui.hapticfeedback.HapticFeedback {
+                            override fun performHapticFeedback(hapticFeedbackType: androidx.compose.ui.hapticfeedback.HapticFeedbackType) {
+                                // Do nothing
+                            }
+                        }
+                    }
+                }
+                
+                CompositionLocalProvider(
+                    LocalGlobalNavBarBottom provides navBarBottom,
+                    androidx.compose.ui.platform.LocalHapticFeedback provides customHaptic
+                ) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                    if (permissionsGranted) {
+                        if (!hasSeenAppIntro) {
+                            AppIntroScreen(
+                                onIntroFinished = {
+                                    getSharedPreferences("BudsPrefs", Context.MODE_PRIVATE).edit().putBoolean("has_seen_app_intro", true).apply()
+                                    hasSeenAppIntro = true
+                                }
+                            )
+                        } else {
+                            MainScreen()
+                        }
+                    } else {
+                        SetupScreen(
+                            onPermissionsGranted = {
+                                permissionsGranted = true
+                            }
+                        )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
